@@ -51,7 +51,7 @@
     <div class="panel">
       <h1>PMP 2026 题型训练</h1>
       <p>PMI 2026 ECO 提到题型会包含场景/案例、图表、匹配、单选、多选、点选等。这里用浏览器可实现的方式模拟“读场景、看图表、做判断”。</p>
-      <div class="quick-start"><button id="heroSimulation" type="button">进入仿真题</button></div>
+      <div class="quick-start"><button id="heroDecision" type="button">进入二选一陷阱题</button></div>
     </div>
     <div class="panel">
       <h2>危险选项识别</h2>
@@ -81,9 +81,8 @@
       <div id="userProfiles" class="user-profile"></div>
       <div class="mode-switch">
         <button id="normalMode" class="active">普通题</button>
-        <button id="hardMode">难题模式</button>
-        <button id="simulationMode">仿真题（像考试）</button>
         <button id="trapMode">概念陷阱题</button>
+        <button id="decisionMode">二选一陷阱题</button>
         <button id="allMode">全部混刷</button>
       </div>
       <div style="margin-top:12px" class="track"><div id="fill" class="fill"></div></div>
@@ -117,10 +116,9 @@ const next=document.getElementById("next");
 const random=document.getElementById("random");
 const reset=document.getElementById("reset");
 const normalMode=document.getElementById("normalMode");
-const hardMode=document.getElementById("hardMode");
-const simulationMode=document.getElementById("simulationMode");
 const trapMode=document.getElementById("trapMode");
-const heroSimulation=document.getElementById("heroSimulation");
+const decisionMode=document.getElementById("decisionMode");
+const heroDecision=document.getElementById("heroDecision");
 const allMode=document.getElementById("allMode");
 const exportStatus=document.getElementById("exportStatus");
 const statusReport=document.getElementById("statusReport");
@@ -529,8 +527,64 @@ const trapQs=[
  q("概念陷阱题","Risk","残余风险不是次生风险。","残余风险和次生风险的区别是？",["残余风险是应对后仍剩余的风险，次生风险是应对措施引发的新风险","残余风险是机会，次生风险是问题","两者都必须关闭","两者没有区别"],0,"Residual risk 是剩余风险；Secondary risk 是应对措施产生的新风险。"),
  q("概念陷阱题","Schedule","紧前紧后别看反。","紧前活动的含义是？",["逻辑上位于某活动之前的活动","某活动之后立即发生的活动","持续时间为零的活动","没有依赖的活动"],0,"Predecessor 是前置活动，Successor 是后续活动。"),
  q("概念陷阱题","Scope","范围蔓延的本质。","范围蔓延指什么？",["未受控制地扩大项目或产品范围","客户批准的正式变更","范围基准创建","WBS 分解"],0,"Scope creep 是未经控制的范围扩大；正式批准的变更不是范围蔓延。"),
- q("概念陷阱题","Quality","镀金不是质量。","镀金通常指什么？",["交付超出需求的额外功能或特性","满足验收标准","消除缺陷","执行质量审计"],0,"Gold plating 是未经要求添加额外内容，可能导致风险、成本和范围问题。")
+q("概念陷阱题","Quality","镀金不是质量。","镀金通常指什么？",["交付超出需求的额外功能或特性","满足验收标准","消除缺陷","执行质量审计"],0,"Gold plating 是未经要求添加额外内容，可能导致风险、成本和范围问题。")
 ];
+const decisionThemes=[
+ ["Integration","客户提出一个会影响进度基准的变更。项目经理已经和团队完成初步影响分析，客户要求马上开始。","项目经理下一步应该做什么？",["将变更请求提交给变更控制机制审批","继续与团队分析所有可能影响","通知客户不能变更","直接更新进度基准"],0,"题干已经说完成初步影响分析，并且影响基准。下一步进入正式变更控制。B 在尚未分析影响时才更合适。"],
+ ["Integration","客户提出新需求，项目经理不确定会不会影响范围、进度和成本。客户强调该需求很重要。","项目经理首先应该做什么？",["提交 CCB 审批","与团队评估该需求的影响","更新范围基准","要求客户撤回需求"],1,"还不确定影响时，先分析影响。不能在信息不足时直接提交审批或更新基准。"],
+ ["Integration","变更控制委员会批准了一项会改变进度基准的变更。项目经理已经收到批准通知。","项目经理下一步应该做什么？",["更新相关计划和基准并沟通批准的变更","再次分析该变更是否有价值","要求客户重新提交请求","拒绝团队开始执行"],0,"变更已批准，下一步是更新受影响文件/基准并安排执行。分析价值是在审批前。"],
+ ["Integration","团队发现一个小改动能提升客户满意度，且不会影响任何基准。客户代表口头同意。","项目经理应该怎么做？",["按项目变更管理计划处理并记录该改动","直接让团队做，不需要记录","提交给高级管理层","更新成本基准"],0,"即使不影响基准，也要按变更管理计划记录和处理，避免失控。"],
+ ["Scope","客户在验收会上指出一个功能缺失。团队认为该功能没有进入范围基准，但客户提供了早期会议纪要。","项目经理首先应该做什么？",["立即让团队补做功能","审查需求文件、范围基准和会议纪要以确认事实","要求客户接受当前成果","提交索赔"],1,"文件信息冲突时先确认事实。不能马上补做，也不能机械拒绝。"],
+ ["Scope","团队完成内部质量检查，一个可交付成果符合质量标准。客户尚未正式接受。","项目经理下一步应该做什么？",["进行确认范围以获得正式验收","结束项目或阶段","更新风险登记册","重新规划质量管理"],0,"控制质量通过后产生核实的可交付成果，下一步进入确认范围取得正式验收。"],
+ ["Quality","客户拒绝验收，因为成果在现场使用不便。团队说所有测试都通过，需求中也没有写现场限制。","项目经理首先应该做什么？",["要求客户验收，因为测试通过","澄清使用场景差距并评估是需求遗漏、缺陷还是变更","让团队立即返工","关闭项目"],1,"先判断差距性质。直接要求验收或直接返工都过早。"],
+ ["Quality","团队为了赶进度建议跳过一次关键审查。项目经理发现最近返工率已经升高。","项目经理应该做什么？",["同意跳过审查以保护进度","评估返工趋势并支持必要的质量保证活动","把审查移到项目结束","让客户承担质量风险"],1,"返工升高说明过程有问题，减少质量活动可能造成更大损失。"],
+ ["Risk","一个已识别风险的触发条件已经出现，但影响尚未发生。团队建议继续观察。","项目经理应该怎么做？",["继续观察直到影响发生","按风险应对计划行动或重新评估风险","关闭该风险","提交变更请求更新基准"],1,"触发条件就是提前行动的信号，不是等损失发生。"],
+ ["Risk","项目经理发现一个高影响低概率风险。发起人认为概率低，不值得花钱。风险登记册已更新。","项目经理下一步应该做什么？",["关闭风险","用风险暴露、阈值和应对选项与发起人讨论决策","立即使用管理储备","升级给 PMO 强制批准"],1,"项目经理帮助决策，不是直接关闭或越权动用储备。"],
+ ["Risk","团队执行应急计划后解决了供应延迟，但替代供应商带来新的质量不确定性。","项目经理下一步应该做什么？",["关闭所有风险","记录并管理次生风险","取消质量检查","要求供应商自行处理"],1,"应对措施引发的新不确定性是次生风险，应记录和管理。"],
+ ["Risk","项目出现一个未识别的问题，需要使用管理储备。发起人口头同意，但组织规定需高层批准。","项目经理应该怎么做？",["按组织治理申请批准","直接使用管理储备","改用应急储备","让团队吸收成本"],0,"管理储备用于未知未知，使用要按组织授权。"],
+ ["Schedule","项目落后两周。团队建议快速跟进两个原本顺序执行且依赖很强的活动。","项目经理首先应该做什么？",["直接快速跟进","评估快速跟进的返工、质量和风险影响","要求团队加班","修改进度基准"],1,"快速跟进是压缩方法，但会带来返工/质量风险。先评估再决策。"],
+ ["Schedule","团队报告某活动完成，但相关交付物尚未通过验收标准中的检查。","项目经理应该怎么做？",["接受活动完成状态","依据完成标准核实实际完成状态","更新进度基准","把检查放到收尾"],1,"完成状态要基于完成标准，不是负责人主观报告。"],
+ ["Schedule","进度预测显示会错过合同里程碑。恢复方案依赖客户更快审批，但客户过去审批一直慢。","项目经理下一步应该做什么？",["假设客户会配合并发布恢复计划","与客户确认审批承诺，并把该依赖纳入恢复计划","要求团队独自赶回进度","立即提交索赔"],1,"恢复计划不能建立在未经确认的乐观假设上。"],
+ ["Cost","CPI 为 0.92，SPI 为 1.08。发起人认为项目提前所以表现很好。","项目经理应该怎么做？",["不采取行动","分析成本超支趋势和原因","增加范围利用提前优势","等收尾再看成本"],1,"SPI 好不代表成本健康。CPI 小于 1 要分析成本效率。"],
+ ["Cost","一个变更会增加项目成本，但降低运营部门长期费用。项目部门只关注本项目预算。","项目经理应该怎么做？",["拒绝变更，因为项目成本增加","组织相关方评估全生命周期价值和资金责任","直接批准变更","让运营部门自行决定项目范围"],1,"这是局部成本与整体价值冲突，要促进跨部门价值决策。"],
+ ["Stakeholder","高权力相关方上线前强烈反对。项目经理发现其团队上线后承担支持工作，但此前参与很少。","项目经理首先应该做什么？",["要求发起人命令其接受","与其沟通担忧并评估支持准备度和上线风险","按原计划上线","把他加入邮件抄送"],1,"反对可能来自准备度缺口。先理解和评估风险，再决定策略。"],
+ ["Stakeholder","某部门经理表面支持项目，却一直不安排关键用户参加需求工作坊。项目经理第一次发现此问题。","项目经理下一步应该做什么？",["立即升级给其上级","与该经理讨论业务影响和可行参与安排","取消该部门需求","让团队代替用户决定"],1,"第一次发现参与障碍，应先沟通约束和影响，升级通常不是第一步。"],
+ ["Communications","项目经理每周发送详细报告，关键相关方仍说没有及时知道影响其部门的决策。相关信息在报告第八页。","项目经理应该怎么做？",["告诉相关方认真阅读报告","调整沟通方式，确保关键决策被确认理解","增加报告页数","移除该相关方"],1,"发送不等于有效沟通。关键决策需要合适渠道和确认。"],
+ ["Communications","项目群里发布风险提醒后，相关方回复收到，但需要他们完成的后续行动没有发生。","项目经理应该怎么做？",["认为沟通完成","明确行动项、责任人和截止日期并跟踪","继续重复提醒","立即升级所有人"],1,"收到信息不等于完成行动。需要转化为明确行动项。"],
+ ["Procurement","固定总价合同中，卖方要求额外付款，称买方评审意见导致返工。团队认为这是质量要求。","项目经理应该做什么？",["直接拒绝，因为固定总价风险都归卖方","审查合同、SOW 和记录，按索赔/变更流程处理","直接批准以保持关系","停止评审"],1,"固定总价不是万能拒绝。采购争议回到合同、事实和流程。"],
+ ["Procurement","卖方提出赶工方案，可满足关键日期但需要额外费用。预算紧张。","项目经理首先应该做什么？",["接受方案","评估费用、进度收益、风险和合同影响","拒绝方案","要求卖方免费赶工"],1,"先评估权衡，再由有权限者决策。"],
+ ["Procurement","卖方建议使用未批准的子承包商。该子承包商经验丰富，但合同要求关键工作提前批准。","项目经理应该怎么做？",["允许使用，因为经验丰富","按合同要求提交批准并评估风险","拒绝所有子承包商","让卖方自行决定"],1,"能力强不代表能绕过合同审批。"],
+ ["Resource","一名成员经常错过任务。私下沟通发现他缺少技能且害怕承认。","项目经理下一步应该怎么做？",["启动处罚","提供支持培训并重新确认工作安排","立即替换","公开说明能力不足"],1,"先支持和辅导，保护心理安全。"],
+ ["Resource","团队依赖一名专家，所有关键决策都等他。项目经理担心其休假影响项目。","项目经理应该怎么做？",["继续依赖专家保证质量","推动知识共享、结对和备份机制","要求专家取消休假","替换其他成员"],1,"单点依赖是团队风险，要增强团队能力。"],
+ ["Agile","产品负责人想在冲刺中加入紧急需求，会挤掉原承诺故事。团队已完成一半工作。","Scrum Master 应该怎么做？",["要求团队加班都做完","促进产品负责人和团队讨论价值、容量和冲刺目标取舍","拒绝所有冲刺中变化","让客户直接指挥团队"],1,"敏捷允许变化，但需要透明取舍，不能直接塞活。"],
+ ["Agile","产品负责人拒绝接受两个故事，因为评审前一天改变了验收想法。故事满足冲刺开始时的验收标准。","项目经理应该怎么做？",["要求团队返工","基于已约定验收标准确认结果，新想法回到待办排序","取消评审","标记团队失败"],1,"满足原验收标准应被确认，新需求进入待办。"],
+ ["Agile","团队速度连续下降。管理层要求提供个人产出排名，团队说故事拆分不清导致返工。","项目经理应该怎么做？",["提供个人排名","分析系统性原因，如待办质量和返工","要求团队恢复速度","减少回顾"],1,"敏捷题避免个人排名，优先解决系统性阻碍。"],
+ ["Business","市场数据表明项目成果仍可交付，但预期收益下降 40%。项目已完成 70%。","项目经理应该做什么？",["继续完成避免浪费投入","与发起人复核商业论证和继续投资合理性","降低质量节省预算","收尾后记录经验教训"],1,"沉没成本不是继续理由。商业价值变化要复核商业论证。"],
+ ["Business","项目上线后使用率低。产品负责人认为还需要更多功能，用户代表说流程审批太复杂。","项目经理应该先做什么？",["批准新增功能","分析低使用率根因和流程障碍","要求用户必须使用","移交运营"],1,"低采用不一定缺功能。先分析根因。"],
+ ["Quality","客户愿意签署声明接受跳过验证的风险，以便提前交付。但该验证属于组织质量政策。","项目经理应该怎么做？",["接受客户声明并跳过验证","遵守组织质量政策，说明约束并寻求正式决策","私下做部分验证","删除验证记录"],1,"客户接受风险不一定能覆盖组织政策和治理。"],
+ ["Integration","项目经理发现多个已批准变更没有同步到培训材料和运维手册。开发团队认为代码已改完。","项目经理应该怎么做？",["接受开发团队说法","确保相关文件、交付物和沟通内容都更新","重新提交所有变更","等运维发现问题再处理"],1,"变更影响不仅是代码，整合管理要同步所有受影响内容。"],
+ ["Scope","客户提出一个看似简单的字段名调整。开发说半天完成，测试说会影响接口、报表和培训材料。","项目经理应该怎么做？",["直接批准，因为开发量小","评估完整影响后再决定是否走变更","拒绝所有字段修改","让开发先做"],1,"不能只看开发量，要看完整影响。"],
+ ["Risk","团队决定接受一个低影响风险。一个月后环境变化使其影响升高。","项目经理应该做什么？",["因为已接受所以不再处理","在风险审查中重新评估并调整应对策略","责怪团队判断错误","立即动用所有储备"],1,"风险接受不是永久不管，环境变化要重新评估。"],
+ ["Communications","技术团队和业务团队使用同一个词但含义不同，导致需求反复返工。","项目经理应该怎么做？",["要求业务学习技术术语","建立共同词汇或术语澄清机制","减少双方沟通","让技术团队决定定义"],1,"术语歧义是沟通问题，需要共同语言机制。"],
+ ["Stakeholder","一个低权力用户组反映新流程增加大量录入工作。高层仍支持项目目标。","项目经理应该做什么？",["忽略该用户组","评估反馈对采用、质量和收益的影响","只听高层意见","要求用户适应"],1,"低权力不等于低影响，最终用户影响采用和价值。"],
+ ["Procurement","买卖双方对接口是否在合同范围内有分歧，双方都能找到支持自己的邮件。关键里程碑临近。","项目经理应该做什么？",["让卖方先做，争议以后再说","按合同争议/变更流程澄清范围并评估里程碑影响","暂停项目等法务","删除不利邮件"],1,"合同争议要按流程澄清，同时评估进度影响。"],
+ ["Schedule","团队提前完成开发，建议减少剩余测试，把节省时间用于增加功能。","项目经理应该怎么做？",["增加功能","评估质量风险、范围影响和基准约束","取消测试","让团队决定"],1,"提前不等于可以随意扩范围或降低质量。"],
+ ["Integration","项目经理收到两个冲突请求：客户要求增加安全审计，发起人要求压缩测试周期。两者都影响上线日期。","项目经理首先应该做什么？",["按客户要求增加审计","按发起人要求压缩测试","评估两个请求的影响和风险并提交适当决策","让团队自行平衡"],2,"冲突请求都可能合理，项目经理先整合影响和风险，再走决策。"],
+ ["Agile","团队完成冲刺目标，但产品负责人希望把下个冲刺所有反馈都加入，以展示响应速度。团队担心容量不足。","项目经理应该怎么做？",["全部加入","帮助产品负责人基于价值、风险和容量排序反馈","拒绝所有反馈","取消迭代目标"],1,"反馈要排序，不能无视容量。"],
+ ["Resource","高绩效成员沟通方式让其他成员感到被贬低。项目经理担心干预影响短期产出。","项目经理应该怎么做？",["不干预","私下反馈行为影响并帮助其调整协作方式","公开批评","替换其他成员"],1,"高绩效不能抵消破坏团队协作的行为。"],
+ ["Business","合规部门提出新要求，会增加短期成本，但不满足可能无法进入目标市场。","项目经理应该怎么做？",["拒绝，因为增加成本","评估合规对范围、成本、进度和商业目标的影响","放到项目后处理","让团队自行决定"],1,"合规要求影响商业可行性，不能只看短期成本。"],
+ ["Quality","团队发现一个低优先级缺陷不影响当前发布，但后续模块接入后修复成本会明显增加。","项目经理应该怎么做？",["推迟，因为当前不影响","评估技术债、未来成本和发布风险","立即阻止发布","隐藏缺陷"],1,"低优先级也要考虑未来成本和技术债。"],
+ ["Integration","项目收尾前仍有少量未关闭变更请求。团队认为这些变更不重要，可交给运营。","项目经理应该怎么做？",["直接关闭项目","确认每个未关闭变更的状态、决策和移交安排","删除不重要变更","让运营自行判断"],1,"收尾前未决事项要有正式状态、决策或移交。"],
+ ["Scope","团队把几个未满足的验收条件移到下个版本，但仍标记故事完成。","项目经理应该怎么做？",["接受完成标记","复核完成定义和验收条件，纠正完成状态","删除验收条件","让客户以后再看"],1,"完成必须满足完成定义和验收条件。"],
+ ["Cost","成本报告未包含供应商已发生但尚未开票的费用。","项目经理应该做什么？",["等发票来了再报","更新成本预测，纳入已发生未开票费用","删除供应商费用","让采购负责"],1,"预测要反映真实已发生义务，不能等发票才承认。"],
+ ["Risk","客户要求试点使用真实客户数据，安全团队提醒可能违反数据保护要求。","项目经理应该做什么？",["按客户要求使用","评估合规和安全风险，寻找可接受测试方案","取消试点","让安全团队决定"],1,"客户价值不能凌驾合规风险，要找可接受方案。"],
+ ["Communications","远程团队说会议信息太多，关键决定容易被淹没。项目经理已上传完整录像。","项目经理应该怎么做？",["让团队看录像","提供清晰决策摘要、行动项和责任人","减少所有会议","只口头通知"],1,"完整录像不是有效沟通。关键是摘要、责任和行动。"],
+ ["Procurement","卖方状态报告一直绿色，但项目团队现场检查发现关键人员已被调走。","项目经理应该怎么做？",["继续相信报告","核实卖方绩效并按合同沟通恢复计划","立即终止合同","替卖方安排人员"],1,"先核实事实并按合同管理绩效，直接终止通常过早。"],
+ ["Stakeholder","一个新高层相关方要求更改报告格式，团队担心频繁改格式浪费时间。","项目经理应该怎么做？",["拒绝更改","了解其决策所需信息并优化报告层级","维护两套完整报告","移除该高层"],1,"先澄清信息需求，避免低价值格式劳动。"],
+ ["Schedule","进度基准已批准，团队成员反馈某即将开始活动估算过于乐观。","项目经理首先应该做什么？",["忽略，因为基准已批准","分析估算依据和潜在影响","立即修改进度基准","要求按原估算完成"],1,"基准批准后仍要分析新信息，必要时再走变更。"],
+ ["Integration","项目经理发现状态报告为绿色，但问题日志中有一个关键阻碍已超过两周未解决。","项目经理应该先做什么？",["继续发布绿色报告","复核项目真实状态并更新沟通内容","关闭问题日志","等待下次状态会"],1,"报告和问题日志不一致时，先复核真实状态，避免误导。"]
+];
+const decisionQs=decisionThemes.map((item)=>q("二选一陷阱题",item[0],item[1],item[2],item[3],item[4],item[5]));
 function q(kind,domain,scenario,question,options,correct,explain,source){return{kind,domain,scenario,question,options,correct,explain,source}}
 let i=0,answered=0,correct=0,displayOptions=[],attemptLog=[];
 let bank=normalQs,modeName="普通题";
@@ -558,7 +612,7 @@ function sourceFor(x){
   return x.source || map[x.domain] || "教材关联：回到 PMBOK 第七版的绩效域和通关宝典对应知识领域，抓住先分析、再协作、再按流程行动。";
 }
 function shuffledOptions(x){const arr=x.options.map((text,source)=>({text,source}));for(let n=arr.length-1;n>0;n--){const j=(i*7+n*3)%arr.length;[arr[n],arr[j]]=[arr[j],arr[n]]}return arr}
-function render(){const x=bank[i];kind.textContent=x.kind;domain.textContent=x.kind==="仿真题"||x.kind==="概念陷阱题"?"综合场景":x.domain;count.textContent=`${modeName} ${i+1}/${bank.length}`;caseBox.textContent=x.scenario;question.textContent=x.question;options.innerHTML="";displayOptions=shuffledOptions(x);displayOptions.forEach((o,idx)=>{const b=document.createElement("button");b.dataset.index=idx;b.innerHTML=`<span class="option-letter">${letter(idx)}</span><span>${o.text}</span>`;b.onclick=()=>check(idx);options.appendChild(b)});answer.textContent="选一个答案开始。";update()}
+function render(){const x=bank[i];kind.textContent=x.kind;domain.textContent=["仿真题","概念陷阱题","二选一陷阱题"].includes(x.kind)?"综合场景":x.domain;count.textContent=`${modeName} ${i+1}/${bank.length}`;caseBox.textContent=x.scenario;question.textContent=x.question;options.innerHTML="";displayOptions=shuffledOptions(x);displayOptions.forEach((o,idx)=>{const b=document.createElement("button");b.dataset.index=idx;b.innerHTML=`<span class="option-letter">${letter(idx)}</span><span>${o.text}</span>`;b.onclick=()=>check(idx);options.appendChild(b)});answer.textContent="选一个答案开始。";update()}
 function check(idx){const x=bank[i],chosen=displayOptions[idx],rightIndex=displayOptions.findIndex((o)=>o.source===x.correct),ok=chosen.source===x.correct;answered++;if(ok)correct++;attemptLog.push({mode:modeName,kind:x.kind,domain:x.domain,ok,question:x.question,scenario:x.scenario,chosen:chosen.text,correct:x.options[x.correct]});saveDrillState();document.querySelectorAll("#options button").forEach((b,n)=>{b.classList.toggle("right",n===rightIndex);b.classList.toggle("wrong",n===idx&&!ok)});const pct=answered?Math.round(correct/answered*100):0;const site=56+((i*7)%33);answer.innerHTML=`<div class="answer-section"><div class="answer-title">答案</div><div class="answer-box"><span>正确答案：<b>${letter(rightIndex)}</b></span><span>你的答案：<b>${letter(idx)}</b></span></div><div class="answer-box" style="margin-top:10px"><span>个人正确率：<b>${pct}%</b></span><span>题库参考正确率：<b>${site}%</b></span></div></div><div class="analysis-section"><div class="analysis-title">解析</div><div class="analysis-text"><b>为什么这样选：</b>${x.explain}<div class="source"><b>教材关联：</b>${sourceFor(x).replace(/^教材关联：/,"")}</div></div></div>`;update()}
 function update(){const pct=answered?Math.round(correct/answered*100):0;fill.style.width=pct+"%";answeredStat.textContent=`已做 ${answered} 题`;accuracyStat.textContent=`准确率 ${pct}%`}
 function setMode(name,newBank,btn){modeName=name;bank=newBank;i=0;answered=0;correct=0;attemptLog=[];saveDrillState();document.querySelectorAll(".mode-switch button").forEach((b)=>b.classList.remove("active"));btn.classList.add("active");render()}
@@ -568,15 +622,14 @@ reset.onclick=()=>{answered=0;correct=0;attemptLog=[];statusReport.value="";PmpU
 function buildStatusReport(){const by={};attemptLog.forEach(a=>{const k=a.domain||"未分类";by[k] ||= {total:0,correct:0,wrong:[]};by[k].total++;if(a.ok)by[k].correct++;else by[k].wrong.push(a)});const rows=Object.entries(by).sort((a,b)=>(a[1].correct/a[1].total)-(b[1].correct/b[1].total)).map(([k,v])=>`${k}: ${v.correct}/${v.total} (${Math.round(v.correct/v.total*100)}%)`);const wrong=attemptLog.filter(a=>!a.ok).slice(-8).map((a,n)=>`${n+1}. [${a.domain}/${a.kind}] ${a.scenario} ${a.question} | 我的答案: ${a.chosen} | 正确: ${a.correct}`).join("\n");return `PMP题型训练状态\n用户: ${PmpUsers.activeUser()}\n模式: ${modeName}\n总题数: ${answered}\n正确: ${correct}\n正确率: ${answered?Math.round(correct/answered*100):0}%\n\n按领域:\n${rows.join("\n")||"暂无"}\n\n最近错题:\n${wrong||"暂无错题"}\n\n请根据以上状态分析我的薄弱点，并告诉我下一步应该补哪些页面、教材页码和练习。`;}
 exportStatus.onclick=()=>{statusReport.value=buildStatusReport();statusReport.select();};
 normalMode.onclick=()=>setMode("普通题",normalQs,normalMode);
-hardMode.onclick=()=>setMode("难题模式",hardQs,hardMode);
-simulationMode.onclick=()=>setMode("仿真题",simulationQs,simulationMode);
-heroSimulation.onclick=()=>setMode("仿真题",simulationQs,simulationMode);
 trapMode.onclick=()=>setMode("概念陷阱题",trapQs,trapMode);
-allMode.onclick=()=>setMode("全部混刷",normalQs.concat(hardQs,simulationQs,trapQs),allMode);
+decisionMode.onclick=()=>setMode("二选一陷阱题",decisionQs,decisionMode);
+heroDecision.onclick=()=>setMode("二选一陷阱题",decisionQs,decisionMode);
+allMode.onclick=()=>setMode("全部混刷",normalQs.concat(trapQs,decisionQs),allMode);
 PmpUsers.mount(document.getElementById("userProfiles"),()=>{loadDrillState();render()});
 loadDrillState();
-if(location.hash==="#simulation"){setMode("仿真题",simulationQs,simulationMode)}
 if(location.hash==="#trap"){setMode("概念陷阱题",trapQs,trapMode)}
+if(location.hash==="#decision"){setMode("二选一陷阱题",decisionQs,decisionMode)}
 render();
 </script>
 </body>
