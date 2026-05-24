@@ -26,6 +26,8 @@
     .mode-switch{display:grid;grid-template-columns:1fr;gap:8px;margin-top:14px}
     .mode-switch button{min-height:40px;border:1px solid var(--line);border-radius:8px;background:#fff;color:#172033;font-weight:700;cursor:pointer}
     .mode-switch button.active{background:#172033;color:#fff;border-color:#172033}
+    .quick-start{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+    .quick-start button{min-height:40px;border:1px solid var(--line);border-radius:8px;background:#172033;color:#fff;padding:0 14px;font-weight:700;cursor:pointer}
     .user-profile{margin-top:12px;padding:12px;border:1px solid var(--line);border-radius:8px;background:#f8fafc}
     .user-title{font-weight:700;margin-bottom:8px}
     .user-row{display:grid;grid-template-columns:1fr;gap:8px}
@@ -49,6 +51,7 @@
     <div class="panel">
       <h1>PMP 2026 题型训练</h1>
       <p>PMI 2026 ECO 提到题型会包含场景/案例、图表、匹配、单选、多选、点选等。这里用浏览器可实现的方式模拟“读场景、看图表、做判断”。</p>
+      <div class="quick-start"><button id="heroSimulation" type="button">进入仿真题</button></div>
     </div>
     <div class="panel">
       <h2>危险选项识别</h2>
@@ -79,7 +82,7 @@
       <div class="mode-switch">
         <button id="normalMode" class="active">普通题</button>
         <button id="hardMode">难题模式</button>
-        <button id="simulationMode">仿真题</button>
+        <button id="simulationMode">仿真题（像考试）</button>
         <button id="allMode">全部混刷</button>
       </div>
       <div style="margin-top:12px" class="track"><div id="fill" class="fill"></div></div>
@@ -115,6 +118,7 @@ const reset=document.getElementById("reset");
 const normalMode=document.getElementById("normalMode");
 const hardMode=document.getElementById("hardMode");
 const simulationMode=document.getElementById("simulationMode");
+const heroSimulation=document.getElementById("heroSimulation");
 const allMode=document.getElementById("allMode");
 const exportStatus=document.getElementById("exportStatus");
 const statusReport=document.getElementById("statusReport");
@@ -410,9 +414,11 @@ exportStatus.onclick=()=>{statusReport.value=buildStatusReport();statusReport.se
 normalMode.onclick=()=>setMode("普通题",normalQs,normalMode);
 hardMode.onclick=()=>setMode("难题模式",hardQs,hardMode);
 simulationMode.onclick=()=>setMode("仿真题",simulationQs,simulationMode);
+heroSimulation.onclick=()=>setMode("仿真题",simulationQs,simulationMode);
 allMode.onclick=()=>setMode("全部混刷",normalQs.concat(hardQs,simulationQs),allMode);
 PmpUsers.mount(document.getElementById("userProfiles"),()=>{loadDrillState();render()});
 loadDrillState();
+if(location.hash==="#simulation"){setMode("仿真题",simulationQs,simulationMode)}
 render();
 </script>
 </body>
