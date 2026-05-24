@@ -7,7 +7,7 @@
   <style>
 
     :root{--ink:#172033;--muted:#607087;--line:#d7dfeb;--paper:#f6f8fc;--panel:#fff;--blue:#2563eb;--teal:#0f766e;--amber:#b45309;--rose:#be123c;--shadow:0 14px 34px rgba(22,34,55,.1)}
-    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:"Microsoft YaHei","PingFang SC","Noto Sans CJK SC",Arial,sans-serif;line-height:1.5}main{max-width:1400px;margin:0 auto;padding:24px}.nav{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}.nav a{padding:8px 11px;border:1px solid var(--line);border-radius:8px;background:#fff;color:inherit;text-decoration:none}.panel{background:#fff;border:1px solid var(--line);border-radius:8px;box-shadow:var(--shadow)}.hero{display:grid;grid-template-columns:.9fr 1.3fr;gap:16px;align-items:stretch}.intro,.memory,.side,.section{padding:20px}h1{margin:0 0 10px;font-size:34px;line-height:1.16;letter-spacing:0}h2{margin:0 0 12px;font-size:20px;letter-spacing:0}h3{margin:0 0 8px;font-size:16px;letter-spacing:0}p{margin:0;color:var(--muted)}.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}.chip{padding:5px 10px;border-radius:999px;border:1px solid var(--line);background:#fff;color:#314058;font-size:13px}.quote{margin-top:14px;padding:12px;border-left:4px solid var(--blue);background:#f8fafc;color:#314058;border-radius:4px}.workspace{display:grid;grid-template-columns:minmax(760px,1fr) 360px;gap:16px;margin-top:16px;align-items:start}.flow{display:grid;grid-template-columns:repeat(var(--steps),minmax(150px,1fr));gap:16px;padding:16px;overflow-x:auto}.step{position:relative;min-height:170px;padding:14px;border:2px solid #dbeafe;border-radius:8px;background:#f8fbff;cursor:pointer;text-align:left}.step::after{content:"";position:absolute;right:-14px;top:52px;width:12px;height:12px;border-top:3px solid var(--blue);border-right:3px solid var(--blue);transform:rotate(45deg)}.step:last-child::after{display:none}.step:hover,.step.selected{outline:3px solid rgba(37,99,235,.18);background:#fff}.step small{display:block;color:var(--muted);margin-bottom:8px}.step b{display:block;margin-bottom:8px;font-size:16px}.step span{color:var(--muted);font-size:13px}.side{position:sticky;top:16px}.badge{display:inline-block;margin:0 6px 10px 0;padding:4px 8px;border-radius:999px;border:1px solid var(--line);background:#fff;color:#314058;font-size:12px}.block{margin-top:14px;padding-top:14px;border-top:1px solid var(--line)}.io{display:grid;gap:8px}.io div{padding:10px;border:1px solid #e5eaf2;border-radius:7px;background:#f8fafc;color:#314058;font-size:14px}.compare{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px}.card{padding:14px;border:1px solid var(--line);border-left:5px solid var(--blue);border-radius:8px;background:#fff}.card.teal{border-left-color:var(--teal)}.card.amber{border-left-color:var(--amber)}.card.rose{border-left-color:var(--rose)}.card ul{margin:8px 0 0;padding-left:18px;color:var(--muted)}.exam-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:12px}.exam{padding:12px;border-radius:8px;background:#f8fafc;border:1px solid #e5eaf2}.exam b{display:block;margin-bottom:5px}.formula{display:grid;grid-template-columns:repeat(var(--steps),1fr);gap:8px;margin-top:14px}.formula div{padding:10px;border-radius:8px;background:#eef5ff;color:#1746a2;text-align:center;font-weight:700;font-size:13px}@media(max-width:1100px){.hero,.workspace,.compare,.exam-grid,.formula{grid-template-columns:1fr}.side{position:static}.flow{grid-template-columns:1fr}.step::after{right:50%;top:auto;bottom:-14px;transform:translateX(50%) rotate(135deg)}}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:"Microsoft YaHei","PingFang SC","Noto Sans CJK SC",Arial,sans-serif;line-height:1.5}main{max-width:1400px;margin:0 auto;padding:24px}.nav{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}.nav a{padding:8px 11px;border:1px solid var(--line);border-radius:8px;background:#fff;color:inherit;text-decoration:none}.panel{background:#fff;border:1px solid var(--line);border-radius:8px;box-shadow:var(--shadow)}.hero{display:grid;grid-template-columns:.9fr 1.3fr;gap:16px;align-items:stretch}.intro,.memory,.side,.section{padding:20px}h1{margin:0 0 10px;font-size:34px;line-height:1.16;letter-spacing:0}h2{margin:0 0 12px;font-size:20px;letter-spacing:0}h3{margin:0 0 8px;font-size:16px;letter-spacing:0}p{margin:0;color:var(--muted)}.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}.chip{padding:5px 10px;border-radius:999px;border:1px solid var(--line);background:#fff;color:#314058;font-size:13px}.quote{margin-top:14px;padding:12px;border-left:4px solid var(--blue);background:#f8fafc;color:#314058;border-radius:4px}.workspace{display:grid;grid-template-columns:minmax(760px,1fr) 360px;gap:16px;margin-top:16px;align-items:start}.flow{display:grid;grid-template-columns:repeat(var(--steps),minmax(150px,1fr));gap:16px;padding:16px;overflow-x:auto}.step{position:relative;min-height:170px;padding:14px;border:2px solid #dbeafe;border-radius:8px;background:#f8fbff;cursor:pointer;text-align:left}.step::after{content:"";position:absolute;right:-14px;top:52px;width:12px;height:12px;border-top:3px solid var(--blue);border-right:3px solid var(--blue);transform:rotate(45deg)}.step:last-child::after{display:none}.step:hover,.step.selected{outline:3px solid rgba(37,99,235,.18);background:#fff}.step small{display:block;color:var(--muted);margin-bottom:8px}.step b{display:block;margin-bottom:8px;font-size:16px}.step span{color:var(--muted);font-size:13px}.side{position:sticky;top:16px}.badge{display:inline-block;margin:0 6px 10px 0;padding:4px 8px;border-radius:999px;border:1px solid var(--line);background:#fff;color:#314058;font-size:12px}.block{margin-top:14px;padding-top:14px;border-top:1px solid var(--line)}.io{display:grid;gap:8px}.io div{padding:10px;border:1px solid #e5eaf2;border-radius:7px;background:#f8fafc;color:#314058;font-size:14px}.compare{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px}.card{padding:14px;border:1px solid var(--line);border-left:5px solid var(--blue);border-radius:8px;background:#fff}.card.teal{border-left-color:var(--teal)}.card.amber{border-left-color:var(--amber)}.card.rose{border-left-color:var(--rose)}.card ul{margin:8px 0 0;padding-left:18px;color:var(--muted)}.exam-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:12px}.exam{padding:12px;border-radius:8px;background:#f8fafc;border:1px solid #e5eaf2}.exam b{display:block;margin-bottom:5px}.formula{display:grid;grid-template-columns:repeat(var(--steps),1fr);gap:8px;margin-top:14px}.formula div{padding:10px;border-radius:8px;background:#eef5ff;color:#1746a2;text-align:center;font-weight:700;font-size:13px}.quick-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:12px}.quick{padding:12px;border:1px solid #e5eaf2;border-radius:8px;background:#f8fafc}.quick b{display:block;margin-bottom:5px;color:#223047}.quick span{color:var(--muted);font-size:13px}.dense-list{columns:2;column-gap:28px;margin:10px 0 0;padding-left:18px;color:var(--muted)}.dense-list li{break-inside:avoid;margin:0 0 7px}.signal{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}.signal div{padding:10px;border-radius:8px;background:#eef5ff;color:#1746a2;font-weight:700}.mini-note{font-size:13px;color:var(--muted);margin-top:8px}@media(max-width:1100px){.hero,.workspace,.compare,.exam-grid,.formula,.quick-grid,.signal{grid-template-columns:1fr}.dense-list{columns:1}.side{position:static}.flow{grid-template-columns:1fr}.step::after{right:50%;top:auto;bottom:-14px;transform:translateX(50%) rotate(135deg)}}
 
   </style>
 </head>
@@ -44,6 +44,56 @@
       </div>
       <div class="block"><h3>容易错成</h3><p id="trap"></p></div>
     </aside>
+  </section>
+  <section class="panel section">
+    <h2>考试占比与补课优先级</h2>
+    <div class="quick-grid">
+      <div class="quick"><b>官方占比</b><span>PMI 不单独公布“进度管理”占比；旧版考试按 People / Process / Business 分布，进度归在 Process 里面。</span></div>
+      <div class="quick"><b>实际体感</b><span>通常不会是最大块，但稳定会出现。建议按 5%-8% 的备考权重处理，错多时要优先补。</span></div>
+      <div class="quick"><b>为什么要补</b><span>进度题常是短概念题，错了很亏；关键路径、压缩、浮动、资源优化非常容易混。</span></div>
+      <div class="quick"><b>教材位置</b><span>PMBOK6 PDF 206-263；通关宝典找“项目进度管理”，重点看排列活动顺序、估算持续时间、制定进度计划。</span></div>
+    </div>
+  </section>
+  <section class="panel section">
+    <h2>进度管理救命骨架</h2>
+    <div class="signal">
+      <div>先列活动</div>
+      <div>再排依赖</div>
+      <div>再估多久</div>
+      <div>再算基准</div>
+      <div>执行控偏差</div>
+      <div>影响基准走变更</div>
+    </div>
+    <ul class="dense-list">
+      <li>活动有持续时间、资源和工作量；里程碑是重要时间点，持续时间为 0。</li>
+      <li>Lead 是提前量，Lag 是滞后量；它们调整活动关系，不算进活动持续时间。</li>
+      <li>PDM 四类关系：FS 最常见，SS、FF 次之，SF 最少见。</li>
+      <li>强制依赖是硬逻辑；选择性依赖是软逻辑；外部依赖来自项目外；内部依赖来自项目内。</li>
+      <li>类比估算快但粗；参数估算靠公式；三点估算看乐观、最可能、悲观；自下而上最细。</li>
+      <li>正向/反向分析是关键路径法，用来算 ES、EF、LS、LF 和浮动时间。</li>
+      <li>关键路径决定最短工期，通常总浮动为 0；出现负浮动说明被强制日期压住。</li>
+      <li>总浮动是不影响项目完工可延迟多久；自由浮动是不影响紧后活动最早开始可延迟多久。</li>
+      <li>赶工是加资源、加钱缩短工期，主要代价是成本上升。</li>
+      <li>快速跟进是把原本顺序活动并行或重叠，主要代价是返工和风险上升。</li>
+      <li>资源平衡解决资源冲突，可能改变关键路径并延长工期。</li>
+      <li>资源平滑只在浮动时间内调整资源，不改变关键路径。</li>
+      <li>偏差分析看实际与基准差多少；趋势分析看未来是否继续恶化。</li>
+      <li>SV = EV - PV；SPI = EV / PV；SPI 小于 1 表示进度落后。</li>
+      <li>发现进度问题先分析影响；影响基准时提变更；批准后才更新基准。</li>
+    </ul>
+  </section>
+  <section class="panel section">
+    <h2>题眼速查</h2>
+    <div class="exam-grid">
+      <div class="exam"><b>正向/反向分析</b>关键路径法，算总浮动，找零或负浮动路径。</div>
+      <div class="exam"><b>软逻辑、低风险、并行</b>快速跟进。</div>
+      <div class="exam"><b>加资源、加班、额外成本</b>赶工。</div>
+      <div class="exam"><b>资源冲突、资源不可用</b>资源平衡，可能延期。</div>
+      <div class="exam"><b>不改变关键路径、用浮动时间调资源</b>资源平滑。</div>
+      <div class="exam"><b>可能发生、如果发生会怎样</b>假设情景分析。</div>
+      <div class="exam"><b>已经落后、与基准比较</b>偏差分析。</div>
+      <div class="exam"><b>未来会不会继续恶化</b>趋势分析。</div>
+    </div>
   </section>
   <section class="panel section">
     <h2>高频混淆边界</h2>
