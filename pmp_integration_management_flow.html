@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>整合管理关系流程图</title>
+  <style>
+
+    :root{--ink:#172033;--muted:#607087;--line:#d7dfeb;--paper:#f6f8fc;--panel:#fff;--blue:#2563eb;--teal:#0f766e;--amber:#b45309;--rose:#be123c;--shadow:0 14px 34px rgba(22,34,55,.1)}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:"Microsoft YaHei","PingFang SC","Noto Sans CJK SC",Arial,sans-serif;line-height:1.5}main{max-width:1400px;margin:0 auto;padding:24px}.nav{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}.nav a{padding:8px 11px;border:1px solid var(--line);border-radius:8px;background:#fff;color:inherit;text-decoration:none}.panel{background:#fff;border:1px solid var(--line);border-radius:8px;box-shadow:var(--shadow)}.hero{display:grid;grid-template-columns:.9fr 1.3fr;gap:16px;align-items:stretch}.intro,.memory,.side,.section{padding:20px}h1{margin:0 0 10px;font-size:34px;line-height:1.16;letter-spacing:0}h2{margin:0 0 12px;font-size:20px;letter-spacing:0}h3{margin:0 0 8px;font-size:16px;letter-spacing:0}p{margin:0;color:var(--muted)}.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}.chip{padding:5px 10px;border-radius:999px;border:1px solid var(--line);background:#fff;color:#314058;font-size:13px}.quote{margin-top:14px;padding:12px;border-left:4px solid var(--blue);background:#f8fafc;color:#314058;border-radius:4px}.workspace{display:grid;grid-template-columns:minmax(760px,1fr) 360px;gap:16px;margin-top:16px;align-items:start}.flow{display:grid;grid-template-columns:repeat(var(--steps),minmax(150px,1fr));gap:16px;padding:16px;overflow-x:auto}.step{position:relative;min-height:170px;padding:14px;border:2px solid #dbeafe;border-radius:8px;background:#f8fbff;cursor:pointer;text-align:left}.step::after{content:"";position:absolute;right:-14px;top:52px;width:12px;height:12px;border-top:3px solid var(--blue);border-right:3px solid var(--blue);transform:rotate(45deg)}.step:last-child::after{display:none}.step:hover,.step.selected{outline:3px solid rgba(37,99,235,.18);background:#fff}.step small{display:block;color:var(--muted);margin-bottom:8px}.step b{display:block;margin-bottom:8px;font-size:16px}.step span{color:var(--muted);font-size:13px}.side{position:sticky;top:16px}.badge{display:inline-block;margin:0 6px 10px 0;padding:4px 8px;border-radius:999px;border:1px solid var(--line);background:#fff;color:#314058;font-size:12px}.block{margin-top:14px;padding-top:14px;border-top:1px solid var(--line)}.io{display:grid;gap:8px}.io div{padding:10px;border:1px solid #e5eaf2;border-radius:7px;background:#f8fafc;color:#314058;font-size:14px}.compare{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px}.card{padding:14px;border:1px solid var(--line);border-left:5px solid var(--blue);border-radius:8px;background:#fff}.card.teal{border-left-color:var(--teal)}.card.amber{border-left-color:var(--amber)}.card.rose{border-left-color:var(--rose)}.card ul{margin:8px 0 0;padding-left:18px;color:var(--muted)}.exam-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:12px}.exam{padding:12px;border-radius:8px;background:#f8fafc;border:1px solid #e5eaf2}.exam b{display:block;margin-bottom:5px}.formula{display:grid;grid-template-columns:repeat(var(--steps),1fr);gap:8px;margin-top:14px}.formula div{padding:10px;border-radius:8px;background:#eef5ff;color:#1746a2;text-align:center;font-weight:700;font-size:13px}@media(max-width:1100px){.hero,.workspace,.compare,.exam-grid,.formula{grid-template-columns:1fr}.side{position:static}.flow{grid-template-columns:1fr}.step::after{right:50%;top:auto;bottom:-14px;transform:translateX(50%) rotate(135deg)}}
+
+  </style>
+</head>
+<body>
+<main style="--steps:7">
+  <nav class="nav">
+    <a href="pmp_knowledge_areas_dashboard.html">知识领域导航</a>
+    <a href="pmp_2026_study_dashboard.html">驾驶舱</a>
+    <a href="pmp_49_process_flowchart.html">49 过程</a>
+    <a href="pmp_resource_management_flow.html">资源专项</a>
+  </nav>
+  <section class="hero">
+    <div class="panel intro">
+      <h1>整合管理关系流程图</h1>
+      <p>整合管理是项目经理的总控台：授权项目、整合计划、执行工作、沉淀知识、监控全局、统一变更、正式收尾。</p>
+      <div class="quote">教材备注：旧版优先看《PMBOK 第六版中文版》PDF 103-162（第4章 项目整合管理）；49过程标准速查 PDF 591-663。</div><div class="chips"><span class="chip">整合管理</span><span class="chip">7 个过程</span><span class="chip">流程 + 易混点 + 做题抓手</span></div>
+    </div>
+    <div class="panel memory">
+      <h2>一眼记忆</h2>
+      <p>整合管理是项目经理的总控台：授权项目、整合计划、执行工作、沉淀知识、监控全局、统一变更、正式收尾。</p>
+      <div class="formula"><div>授权</div><div>整合计划</div><div>做项目</div><div>沉淀经验</div><div>看全局</div><div>批变更</div><div>归档</div></div>
+      <div class="quote">口诀：章程给权，计划定法，执行产成果，监控看全局，变更统一批，收尾验收归档。</div>
+    </div>
+  </section>
+  <section class="workspace">
+    <div class="panel"><div id="flow" class="flow"></div></div>
+    <aside class="panel side">
+      <span id="groupBadge" class="badge">整合管理</span><span id="typeBadge" class="badge"></span>
+      <h2 id="title"></h2><p id="summary"></p>
+      <div class="block io">
+        <div><b>主要输入/依据</b><br><span id="inputs"></span></div>
+        <div><b>核心输出</b><br><span id="outputs"></span></div>
+        <div><b>做题抓手</b><br><span id="cue"></span></div><div><b>教材备注</b><br><span id="textbookNote"></span></div>
+      </div>
+      <div class="block"><h3>容易错成</h3><p id="trap"></p></div>
+    </aside>
+  </section>
+  <section class="panel section">
+    <h2>高频混淆边界</h2>
+    <div class="compare"><div class="card teal"><h3>章程 vs 管理计划</h3><ul><li>章程授权项目和项目经理；管理计划说明如何执行、监控和收尾。</li></ul></div><div class="card amber"><h3>监控项目工作 vs 各控制过程</h3><ul><li>监控项目工作看全局；控制范围/进度/成本等看局部领域。</li></ul></div><div class="card rose"><h3>变更请求 vs 批准的变更请求</h3><ul><li>变更请求先提交；批准后才进入执行过程实施。</li></ul></div></div>
+  </section>
+  <section class="panel section">
+    <h2>考试化判断</h2>
+    <div class="exam-grid"><div class='exam'><b>正式授权、任命项目经理</b>制定项目章程。</div><div class='exam'><b>整合所有子计划和基准</b>制定项目管理计划。</div><div class='exam'><b>实施批准的变更请求</b>指导与管理项目工作。</div><div class='exam'><b>经验教训、知识库、知识分享</b>管理项目知识。</div><div class='exam'><b>WPI 汇总为 WPR</b>监控项目工作。</div><div class='exam'><b>影响基准的变更</b>实施整体变更控制。</div></div>
+  </section>
+</main>
+<script>
+const textbookRef = '教材备注：旧版优先看《PMBOK 第六版中文版》PDF 103-162（第4章 项目整合管理）；49过程标准速查 PDF 591-663。';
+const steps = [{"name": "制定项目章程", "phase": "启动", "short": "授权", "summary": "正式批准项目或阶段，授权项目经理使用组织资源。", "inputs": "商业文件、协议、事业环境因素、组织过程资产。", "outputs": "项目章程、假设日志。", "cue": "看到正式任命、授权、发起人、高层边界，选章程。", "trap": "不要把章程和项目管理计划混淆：章程是授权，计划是怎么做。"}, {"name": "制定项目管理计划", "phase": "规划", "short": "整合计划", "summary": "把各子计划和三大基准整合成统一项目管理计划。", "inputs": "项目章程、其他过程输出、组织过程资产。", "outputs": "项目管理计划。", "cue": "看到整合子计划、范围/进度/成本基准，选制定项目管理计划。", "trap": "不要在没有计划更新授权时私自改基准。"}, {"name": "指导与管理项目工作", "phase": "执行", "short": "做项目", "summary": "按计划执行项目工作，产出可交付成果和工作绩效数据。", "inputs": "项目管理计划、批准的变更请求。", "outputs": "可交付成果、WPD、问题日志、变更请求。", "cue": "看到执行工作、产出成果、实施批准变更，选它。", "trap": "发现问题不等于直接改计划，可能要提出变更请求。"}, {"name": "管理项目知识", "phase": "执行", "short": "沉淀经验", "summary": "使用现有知识并创造新知识，促进经验复用。", "inputs": "可交付成果、项目文件、事业环境因素。", "outputs": "经验教训登记册、项目管理计划更新。", "cue": "看到经验教训、知识分享、知识库、复盘，选它。", "trap": "不要只在收尾才考虑经验教训。"}, {"name": "监控项目工作", "phase": "监控", "short": "看全局", "summary": "跟踪、审查和报告整体项目进展，实现项目目标。", "inputs": "WPI、预测、项目管理计划。", "outputs": "WPR、变更请求、计划和文件更新。", "cue": "看到汇总各领域状态、预测、全局报告，选监控项目工作。", "trap": "它是全局监控，不是某个领域的控制。"}, {"name": "实施整体变更控制", "phase": "监控", "short": "批变更", "summary": "审查、批准、否决和管理所有变更，维护基准一致性。", "inputs": "变更请求、项目管理计划、WPR。", "outputs": "批准的变更请求、变更日志、计划和文件更新。", "cue": "看到基准变化、CCB、正式批准/否决，选它。", "trap": "不要口头批准或私自执行影响基准的变更。"}, {"name": "结束项目或阶段", "phase": "收尾", "short": "归档", "summary": "正式完成项目或阶段，移交成果并更新组织过程资产。", "inputs": "项目章程、项目管理计划、验收的可交付成果。", "outputs": "最终产品/服务/成果移交、最终报告、OPA 更新。", "cue": "看到最终验收、移交、释放资源、归档，选收尾。", "trap": "没有验收的可交付成果时，不应直接收尾。"}];
+const flow = document.getElementById("flow"), title = document.getElementById("title"), summary = document.getElementById("summary"), inputs = document.getElementById("inputs"), outputs = document.getElementById("outputs"), cue = document.getElementById("cue"), trap = document.getElementById("trap"), typeBadge = document.getElementById("typeBadge"), textbookNote = document.getElementById("textbookNote");
+function render() {
+  flow.innerHTML = "";
+  steps.forEach((step, index) => {
+    const btn = document.createElement("button");
+    btn.className = "step";
+    btn.innerHTML = `<small>${index + 1}. ${step.phase}</small><b>${step.name}</b><span>${step.short}<br>${step.summary}</span>`;
+    btn.onclick = () => selectStep(step);
+    flow.appendChild(btn);
+  });
+  selectStep(steps[0]);
+}
+function selectStep(step) {
+  title.textContent = step.name;
+  summary.textContent = step.summary;
+  inputs.textContent = step.inputs;
+  outputs.textContent = step.outputs;
+  cue.textContent = step.cue;
+  trap.textContent = step.trap;
+  typeBadge.textContent = step.phase;
+  textbookNote.textContent = textbookRef;
+  document.querySelectorAll(".step").forEach((item) => item.classList.toggle("selected", item.textContent.includes(step.name)));
+}
+render();
+</script>
+</body>
+</html>

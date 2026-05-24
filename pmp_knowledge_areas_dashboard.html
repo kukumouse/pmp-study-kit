@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PMP 十大知识领域专项导航</title>
+  <style>
+    :root { --ink:#172033; --muted:#607087; --line:#d7dfeb; --paper:#f6f8fc; --blue:#2563eb; --teal:#0f766e; --amber:#b45309; --rose:#be123c; --shadow:0 14px 34px rgba(22,34,55,.1); }
+    * { box-sizing: border-box; }
+    body { margin:0; background:var(--paper); color:var(--ink); font-family:"Microsoft YaHei","PingFang SC","Noto Sans CJK SC",Arial,sans-serif; line-height:1.5; }
+    main { max-width:1240px; margin:0 auto; padding:24px; }
+    a { color:inherit; text-decoration:none; }
+    .nav { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:16px; }
+    .nav a { padding:8px 11px; border:1px solid var(--line); border-radius:8px; background:#fff; }
+    .hero { display:grid; grid-template-columns:1fr 1fr; gap:16px; align-items:stretch; }
+    .panel, .card { background:#fff; border:1px solid var(--line); border-radius:8px; box-shadow:var(--shadow); }
+    .intro, .method { padding:22px; }
+    h1 { margin:0 0 10px; font-size:34px; line-height:1.16; letter-spacing:0; }
+    h2 { margin:0 0 12px; font-size:20px; letter-spacing:0; }
+    h3 { margin:0 0 8px; font-size:16px; letter-spacing:0; }
+    p { margin:0; color:var(--muted); }
+    .chips { display:flex; flex-wrap:wrap; gap:8px; margin-top:14px; }
+    .chip { padding:5px 10px; border-radius:999px; border:1px solid var(--line); background:#fff; color:#314058; font-size:13px; }
+    .method ol { margin:10px 0 0; padding-left:22px; color:#314058; }
+    .grid { display:grid; grid-template-columns:repeat(5, minmax(180px, 1fr)); gap:14px; margin-top:16px; }
+    .card { min-height:230px; padding:16px; display:flex; flex-direction:column; border-top:5px solid var(--blue); }
+    .card:hover { transform:translateY(-1px); border-color:rgba(37,99,235,.45); }
+    .card.teal { border-top-color:var(--teal); }
+    .card.amber { border-top-color:var(--amber); }
+    .card.rose { border-top-color:var(--rose); }
+    .card small { display:block; margin-bottom:10px; color:var(--muted); }
+    .card p { font-size:14px; }
+    .card ul { margin:10px 0 0; padding-left:18px; color:var(--muted); font-size:13px; }
+    .open { margin-top:auto; min-height:38px; display:grid; place-items:center; border-radius:8px; background:var(--ink); color:#fff; font-weight:700; pointer-events:none; }
+    .map { margin-top:16px; padding:20px; }
+    .flow { display:grid; grid-template-columns:repeat(5, 1fr); gap:8px; margin-top:12px; }
+    .flow div { padding:10px; border:1px solid #e5eaf2; border-radius:8px; background:#f8fafc; color:#314058; text-align:center; font-size:13px; }
+    @media (max-width:980px) { main{padding:16px;} .hero,.grid,.flow{grid-template-columns:1fr;} h1{font-size:30px;} }
+  </style>
+</head>
+<body>
+  <main>
+    <nav class="nav">
+      <a href="pmp_2026_study_dashboard.html">备考驾驶舱</a>
+      <a href="pmp_pre_july_old_exam_plan.html">旧版路径</a>
+      <a href="pmp_49_process_flowchart.html">49过程地图</a>
+      <a href="pmp_pmbok7_performance_domains.html">第七版绩效域</a>
+      <a href="pmp_exam_essentials_gap_fill.html">补齐页</a>
+      <a href="pmp_2026_eco_interactive.html">2026 ECO</a>
+      <a href="pmp_agile_hybrid_playbook.html">敏捷/混合</a>
+    </nav>
+
+    <section class="hero">
+      <div class="panel intro">
+        <h1>PMP 十大知识领域专项导航</h1>
+        <p>资源管理已经单独整理出来了。这里把另外 9 大知识领域补齐，形成“每个领域一张流程图、一组易混点、一套考试判断”的复习入口。</p>
+        <div class="chips">
+          <span class="chip">看主线</span>
+          <span class="chip">抓边界</span>
+          <span class="chip">练下一步</span>
+          <span class="chip">避免死背 ITTO</span>
+        </div>
+      </div>
+      <div class="panel method">
+        <h2>建议刷法</h2>
+        <ol>
+          <li>先打开一个领域，看左侧流程顺序。</li>
+          <li>点每个过程，看“前一步、后一步、考试触发词”。</li>
+          <li>最后看易混卡片，把题目里最容易绕的边界记住。</li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="grid">
+      <a class="card teal" href="pmp_integration_management_flow.html">
+        <small>01 / Integration</small>
+        <h3>项目整合管理</h3>
+        <p>把章程、计划、执行、知识、监控、变更、收尾串成主控台。</p>
+        <ul><li>整体变更控制</li><li>WPD/WPI/WPR</li><li>收尾与经验教训</li></ul>
+        <span class="open">打开</span>
+      </a>
+      <a class="card" href="pmp_scope_management_flow.html">
+        <small>02 / Scope</small>
+        <h3>项目范围管理</h3>
+        <p>从需求到 WBS，再到确认范围和控制范围。</p>
+        <ul><li>验收 vs 检查</li><li>范围蔓延</li><li>需求跟踪矩阵</li></ul>
+        <span class="open">打开</span>
+      </a>
+      <a class="card amber" href="pmp_schedule_management_flow.html">
+        <small>03 / Schedule</small>
+        <h3>项目进度管理</h3>
+        <p>活动、顺序、资源、持续时间、进度表和控制进度。</p>
+        <ul><li>关键路径</li><li>赶工/快速跟进</li><li>SPI/SV</li></ul>
+        <span class="open">打开</span>
+      </a>
+      <a class="card rose" href="pmp_cost_management_flow.html">
+        <small>04 / Cost</small>
+        <h3>项目成本管理</h3>
+        <p>估算、预算、控制，重点建立挣值判断直觉。</p>
+        <ul><li>BAC/CPI/ETC/EAC</li><li>成本基准</li><li>储备分析</li></ul>
+        <span class="open">打开</span>
+      </a>
+      <a class="card teal" href="pmp_quality_management_flow.html">
+        <small>05 / Quality</small>
+        <h3>项目质量管理</h3>
+        <p>规划质量、管理质量、控制质量三者边界。</p>
+        <ul><li>预防优于检查</li><li>审计 vs 检查</li><li>确认范围前置条件</li></ul>
+        <span class="open">打开</span>
+      </a>
+      <a class="card" href="pmp_resource_management_flow.html">
+        <small>06 / Resource</small>
+        <h3>项目资源管理</h3>
+        <p>你已经重点补过的资源专题页。</p>
+        <ul><li>团队章程</li><li>建设/管理团队</li><li>控制实物资源</li></ul>
+        <span class="open">打开</span>
+      </a>
+      <a class="card amber" href="pmp_communications_management_flow.html">
+        <small>07 / Communications</small>
+        <h3>项目沟通管理</h3>
+        <p>规划沟通、管理沟通、监督沟通，注意不是相关方参与。</p>
+        <ul><li>沟通需求</li><li>沟通方法</li><li>沟通效果</li></ul>
+        <span class="open">打开</span>
+      </a>
+      <a class="card rose" href="pmp_risk_management_flow.html">
+        <small>08 / Risk</small>
+        <h3>项目风险管理</h3>
+        <p>从识别到分析、应对、实施、监督，分清风险和问题。</p>
+        <ul><li>威胁/机会策略</li><li>风险登记册</li><li>储备与次生风险</li></ul>
+        <span class="open">打开</span>
+      </a>
+      <a class="card teal" href="pmp_procurement_management_flow.html">
+        <small>09 / Procurement</small>
+        <h3>项目采购管理</h3>
+        <p>自制外购、招标、合同、索赔、采购关闭。</p>
+        <ul><li>合同类型</li><li>采购文件</li><li>变更与索赔</li></ul>
+        <span class="open">打开</span>
+      </a>
+      <a class="card" href="pmp_stakeholder_management_flow.html">
+        <small>10 / Stakeholder</small>
+        <h3>项目相关方管理</h3>
+        <p>识别、规划、管理参与、监督参与，是场景题高频区。</p>
+        <ul><li>参与度矩阵</li><li>先沟通再升级</li><li>阻力与期望</li></ul>
+        <span class="open">打开</span>
+      </a>
+    </section>
+
+    <section class="panel map">
+      <h2>一眼记住十个领域的考试角色</h2>
+      <div class="flow">
+        <div>整合：总控台</div>
+        <div>范围：做什么</div>
+        <div>进度：何时做</div>
+        <div>成本：花多少</div>
+        <div>质量：做到什么标准</div>
+        <div>资源：谁和什么来做</div>
+        <div>沟通：信息怎么流</div>
+        <div>风险：不确定性</div>
+        <div>采购：外部怎么拿</div>
+        <div>相关方：人是否支持</div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

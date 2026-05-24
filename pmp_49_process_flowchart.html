@@ -1,0 +1,1791 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>49 个管理过程：交互式逻辑地图</title>
+  <style>
+    :root {
+      --ink: #182033;
+      --muted: #5e6878;
+      --line: #d4dbe7;
+      --paper: #f5f7fb;
+      --panel: #ffffff;
+      --init: #dff4e7;
+      --plan: #dcecff;
+      --exec: #ffe8cf;
+      --mc: #efe2ff;
+      --close: #e7ebf1;
+      --teal: #0f766e;
+      --blue: #2563eb;
+      --amber: #b45309;
+      --rose: #be123c;
+      --shadow: 0 14px 32px rgba(28, 38, 60, 0.09);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background:
+        linear-gradient(90deg, rgba(37, 99, 235, 0.05) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(15, 118, 110, 0.04) 1px, transparent 1px),
+        var(--paper);
+      background-size: 28px 28px;
+      color: var(--ink);
+      font-family: "Microsoft YaHei", "PingFang SC", "Noto Sans CJK SC", Arial, sans-serif;
+      line-height: 1.45;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    main {
+      max-width: 1540px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    .nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .nav a {
+      padding: 8px 11px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .top {
+      display: grid;
+      grid-template-columns: minmax(300px, 0.95fr) minmax(520px, 1.8fr);
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .panel {
+      background: rgba(255, 255, 255, 0.94);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+    }
+
+    .intro {
+      padding: 22px;
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      font-size: 34px;
+      line-height: 1.16;
+      letter-spacing: 0;
+    }
+
+    h2 {
+      margin: 0 0 12px;
+      font-size: 20px;
+      letter-spacing: 0;
+    }
+
+    h3 {
+      margin: 0 0 8px;
+      font-size: 16px;
+      letter-spacing: 0;
+    }
+
+    p {
+      margin: 0;
+    }
+
+    .lead {
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .formula {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 9px;
+      margin-top: 18px;
+    }
+
+    .formula-card {
+      position: relative;
+      min-height: 86px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfdff;
+      overflow: hidden;
+    }
+
+    .formula-card b {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 15px;
+    }
+
+    .formula-card span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .formula-card::after {
+      content: "";
+      position: absolute;
+      right: -18px;
+      bottom: -18px;
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      border: 14px solid rgba(37, 99, 235, 0.12);
+    }
+
+    .story {
+      padding: 18px;
+    }
+
+    .story-map {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(118px, 1fr));
+      gap: 18px;
+      overflow-x: auto;
+      padding: 2px 2px 8px;
+    }
+
+    .story-step {
+      position: relative;
+      min-height: 128px;
+      padding: 12px;
+      border: 2px solid #b7c8e8;
+      border-radius: 8px;
+      background: #f8fbff;
+    }
+
+    .story-step::before {
+      content: attr(data-num);
+      display: grid;
+      place-items: center;
+      width: 28px;
+      height: 28px;
+      margin-bottom: 8px;
+      border-radius: 50%;
+      background: var(--blue);
+      color: #fff;
+      font-weight: 700;
+      font-size: 13px;
+    }
+
+    .story-step::after {
+      content: "";
+      position: absolute;
+      top: 58px;
+      right: -17px;
+      width: 14px;
+      height: 14px;
+      border-top: 3px solid var(--blue);
+      border-right: 3px solid var(--blue);
+      transform: rotate(45deg);
+    }
+
+    .story-step:last-child::after {
+      display: none;
+    }
+
+    .story-step b {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 14px;
+    }
+
+    .story-step span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .controls {
+      display: grid;
+      grid-template-columns: minmax(260px, 1fr) auto;
+      gap: 14px;
+      margin: 18px 0;
+      align-items: center;
+    }
+
+    .search {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 44px;
+      padding: 0 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+    }
+
+    .search input {
+      width: 100%;
+      border: 0;
+      outline: 0;
+      color: var(--ink);
+      background: transparent;
+    }
+
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 8px;
+    }
+
+    .tool-btn {
+      min-height: 38px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 0 12px;
+      background: #fff;
+      color: #263246;
+      cursor: pointer;
+    }
+
+    .tool-btn:hover,
+    .tool-btn.active {
+      border-color: var(--blue);
+      background: #eef5ff;
+      color: #143c91;
+    }
+
+    .workspace {
+      display: grid;
+      grid-template-columns: minmax(820px, 1fr) 360px;
+      gap: 18px;
+      align-items: start;
+    }
+
+    .matrix-panel {
+      overflow: auto;
+    }
+
+    .matrix {
+      min-width: 1080px;
+      display: grid;
+      grid-template-columns: 128px repeat(5, minmax(176px, 1fr));
+      border-top: 1px solid var(--line);
+      border-left: 1px solid var(--line);
+    }
+
+    .head,
+    .area,
+    .cell {
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      padding: 10px;
+    }
+
+    .head {
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      text-align: center;
+      font-weight: 700;
+    }
+
+    .area {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-weight: 700;
+      background: #fff;
+    }
+
+    .cell {
+      min-height: 86px;
+      background: #fff;
+    }
+
+    .init { background: var(--init); }
+    .plan { background: var(--plan); }
+    .exec { background: var(--exec); }
+    .mc { background: var(--mc); }
+    .close { background: var(--close); }
+
+    .process {
+      display: block;
+      width: 100%;
+      min-height: 34px;
+      margin: 0 0 7px;
+      padding: 7px 9px 7px 12px;
+      border: 1px solid rgba(24, 32, 51, 0.13);
+      border-left: 5px solid transparent;
+      border-radius: 7px;
+      background: rgba(255, 255, 255, 0.76);
+      color: #172033;
+      text-align: left;
+      cursor: pointer;
+      transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
+    }
+
+    .process:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 7px 16px rgba(24, 32, 51, 0.12);
+    }
+
+    .process:last-child {
+      margin-bottom: 0;
+    }
+
+    .process strong {
+      display: block;
+      font-size: 13px;
+      letter-spacing: 0;
+    }
+
+    .process small {
+      display: block;
+      margin-top: 2px;
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .process[data-group="启动"] { border-left-color: #24955b; }
+    .process[data-group="规划"] { border-left-color: #2563eb; }
+    .process[data-group="执行"] { border-left-color: #d97706; }
+    .process[data-group="监控"] { border-left-color: #7c3aed; }
+    .process[data-group="收尾"] { border-left-color: #64748b; }
+
+    .process.selected {
+      outline: 3px solid rgba(37, 99, 235, 0.24);
+      background: #fff;
+      box-shadow: 0 10px 22px rgba(37, 99, 235, 0.17);
+    }
+
+    .process.dimmed {
+      opacity: 0.24;
+    }
+
+    .process.highlight {
+      outline: 2px solid rgba(15, 118, 110, 0.34);
+      background: #f0fdfa;
+    }
+
+    .side {
+      position: sticky;
+      top: 16px;
+      padding: 18px;
+    }
+
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-bottom: 12px;
+    }
+
+    .badge {
+      padding: 4px 8px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: #fff;
+      color: #334155;
+      font-size: 12px;
+    }
+
+    .detail-title {
+      margin: 0 0 8px;
+      font-size: 24px;
+      line-height: 1.2;
+    }
+
+    .detail-text {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .detail-block {
+      margin-top: 16px;
+      padding-top: 14px;
+      border-top: 1px solid var(--line);
+    }
+
+    .io {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 9px;
+    }
+
+    .io-card {
+      padding: 10px;
+      border-radius: 7px;
+      background: #f8fafc;
+      border: 1px solid #e5eaf2;
+      font-size: 13px;
+    }
+
+    .io-card b {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .link-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+    }
+
+    .cause-grid {
+      display: grid;
+      gap: 10px;
+    }
+
+    .cause-card {
+      padding: 10px;
+      border: 1px solid #e5eaf2;
+      border-radius: 7px;
+      background: #f8fafc;
+    }
+
+    .cause-card b {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 13px;
+    }
+
+    .cause-card p {
+      margin-top: 7px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .mini-link {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 5px 9px;
+      background: #fff;
+      color: #263246;
+      cursor: pointer;
+      font-size: 12px;
+    }
+
+    .mini-link:hover {
+      border-color: var(--blue);
+      color: #143c91;
+    }
+
+    .bottom {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin-top: 18px;
+    }
+
+    .logic,
+    .quiz {
+      padding: 18px;
+    }
+
+    .chain {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+
+    .chain-card {
+      min-height: 118px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fbfdff;
+    }
+
+    .chain-card b {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .chain-card span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .quiz-options {
+      display: grid;
+      gap: 18px;
+      margin-top: 22px;
+    }
+
+    .quiz-options button {
+      display: grid;
+      grid-template-columns: 68px 1fr;
+      align-items: center;
+      gap: 18px;
+      min-height: 72px;
+      border: 0;
+      border-radius: 0;
+      background: #fff;
+      color: #223047;
+      cursor: pointer;
+      text-align: left;
+      padding: 0;
+      font-size: 22px;
+      line-height: 1.45;
+    }
+
+    .quiz-options button.right {
+      background: #fff;
+    }
+
+    .quiz-options button.wrong {
+      background: #fff;
+    }
+
+    .option-letter {
+      display: grid;
+      place-items: center;
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      border: 1px solid #e5e7eb;
+      color: #9ca3af;
+      font-weight: 700;
+      background: #fff;
+      flex: 0 0 auto;
+    }
+
+    .quiz-options button.right .option-letter {
+      border-color: #10b981;
+      background: #10c66b;
+      color: #fff;
+    }
+
+    .quiz-options button.wrong .option-letter {
+      border-color: var(--rose);
+      background: #fff1f2;
+      color: var(--rose);
+    }
+
+    .q-type {
+      display: inline-block;
+      margin-bottom: 18px;
+      padding: 5px 12px;
+      background: #eef5ff;
+      color: #1677ff;
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .quiz-question {
+      color: #333b4a;
+      font-size: 26px;
+      line-height: 1.7;
+    }
+
+    .answer {
+      min-height: 46px;
+      margin-top: 24px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .answer-section,
+    .analysis-section {
+      margin-top: 18px;
+      padding-top: 18px;
+      border-top: 12px solid #f4f5f7;
+    }
+
+    .answer-title,
+    .analysis-title {
+      margin: 0 0 12px;
+      color: #202938;
+      font-size: 22px;
+      font-weight: 700;
+    }
+
+    .answer-box {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      padding: 16px;
+      border-radius: 8px;
+      background: #f4f8ff;
+      color: #334155;
+      font-size: 18px;
+    }
+
+    .answer-box b {
+      color: #10b981;
+      margin-left: 8px;
+    }
+
+    .analysis-text {
+      color: #374151;
+      font-size: 18px;
+      line-height: 1.75;
+    }
+
+    .mastery {
+      margin: 12px 0;
+      padding: 12px;
+      border: 1px solid #e5eaf2;
+      border-radius: 8px;
+      background: #f8fafc;
+    }
+
+    .mastery-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: baseline;
+      margin-bottom: 8px;
+    }
+
+    .mastery-top b {
+      font-size: 14px;
+    }
+
+    .mastery-top span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .progress-track {
+      height: 12px;
+      border-radius: 999px;
+      background: #e2e8f0;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      width: 0%;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--teal), var(--blue));
+      transition: width 0.25s ease;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-top: 9px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .stats span {
+      display: block;
+      padding: 7px 8px;
+      border-radius: 7px;
+      background: #fff;
+      border: 1px solid #e5eaf2;
+    }
+
+    .quiz-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+
+    .quiz-count {
+      color: var(--muted);
+      font-size: 13px;
+      white-space: nowrap;
+    }
+
+    .quiz-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .quiz-actions button {
+      min-height: 36px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      color: #223047;
+      cursor: pointer;
+      padding: 0 11px;
+    }
+
+    .quiz-actions button:hover {
+      border-color: var(--blue);
+      background: #eef5ff;
+    }
+
+    .status-report {
+      width: 100%;
+      min-height: 150px;
+      margin-top: 10px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 10px;
+      font: 12px Consolas, monospace;
+      color: #263246;
+    }
+
+    .drag-panel {
+      margin-top: 18px;
+      padding: 18px;
+    }
+
+    .drag-board {
+      overflow-x: auto;
+      margin-top: 12px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: #fff;
+    }
+
+    .drag-grid {
+      min-width: 1040px;
+      display: grid;
+      grid-template-columns: 100px repeat(5, 1fr);
+      gap: 1px;
+      background: #e6ebf5;
+    }
+
+    .drag-cell,
+    .drag-head,
+    .drag-area {
+      min-height: 46px;
+      background: #fff;
+      padding: 8px;
+    }
+
+    .drag-head {
+      display: grid;
+      place-items: center;
+      background: #dcd8ff;
+      color: #232088;
+      font-weight: 700;
+    }
+
+    .drag-area {
+      color: #232088;
+      font-weight: 700;
+      font-size: 13px;
+    }
+
+    .drag-cell {
+      border: 1px dashed #c7c4ff;
+      background: #fbfbff;
+    }
+
+    .drag-cell.over {
+      outline: 3px solid rgba(37,99,235,.2);
+    }
+
+    .drag-cell.bad {
+      background: #fff1f2;
+      border-color: var(--rose);
+    }
+
+    .drag-count {
+      color: #b7b1ff;
+      font-size: 12px;
+      text-align: center;
+    }
+
+    .drag-pool {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+      padding: 12px;
+      border-radius: 8px;
+      background: #fff;
+      border: 1px solid var(--line);
+    }
+
+    .drag-chip {
+      padding: 7px 10px;
+      border: 1px solid #c7c4ff;
+      border-radius: 8px;
+      background: #f2f0ff;
+      color: #2623a6;
+      cursor: grab;
+      user-select: none;
+      font-size: 13px;
+    }
+
+    .drag-chip.placed {
+      margin: 3px;
+      cursor: default;
+      background: #ecfdf5;
+      border-color: #10b981;
+      color: #065f46;
+    }
+
+    .drag-stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .drag-stats span {
+      padding: 6px 10px;
+      border-radius: 8px;
+      background: #eef5ff;
+      color: #1746a2;
+      font-weight: 700;
+    }
+
+    @media (max-width: 1180px) {
+      .top,
+      .workspace,
+      .bottom {
+        grid-template-columns: 1fr;
+      }
+
+      .side {
+        position: static;
+      }
+    }
+
+    @media (max-width: 760px) {
+      main {
+        padding: 14px;
+      }
+
+      h1 {
+        font-size: 28px;
+      }
+
+      .formula,
+      .controls,
+      .chain {
+        grid-template-columns: 1fr;
+      }
+
+      .toolbar {
+        justify-content: flex-start;
+      }
+
+      .story-map {
+        grid-template-columns: 1fr;
+      }
+
+      .story-step::after {
+        top: auto;
+        right: 50%;
+        bottom: -16px;
+        transform: translateX(50%) rotate(135deg);
+      }
+    }
+
+    @media print {
+      body {
+        background: #fff;
+      }
+
+      main {
+        max-width: none;
+        padding: 10mm;
+      }
+
+      .panel {
+        box-shadow: none;
+      }
+
+      .controls,
+      .side,
+      .quiz {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <nav class="nav">
+      <a href="pmp_2026_study_dashboard.html">驾驶舱</a>
+      <a href="pmp_pre_july_old_exam_plan.html">旧版路径</a>
+      <a href="pmp_2026_eco_interactive.html">2026 ECO</a>
+      <a href="pmp_agile_hybrid_playbook.html">敏捷/混合</a>
+      <a href="pmp_exam_style_drills.html">题型训练</a>
+      <a href="pmp_pmbok7_performance_domains.html">第七版绩效域</a>
+      <a href="pmp_exam_essentials_gap_fill.html">补齐页</a>
+      <a href="pmp_knowledge_areas_dashboard.html">十大领域</a>
+      <a href="pmp_resource_management_flow.html">资源专项</a>
+      <a href="#dragGame">拖拽小游戏</a>
+    </nav>
+    <section class="top">
+      <div class="panel intro">
+        <h1>49 个管理过程交互地图</h1>
+        <p class="lead">别把 49 个名字当清单背。把它当一个项目操作系统：启动给授权，规划定规则，执行产成果，监控找偏差，收尾做验收和归档。</p>
+        <div class="formula" aria-label="学习抓手">
+          <div class="formula-card"><b>行政边界</b><span>规划是定规则，执行是动手做，监控是比偏差。</span></div>
+          <div class="formula-card"><b>因果链条</b><span>先有标准，才有检查；先有控制质量，才好确认范围。</span></div>
+          <div class="formula-card"><b>数据血脉</b><span>WPD 原始事实，经控制过程加工为 WPI，汇总为 WPR。</span></div>
+        </div>
+      </div>
+
+      <div class="panel story">
+        <h2>先按这条故事线理解</h2>
+        <div class="story-map">
+          <div class="story-step" data-num="1"><b>章程授权</b><span>项目经理获得正式身份，项目边界被高层确认。</span></div>
+          <div class="story-step" data-num="2"><b>识别人</b><span>找出相关方，理解他们的权力、利益和参与程度。</span></div>
+          <div class="story-step" data-num="3"><b>定规则</b><span>整合各领域子计划，形成项目管理计划与基准。</span></div>
+          <div class="story-step" data-num="4"><b>做项目</b><span>团队执行工作，产出可交付成果和工作绩效数据。</span></div>
+          <div class="story-step" data-num="5"><b>查偏差</b><span>控制范围、进度、成本、质量、风险等，提出变更。</span></div>
+          <div class="story-step" data-num="6"><b>批变更</b><span>重大调整进入整体变更控制，统一批准或否决。</span></div>
+          <div class="story-step" data-num="7"><b>验收收尾</b><span>客户确认范围后，结束项目或阶段，沉淀经验。</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="controls" aria-label="交互控制">
+      <label class="search">
+        <span>搜索</span>
+        <input id="searchBox" type="search" placeholder="输入过程名、知识领域、WPD、变更、质量、相关方...">
+      </label>
+      <div class="toolbar">
+        <button class="tool-btn active" data-mode="all" type="button">全部</button>
+        <button class="tool-btn" data-mode="data" type="button">数据血脉</button>
+        <button class="tool-btn" data-mode="change" type="button">变更闭环</button>
+        <button class="tool-btn" data-mode="quality" type="button">质量验收链</button>
+        <button class="tool-btn" data-mode="stakeholder" type="button">相关方链</button>
+        <a class="tool-btn" href="#dragGame">去拖拽练习</a>
+      </div>
+    </section>
+
+    <section class="workspace">
+      <div class="panel matrix-panel">
+        <div id="matrix" class="matrix" aria-label="49 个管理过程矩阵"></div>
+      </div>
+
+      <aside class="panel side" aria-live="polite">
+        <div class="badge-row">
+          <span id="detailGroup" class="badge">启动</span>
+          <span id="detailArea" class="badge">整合管理</span>
+        </div>
+        <h2 id="detailTitle" class="detail-title">制定项目章程</h2>
+        <p id="detailExplain" class="detail-text"></p>
+        <div class="detail-block io">
+          <div class="io-card"><b>典型输入</b><span id="detailInputs"></span></div>
+          <div class="io-card"><b>核心输出</b><span id="detailOutputs"></span></div>
+          <div class="io-card"><b>做题判断</b><span id="detailCue"></span></div>
+          <div class="io-card"><b>教材备注</b><span id="detailTextbook"></span></div>
+        </div>
+        <div class="detail-block">
+          <h3>前一步 / 后一步</h3>
+          <div class="cause-grid">
+            <div class="cause-card">
+              <b>上游输入从哪里来</b>
+              <div id="prevLinks" class="link-list"></div>
+            </div>
+            <div class="cause-card">
+              <b>下一步通常流向哪里</b>
+              <div id="nextLinks" class="link-list"></div>
+            </div>
+            <div class="cause-card">
+              <b>为什么这样走</b>
+              <p id="flowReason">选择一个过程后，这里会显示它和上下游之间的逻辑。</p>
+            </div>
+          </div>
+        </div>
+        <div class="detail-block">
+          <div class="mastery">
+            <div class="mastery-top">
+              <b>掌握度闭环</b>
+              <span id="masteryLabel">0%</span>
+            </div>
+            <div class="progress-track" aria-label="掌握度进度条">
+              <div id="masteryFill" class="progress-fill"></div>
+            </div>
+            <div class="stats">
+              <span id="answeredStat">已做 0 题</span>
+              <span id="accuracyStat">准确率 0%</span>
+              <span id="coverageStat">覆盖 0 / 49</span>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <section class="bottom">
+      <div class="panel logic">
+        <h2>四条最值得背成直觉的链</h2>
+        <div class="chain">
+          <div class="chain-card"><b>范围链</b><span>需求 → 范围说明书 → WBS → 范围基准 → 确认范围。</span></div>
+          <div class="chain-card"><b>质量链</b><span>规划质量定标准，管理质量改过程，控制质量查成果。</span></div>
+          <div class="chain-card"><b>变更链</b><span>发现偏差 → 变更请求 → 整体变更控制 → 更新计划和基准。</span></div>
+          <div class="chain-card"><b>沟通链</b><span>WPR 不是凭空出现；它来自控制过程的信息汇总。</span></div>
+        </div>
+      </div>
+
+      <div class="panel quiz">
+        <div class="quiz-head">
+          <h2>200 题判断练习</h2>
+          <span id="quizCount" class="quiz-count"></span>
+        </div>
+        <div class="q-type">单选题</div>
+        <p id="quizQuestion" class="quiz-question"></p>
+        <div id="quizOptions" class="quiz-options"></div>
+        <div id="answer" class="answer">选一个答案，页面会告诉你为什么。</div>
+        <div class="quiz-actions">
+          <button id="prevQuiz" type="button">上一题</button>
+          <button id="nextQuiz" type="button">下一题</button>
+          <button id="randomQuiz" type="button">随机一题</button>
+          <button id="resetQuiz" type="button">Reset</button>
+          <button id="export49Status" type="button">生成状态</button>
+        </div>
+        <textarea id="status49Report" class="status-report" readonly placeholder="做完题后点“生成状态”，把这里内容发给我，我帮你分析薄弱知识领域。"></textarea>
+      </div>
+    </section>
+
+    <section id="dragGame" class="panel drag-panel">
+      <div class="quiz-head">
+        <h2>49 过程拖拽小游戏</h2>
+        <span id="dragProgress" class="quiz-count">0 / 49</span>
+      </div>
+      <p class="lead">把下方过程拖到正确的“知识领域 × 过程组”格子。拖对会放进格子，拖错格子会闪红。</p>
+      <div class="drag-stats"><span id="dragRight">✓ 0</span><span id="dragWrong">× 0</span><span id="dragLeft">剩余 49</span></div>
+      <div id="dragBoard" class="drag-board"></div>
+      <div id="dragPool" class="drag-pool"></div>
+      <div class="quiz-actions"><button id="resetDrag" type="button">重置拖拽</button></div>
+    </section>
+  </main>
+
+  <script>
+    const groups = ["启动", "规划", "执行", "监控", "收尾"];
+    const areas = ["整合管理", "范围管理", "进度管理", "成本管理", "质量管理", "资源管理", "沟通管理", "风险管理", "采购管理", "相关方管理"];
+    const textbookRefs = {
+      "整合管理": "《PMBOK 第六版中文版》PDF 103-162（第4章）；过程组标准速查 PDF 591-663。",
+      "范围管理": "《PMBOK 第六版中文版》PDF 163-205（第5章）；重点看确认范围 vs 控制质量。",
+      "进度管理": "《PMBOK 第六版中文版》PDF 206-263（第6章）；重点看关键路径、赶工、快速跟进。",
+      "成本管理": "《PMBOK 第六版中文版》PDF 264-303（第7章）；公式配合补齐页刷。",
+      "质量管理": "《PMBOK 第六版中文版》PDF 304-339（第8章）；重点看规划/管理/控制质量。",
+      "资源管理": "《PMBOK 第六版中文版》PDF 340-391（第9章）；《PMP新版通关宝典》资源管理约书页 133-153。",
+      "沟通管理": "《PMBOK 第六版中文版》PDF 392-426（第10章）；重点看规划/管理/监督沟通。",
+      "风险管理": "《PMBOK 第六版中文版》PDF 427-490（第11章）；重点看识别、分析、应对、监督风险。",
+      "采购管理": "《PMBOK 第六版中文版》PDF 491-534（第12章）；重点看合同、索赔、控制采购。",
+      "相关方管理": "《PMBOK 第六版中文版》PDF 535-568（第13章）；重点看管理参与 vs 监督参与。"
+    };
+
+    const processData = [
+      p("制定项目章程", "整合管理", "启动", "正式批准项目或阶段，授权项目经理使用组织资源。", "商业文件、协议、事业环境因素", "项目章程、假设日志", "题目出现“正式授权、任命项目经理、高层边界”，通常定位到这里。", ["制定项目管理计划", "识别相关方"], ["change"]),
+      p("制定项目管理计划", "整合管理", "规划", "把所有子计划和范围、进度、成本基准整合成统一管理规则。", "项目章程、其他过程输出", "项目管理计划", "题目问“按什么规则管理项目”，先找计划。", ["指导与管理项目工作", "监控项目工作"], ["change"]),
+      p("指导与管理项目工作", "整合管理", "执行", "按计划执行项目工作，产出可交付成果、WPD 和变更请求。", "项目管理计划、批准的变更请求", "可交付成果、WPD、问题日志、变更请求", "执行中发现问题，不是私自改基准，而是提出变更请求。", ["控制质量", "监控项目工作", "实施整体变更控制"], ["data", "change"]),
+      p("管理项目知识", "整合管理", "执行", "使用现有知识并创造新知识，让经验被团队复用。", "可交付成果、项目文件", "经验教训登记册、项目管理计划更新", "出现经验复用、知识分享、经验教训，优先想到它。", ["结束项目或阶段"], []),
+      p("监控项目工作", "整合管理", "监控", "汇总各控制过程的信息，形成 WPR，并提出必要变更。", "WPI、预测、项目管理计划", "WPR、变更请求", "这是项目经理看全局仪表盘，不是某个领域的局部控制。", ["实施整体变更控制", "管理沟通"], ["data", "change"]),
+      p("实施整体变更控制", "整合管理", "监控", "审查、批准或否决变更，并维护计划、基准和文件的一致性。", "变更请求、项目管理计划、WPR", "批准的变更请求、变更日志", "只要涉及基准或正式变更审批，先走这里。", ["指导与管理项目工作", "监控项目工作"], ["change"]),
+      p("结束项目或阶段", "整合管理", "收尾", "完成最终验收、移交成果、归档文件并总结经验。", "项目章程、项目管理计划、验收的可交付成果", "最终产品移交、最终报告、组织过程资产更新", "题目出现“项目结束、阶段结束、归档、释放资源”，定位到收尾。", ["确认范围", "管理项目知识"], []),
+
+      p("规划范围管理", "范围管理", "规划", "规定如何定义、确认和控制范围。", "项目章程、项目管理计划", "范围管理计划、需求管理计划", "先定范围怎么管，再收集和定义具体范围。", ["收集需求"], []),
+      p("收集需求", "范围管理", "规划", "识别并记录相关方需求，为范围定义提供依据。", "章程、相关方登记册", "需求文件、需求跟踪矩阵", "看到访谈、焦点小组、问卷、原型，常在这里。", ["定义范围", "创建 WBS"], []),
+      p("定义范围", "范围管理", "规划", "把需求转成项目和产品范围的详细描述。", "需求文件、章程、范围管理计划", "项目范围说明书、项目文件更新", "关键产物是范围说明书。", ["创建 WBS"], []),
+      p("创建 WBS", "范围管理", "规划", "把项目范围分解为可管理的工作包。", "范围说明书、需求文件", "范围基准、项目文件更新", "范围基准由范围说明书、WBS、WBS 词典组成。", ["确认范围", "控制范围"], []),
+      p("确认范围", "范围管理", "监控", "由客户或发起人正式验收已完成的可交付成果。", "核实的可交付成果、范围基准", "验收的可交付成果、变更请求", "客户验收是确认范围；内部检查是控制质量。", ["控制质量", "结束项目或阶段"], ["quality"]),
+      p("控制范围", "范围管理", "监控", "监督项目和产品范围状态，管理范围基准变更。", "范围基准、WPD、需求文件", "WPI、变更请求", "防止范围蔓延，偏差需要正式变更。", ["实施整体变更控制"], ["data", "change"]),
+
+      p("规划进度管理", "进度管理", "规划", "规定如何规划、制定、管理和控制进度。", "项目章程、项目管理计划", "进度管理计划", "它是进度领域的规则入口。", ["定义活动"], []),
+      p("定义活动", "进度管理", "规划", "识别完成可交付成果所需的具体活动。", "范围基准、进度管理计划", "活动清单、里程碑清单", "WBS 到活动清单，是范围转进度的关键。", ["排列活动顺序"], []),
+      p("排列活动顺序", "进度管理", "规划", "识别并记录活动之间的逻辑关系。", "活动清单、里程碑清单", "项目进度网络图", "题目出现 FS、SS、紧前关系、网络图，定位这里。", ["估算活动持续时间"], []),
+      p("估算活动持续时间", "进度管理", "规划", "估算完成单项活动所需的工作时间。", "活动清单、资源需求", "持续时间估算、估算依据", "注意它估的是时间，不是成本。", ["制定进度计划"], []),
+      p("制定进度计划", "进度管理", "规划", "分析活动顺序、持续时间、资源和制约因素，形成进度模型。", "网络图、持续时间估算、资源日历", "进度基准、项目进度计划", "进度基准在这里形成。", ["控制进度"], []),
+      p("控制进度", "进度管理", "监控", "监督进度状态，管理进度基准变更。", "进度基准、WPD、项目进度计划", "WPI、进度预测、变更请求", "题目出现进度偏差、赶工、快速跟进，常在这里或变更控制。", ["实施整体变更控制"], ["data", "change"]),
+
+      p("规划成本管理", "成本管理", "规划", "规定如何估算、预算、管理和控制成本。", "项目章程、项目管理计划", "成本管理计划", "成本领域先定规则。", ["估算成本"], []),
+      p("估算成本", "成本管理", "规划", "对完成项目活动所需成本进行近似估算。", "成本管理计划、质量管理计划、资源需求", "成本估算、估算依据", "估算是近似值，预算是汇总并形成基准。", ["制定预算"], []),
+      p("制定预算", "成本管理", "规划", "汇总估算，确定授权的成本基准。", "成本估算、项目进度计划", "成本基准、项目资金需求", "成本基准在这里形成。", ["控制成本"], []),
+      p("控制成本", "成本管理", "监控", "监督项目成本状态，管理成本基准变更。", "成本基准、WPD、资金需求", "WPI、成本预测、变更请求", "EVM、CPI、SPI、EAC、ETC 常在这里出现。", ["实施整体变更控制"], ["data", "change"]),
+
+      p("规划质量管理", "质量管理", "规划", "识别项目和产品质量要求，规定如何证明符合要求。", "项目章程、需求文件、风险登记册", "质量管理计划、质量测量指标", "先有质量标准，后面才能管理质量和控制质量。", ["管理质量", "控制质量"], ["quality"]),
+      p("管理质量", "质量管理", "执行", "把质量管理计划转化为可执行活动，改进过程，预防缺陷。", "质量管理计划、质量测量指标", "质量报告、测试与评估文件、变更请求", "它关注过程是否足够好，常见审计、过程分析。", ["控制质量"], ["quality"]),
+      p("控制质量", "质量管理", "监控", "监测并记录质量活动结果，核实可交付成果是否正确。", "可交付成果、质量测量指标、WPD", "质量控制测量结果、核实的可交付成果、WPI", "内部检查成果是控制质量；客户接受成果是确认范围。", ["确认范围"], ["data", "quality"]),
+
+      p("规划资源管理", "资源管理", "规划", "定义如何估算、获取、管理和使用团队及实物资源。", "项目章程、项目管理计划", "资源管理计划、团队章程", "团队章程在这里形成。", ["估算活动资源", "获取资源"], []),
+      p("估算活动资源", "资源管理", "规划", "估算活动需要的团队、设备、材料和用品。", "活动清单、资源管理计划", "资源需求、估算依据、资源分解结构", "它回答“需要什么资源、需要多少”。", ["获取资源"], []),
+      p("获取资源", "资源管理", "执行", "获取完成项目所需的团队成员、设施、设备等。", "资源管理计划、资源需求", "物质资源分配、项目团队派工单", "谈判、预分派、虚拟团队常在这里。", ["建设团队", "管理团队"], []),
+      p("建设团队", "资源管理", "执行", "提高团队能力、互动和整体绩效。", "团队章程、资源管理计划", "团队绩效评价、变更请求", "培训、团队建设、认可奖励，偏建设团队。", ["管理团队"], []),
+      p("管理团队", "资源管理", "执行", "跟踪团队绩效，解决冲突，管理团队变更。", "团队绩效评价、问题日志", "变更请求、项目管理计划更新", "冲突管理、人员问题、绩效反馈，偏管理团队。", ["控制资源"], []),
+      p("控制资源", "资源管理", "监控", "确保实物资源按计划可用并被正确使用。", "资源管理计划、WPD、协议", "WPI、变更请求", "注意控制资源主要管实物资源，不是团队绩效。", ["实施整体变更控制"], ["data", "change"]),
+
+      p("规划沟通管理", "沟通管理", "规划", "确定相关方信息需求和沟通方法。", "相关方登记册、项目管理计划", "沟通管理计划", "谁需要什么信息、何时、用什么方式，这是它。", ["管理沟通"], []),
+      p("管理沟通", "沟通管理", "执行", "确保项目信息被及时生成、收集、发布和存储。", "沟通管理计划、WPR", "项目沟通记录、项目管理计划更新", "发报告、开会、发布信息，是执行层面的沟通。", ["监督沟通"], ["data"]),
+      p("监督沟通", "沟通管理", "监控", "确保沟通满足项目和相关方的信息需求。", "沟通管理计划、项目沟通记录", "WPI、变更请求", "看沟通方法是否有效，是监督沟通。", ["实施整体变更控制"], ["data", "change"]),
+
+      p("规划风险管理", "风险管理", "规划", "定义如何开展项目风险管理活动。", "项目章程、项目管理计划", "风险管理计划", "风险领域先定方法、角色、概率影响矩阵。", ["识别风险"], []),
+      p("识别风险", "风险管理", "规划", "识别单个项目风险和整体项目风险来源。", "风险管理计划、需求文件、估算", "风险登记册、风险报告", "题目出现新风险、风险登记册初建或更新，常在这里。", ["实施定性风险分析", "实施定量风险分析"], []),
+      p("实施定性风险分析", "风险管理", "规划", "评估风险概率和影响，为风险排序。", "风险登记册、风险管理计划", "项目文件更新", "概率影响矩阵、风险排序，定位定性。", ["实施定量风险分析", "规划风险应对"], []),
+      p("实施定量风险分析", "风险管理", "规划", "对风险对项目目标的综合影响进行数值分析。", "风险登记册、风险报告", "项目文件更新", "蒙特卡洛、敏感性分析、决策树，定位定量。", ["规划风险应对"], []),
+      p("规划风险应对", "风险管理", "规划", "制定处理整体风险和单个风险的方案。", "风险登记册、风险报告", "变更请求、项目管理计划更新", "威胁规避/转移/减轻/接受，机会开拓/分享/提高/接受。", ["实施风险应对"], ["change"]),
+      p("实施风险应对", "风险管理", "执行", "执行已经商定的风险应对计划。", "风险管理计划、风险登记册", "变更请求、项目文件更新", "有计划的应对动作在这里执行，不是临时拍脑袋。", ["监督风险"], ["change"]),
+      p("监督风险", "风险管理", "监控", "监督风险应对、跟踪已识别风险、识别新风险并评估风险过程有效性。", "风险管理计划、WPD、WPR", "WPI、变更请求", "风险审计、储备分析、风险再评估常在这里。", ["实施整体变更控制"], ["data", "change"]),
+
+      p("规划采购管理", "采购管理", "规划", "决定采购什么、如何采购，并识别潜在卖方。", "项目章程、商业文件、资源需求", "采购管理计划、采购策略、招标文件", "自制或外购分析、合同类型选择，定位这里。", ["实施采购"], []),
+      p("实施采购", "采购管理", "执行", "获取卖方应答，选择卖方并授予合同。", "采购文件、卖方建议书", "选定的卖方、协议", "招标、投标人会议、合同授予，定位这里。", ["控制采购"], []),
+      p("控制采购", "采购管理", "监控", "管理采购关系，监督合同绩效，必要时关闭合同。", "协议、采购文档、WPD", "结束的采购、WPI、变更请求", "合同争议、索赔管理、采购审计常在这里。", ["实施整体变更控制"], ["data", "change"]),
+
+      p("识别相关方", "相关方管理", "启动", "定期识别相关方，分析其利益、参与度、影响和潜在影响。", "项目章程、商业文件、协议", "相关方登记册、变更请求", "项目早期先识别人；项目中也会持续更新。", ["规划相关方参与"], ["stakeholder"]),
+      p("规划相关方参与", "相关方管理", "规划", "基于相关方需求、期望和影响，制定参与策略。", "相关方登记册、项目章程", "相关方参与计划", "把当前参与程度和期望参与程度对齐。", ["管理相关方参与"], ["stakeholder"]),
+      p("管理相关方参与", "相关方管理", "执行", "与相关方沟通协作，满足需求、处理问题并促进参与。", "相关方参与计划、沟通管理计划", "变更请求、问题日志更新", "主动沟通、处理期望、争取支持，是执行。", ["监督相关方参与"], ["stakeholder", "change"]),
+      p("监督相关方参与", "相关方管理", "监控", "监督相关方关系并调整参与策略。", "相关方参与计划、项目沟通记录", "WPI、变更请求", "看参与策略是否有效，是监控。", ["实施整体变更控制"], ["data", "stakeholder", "change"])
+    ];
+
+    const seedQuizBank = [
+      q("客户正式检查已完成的可交付成果，并决定是否接受。", ["控制质量", "确认范围", "管理质量"], "确认范围", "客户或发起人的正式验收是确认范围；控制质量是团队内部检查，管理质量偏过程改进。"),
+      q("团队发现进度基准需要调整，项目经理下一步应把请求提交审批。", ["控制进度", "实施整体变更控制", "制定进度计划"], "实施整体变更控制", "涉及基准调整，要进入实施整体变更控制；控制进度负责发现偏差和提出变更请求。"),
+      q("项目刚获批准，发起人希望正式任命项目经理并授予资源使用权。", ["制定项目章程", "制定项目管理计划", "识别相关方"], "制定项目章程", "项目章程正式授权项目和项目经理，是项目启动的关键产物。"),
+      q("项目经理正在把各领域子计划和范围、进度、成本基准合并成一份统一文件。", ["制定项目管理计划", "监控项目工作", "规划范围管理"], "制定项目管理计划", "整合所有子计划和基准形成统一管理规则，就是制定项目管理计划。"),
+      q("执行团队产出了可交付成果，同时记录了工时、缺陷数量和实际成本。", ["指导与管理项目工作", "监控项目工作", "控制成本"], "指导与管理项目工作", "执行过程产出可交付成果和 WPD；监控过程再把 WPD 加工为 WPI。"),
+      q("项目经理汇总各控制过程的状态、预测和偏差，形成给相关方看的报告。", ["管理沟通", "监控项目工作", "监督沟通"], "监控项目工作", "监控项目工作汇总 WPI 形成 WPR；管理沟通负责把信息发出去。"),
+      q("团队希望把本项目踩过的坑记录下来，供后续项目复用。", ["管理项目知识", "结束项目或阶段", "管理质量"], "管理项目知识", "经验复用和知识沉淀优先定位管理项目知识；收尾也会归档，但不只在最后才做。"),
+      q("相关方抱怨收不到及时信息，项目经理开始调整信息发布频率和渠道。", ["管理沟通", "监督沟通", "规划沟通管理"], "监督沟通", "判断沟通是否满足需求并调整方法，是监督沟通；实际发送信息才是管理沟通。"),
+      q("项目团队正在访谈用户、整理需求，并建立需求跟踪矩阵。", ["收集需求", "定义范围", "创建 WBS"], "收集需求", "访谈、原型、问卷、需求文件、需求跟踪矩阵都强烈指向收集需求。"),
+      q("项目经理把范围说明书进一步分解成工作包，并形成范围基准。", ["定义范围", "创建 WBS", "控制范围"], "创建 WBS", "范围基准由范围说明书、WBS 和 WBS 词典组成，创建 WBS 形成范围基准。"),
+      q("客户又提了一个新功能，团队担心这是范围蔓延。项目经理应按流程管理这个变化。", ["控制范围", "收集需求", "确认范围"], "控制范围", "范围变化和范围蔓延属于控制范围；若影响基准，再进入整体变更控制。"),
+      q("团队正在确定活动之间的 FS、SS 等逻辑关系，并绘制网络图。", ["定义活动", "排列活动顺序", "制定进度计划"], "排列活动顺序", "活动逻辑关系和项目进度网络图是排列活动顺序的核心。"),
+      q("项目经理用 CPI、EAC、ETC 分析预算偏差，并预测完工成本。", ["估算成本", "制定预算", "控制成本"], "控制成本", "挣值、成本偏差、成本预测属于控制成本。"),
+      q("团队先确定质量测量指标和验收标准，为后续检查提供依据。", ["规划质量管理", "管理质量", "控制质量"], "规划质量管理", "质量标准和质量测量指标先在规划质量管理中定义。"),
+      q("质量经理开展审计和过程分析，希望减少未来缺陷。", ["管理质量", "控制质量", "规划质量管理"], "管理质量", "审计、过程分析、过程改进偏管理质量；控制质量偏检查具体成果。"),
+      q("测试团队检查可交付成果是否满足质量测量指标，并输出核实的可交付成果。", ["管理质量", "控制质量", "确认范围"], "控制质量", "核实的可交付成果来自控制质量，之后才交给确认范围做客户验收。"),
+      q("团队成员已经到位，项目经理安排培训和团队建设活动提升协作。", ["获取资源", "建设团队", "管理团队"], "建设团队", "培训、团队建设、认可奖励是建设团队；处理冲突和绩效问题是管理团队。"),
+      q("两个团队成员发生冲突，项目经理介入协调并更新问题日志。", ["建设团队", "管理团队", "控制资源"], "管理团队", "冲突管理、绩效反馈、团队问题处理属于管理团队。"),
+      q("项目经理选择合同类型、准备招标文件，并决定哪些工作外包。", ["规划采购管理", "实施采购", "控制采购"], "规划采购管理", "自制或外购、合同类型、招标文件都属于规划采购管理。"),
+      q("供应商已签约，项目经理开始跟踪合同绩效、处理索赔和采购变更。", ["实施采购", "控制采购", "结束项目或阶段"], "控制采购", "合同授予后进入控制采购，管理卖方关系、绩效、索赔和关闭采购。"),
+      q("项目早期，项目经理分析谁支持项目、谁反对项目、谁有高权力高利益。", ["识别相关方", "规划相关方参与", "管理相关方参与"], "识别相关方", "相关方识别和权力利益分析产出相关方登记册。"),
+      q("项目经理主动和关键相关方沟通，处理他们的期望并争取支持。", ["管理相关方参与", "监督相关方参与", "管理沟通"], "管理相关方参与", "主动互动、处理期望、争取支持，是管理相关方参与。"),
+      q("项目经理发现某关键相关方参与度不足，开始评估参与策略是否有效。", ["规划相关方参与", "管理相关方参与", "监督相关方参与"], "监督相关方参与", "监控相关方关系和参与策略有效性，是监督相关方参与。"),
+      q("项目团队识别出一个新风险，并把原因、触发条件和潜在应对记录下来。", ["识别风险", "实施定性风险分析", "监督风险"], "识别风险", "发现新风险并更新风险登记册，首先是识别风险；项目进行中也会反复识别。"),
+      q("团队用概率影响矩阵对风险排序。", ["实施定性风险分析", "实施定量风险分析", "规划风险应对"], "实施定性风险分析", "概率影响矩阵和风险优先级排序属于定性风险分析。"),
+      q("团队使用蒙特卡洛模拟分析项目整体完工日期的不确定性。", ["实施定性风险分析", "实施定量风险分析", "监督风险"], "实施定量风险分析", "蒙特卡洛、决策树、敏感性分析等数值分析属于定量风险分析。"),
+      q("风险应对策略已经写入计划，现在风险责任人开始执行这些应对动作。", ["规划风险应对", "实施风险应对", "监督风险"], "实施风险应对", "计划好的风险应对进入执行，就是实施风险应对。")
+    ];
+
+    const flowEdges = [
+      e("制定项目章程", "识别相关方", "章程给出项目目的和高层边界，先知道项目为何存在，才能系统识别谁会影响或被影响。"),
+      e("制定项目章程", "制定项目管理计划", "章程授权项目并定义高层目标，是项目管理计划的起点输入。"),
+      e("识别相关方", "规划相关方参与", "相关方登记册先说明谁重要，后续才能设计参与策略。"),
+      e("识别相关方", "规划沟通管理", "沟通计划要回答谁需要什么信息，因此依赖相关方识别。"),
+      e("制定项目管理计划", "指导与管理项目工作", "计划定规则，执行过程按这些规则组织团队完成工作。"),
+      e("制定项目管理计划", "监控项目工作", "监控要拿实际表现和计划、基准比较。"),
+      e("指导与管理项目工作", "管理项目知识", "执行中产生经验和问题，需要被沉淀并复用。"),
+      e("指导与管理项目工作", "控制质量", "执行产出可交付成果，控制质量先做内部核实。"),
+      e("指导与管理项目工作", "监控项目工作", "执行产生 WPD 和问题，监控项目工作汇总全局状态。"),
+      e("监控项目工作", "实施整体变更控制", "全局监控发现偏差或风险时，正式变更要进入统一审批。"),
+      e("实施整体变更控制", "指导与管理项目工作", "批准的变更请求回到执行，由团队落实。"),
+      e("实施整体变更控制", "制定项目管理计划", "批准变更可能更新计划、子计划或基准。"),
+      e("控制质量", "确认范围", "控制质量输出核实的可交付成果，确认范围再交给客户或发起人验收。"),
+      e("确认范围", "结束项目或阶段", "有验收的可交付成果后，才具备正式收尾的条件。"),
+      e("管理项目知识", "结束项目或阶段", "收尾时要把经验教训和组织过程资产更新完整。"),
+
+      e("规划范围管理", "收集需求", "先规定如何管理范围和需求，再开始收集需求。"),
+      e("收集需求", "定义范围", "需求文件是定义项目和产品范围的直接依据。"),
+      e("定义范围", "创建 WBS", "范围说明书清楚后，才能分解成 WBS 和工作包。"),
+      e("创建 WBS", "定义活动", "WBS 工作包是识别具体进度活动的基础。"),
+      e("创建 WBS", "确认范围", "范围基准用于判断交付成果是否满足约定范围。"),
+      e("创建 WBS", "控制范围", "控制范围要对照范围基准管理范围变化。"),
+      e("控制范围", "实施整体变更控制", "范围基准变化属于正式变更，必须统一审批。"),
+
+      e("规划进度管理", "定义活动", "进度管理计划先定义进度方法和规则。"),
+      e("定义活动", "排列活动顺序", "先知道有哪些活动，才能排列依赖关系。"),
+      e("排列活动顺序", "估算活动持续时间", "活动顺序和依赖会影响持续时间估算。"),
+      e("估算活动持续时间", "制定进度计划", "持续时间估算进入进度模型，形成进度计划和基准。"),
+      e("制定进度计划", "控制进度", "有进度基准后，才能比较偏差并控制进度。"),
+      e("控制进度", "实施整体变更控制", "进度基准调整要作为正式变更处理。"),
+
+      e("规划成本管理", "估算成本", "先规定成本估算和控制方法，再估算各项成本。"),
+      e("估算成本", "制定预算", "成本估算汇总后形成成本基准。"),
+      e("制定预算", "控制成本", "控制成本要以成本基准为比较对象。"),
+      e("控制成本", "实施整体变更控制", "成本基准调整要进入整体变更控制。"),
+
+      e("规划质量管理", "管理质量", "质量标准和测量指标先被定义，执行中才能把标准转成过程活动。"),
+      e("规划质量管理", "控制质量", "控制质量要拿规划质量输出的测量指标检查成果。"),
+      e("管理质量", "控制质量", "管理质量改进过程，控制质量检查具体成果是否合格。"),
+
+      e("规划资源管理", "估算活动资源", "先定义资源管理规则，再估算每项活动需要什么资源。"),
+      e("估算活动资源", "获取资源", "资源需求明确后，才能获取人员、设备和材料。"),
+      e("获取资源", "建设团队", "团队成员到位后，才能培训、磨合和提升绩效。"),
+      e("建设团队", "管理团队", "建设提升能力，管理团队跟踪表现并处理冲突。"),
+      e("管理团队", "控制资源", "团队执行中暴露的资源问题会反馈到实物资源控制。"),
+      e("控制资源", "实施整体变更控制", "资源计划或资源分配的正式调整可能触发变更。"),
+
+      e("规划沟通管理", "管理沟通", "沟通计划说明信息如何发布，管理沟通负责实际生成和分发。"),
+      e("管理沟通", "监督沟通", "沟通发生后，监督沟通检查信息是否真正满足需求。"),
+      e("监督沟通", "实施整体变更控制", "沟通方式失效时，可能需要调整计划并发起变更。"),
+      e("监控项目工作", "管理沟通", "WPR 由全局监控汇总，再通过管理沟通发送给相关方。"),
+
+      e("规划风险管理", "识别风险", "先定风险方法、角色和概率影响标准，再识别风险。"),
+      e("识别风险", "实施定性风险分析", "识别出的风险先做概率和影响排序。"),
+      e("实施定性风险分析", "实施定量风险分析", "高优先级或关键风险可进一步做数值分析。"),
+      e("实施定量风险分析", "规划风险应对", "量化结果帮助选择更合适的应对策略和储备。"),
+      e("实施定性风险分析", "规划风险应对", "并非所有风险都必须定量，定性排序后也可规划应对。"),
+      e("规划风险应对", "实施风险应对", "计划好的应对策略要在执行中真正落实。"),
+      e("实施风险应对", "监督风险", "应对执行后要跟踪是否有效，是否出现新风险。"),
+      e("监督风险", "实施整体变更控制", "风险监控发现需要改计划或基准时，进入整体变更控制。"),
+
+      e("规划采购管理", "实施采购", "先决定采购策略、合同类型和招标文件，再选择卖方。"),
+      e("实施采购", "控制采购", "合同授予后，进入合同绩效、变更、索赔和关闭管理。"),
+      e("控制采购", "实施整体变更控制", "采购变更影响范围、成本或进度时，需要统一审批。"),
+
+      e("规划相关方参与", "管理相关方参与", "参与计划定义策略，执行中通过沟通协作落实策略。"),
+      e("管理相关方参与", "监督相关方参与", "实际参与后，要看策略是否有效并调整。"),
+      e("监督相关方参与", "实施整体变更控制", "参与策略或沟通方式需要正式调整时，可能发起变更。")
+    ];
+
+    const quizBank = buildQuizBank(seedQuizBank, 200);
+
+    const matrix = document.getElementById("matrix");
+    const searchBox = document.getElementById("searchBox");
+    const detailTitle = document.getElementById("detailTitle");
+    const detailExplain = document.getElementById("detailExplain");
+    const detailInputs = document.getElementById("detailInputs");
+    const detailOutputs = document.getElementById("detailOutputs");
+    const detailCue = document.getElementById("detailCue");
+    const detailTextbook = document.getElementById("detailTextbook");
+    const detailGroup = document.getElementById("detailGroup");
+    const detailArea = document.getElementById("detailArea");
+    const prevLinks = document.getElementById("prevLinks");
+    const nextLinks = document.getElementById("nextLinks");
+    const flowReason = document.getElementById("flowReason");
+    const quizQuestion = document.getElementById("quizQuestion");
+    const quizOptions = document.getElementById("quizOptions");
+    const quizCount = document.getElementById("quizCount");
+    const answer = document.getElementById("answer");
+    const masteryLabel = document.getElementById("masteryLabel");
+    const masteryFill = document.getElementById("masteryFill");
+    const answeredStat = document.getElementById("answeredStat");
+    const accuracyStat = document.getElementById("accuracyStat");
+    const coverageStat = document.getElementById("coverageStat");
+    const export49Status = document.getElementById("export49Status");
+    const status49Report = document.getElementById("status49Report");
+    const dragBoard = document.getElementById("dragBoard");
+    const dragPool = document.getElementById("dragPool");
+    const dragProgress = document.getElementById("dragProgress");
+    const dragRight = document.getElementById("dragRight");
+    const dragWrong = document.getElementById("dragWrong");
+    const dragLeft = document.getElementById("dragLeft");
+    const resetDrag = document.getElementById("resetDrag");
+    let selected = processData[0].name;
+    let mode = "all";
+    let quizIndex = 0;
+    const progressKey = "pmp49QuizProgressV1";
+    let quizProgress = loadProgress();
+    let draggedName = "";
+    let dragStats = { right: 0, wrong: 0 };
+
+    function p(name, area, group, explain, inputs, outputs, cue, links, tags) {
+      return { name, area, group, explain, inputs, outputs, cue, links, tags, search: [name, area, group, explain, inputs, outputs, cue, tags.join(" ")].join(" ").toLowerCase() };
+    }
+
+    function e(from, to, why) {
+      return { from, to, why };
+    }
+
+    function q(prompt, options, correct, explanation) {
+      return { prompt, options, correct, explanation };
+    }
+
+    function loadProgress() {
+      try {
+        return JSON.parse(localStorage.getItem(progressKey)) || {};
+      } catch (error) {
+        return {};
+      }
+    }
+
+    function saveProgress() {
+      localStorage.setItem(progressKey, JSON.stringify(quizProgress));
+    }
+
+    function buildQuizBank(seed, targetCount) {
+      const generated = [];
+      const byName = new Map(processData.map((item) => [item.name, item]));
+
+      processData.forEach((item, index) => {
+        generated.push(q(
+          `项目团队正在推进一个${item.area}相关活动。当前工作是：${item.explain} 项目经理需要判断下一步应按哪个过程继续管理。`,
+          makeOptions(item, index, "scenario-definition"),
+          item.name,
+          `这是“${item.name}”。它属于${item.area} / ${item.group}，重点看项目经理正在做的管理动作。`
+        ));
+        generated.push(q(
+          `项目进入一个复杂情境：相关方要求项目经理说明当前工作的正式产出，材料中出现“${item.outputs}”。项目经理应把这些产出对应到哪个过程？`,
+          makeOptions(item, index, "scenario-output"),
+          item.name,
+          `这些产出指向“${item.name}”。注意会议纪要、报告、登记册或基准变化中出现的正式产出。`
+        ));
+        generated.push(q(
+          `项目经理查看项目文件，主要依据包括“${item.inputs}”。现在需要决定下一步管理动作。最符合 PMP 过程逻辑的是哪个？`,
+          makeOptions(item, index, "scenario-input"),
+          item.name,
+          `这些依据通常进入“${item.name}”。先判断当前材料是输入、输出，还是变更触发点。`
+        ));
+        generated.push(q(
+          `项目过程中出现以下情况：“${item.cue}” 项目经理需要选择最合适的管理过程来处理当前情境。`,
+          makeOptions(item, index, "scenario-cue"),
+          item.name,
+          `这是“${item.name}”的典型判断点。关键是判断项目经理当前应该采取的管理动作。`
+        ));
+      });
+
+      flowEdges.forEach((edge, index) => {
+        const target = byName.get(edge.to);
+        if (!target) return;
+        generated.push(q(
+          `项目经理刚完成“${edge.from}”相关工作。随后出现的情况是：${edge.why} 按 PMP 的流程逻辑，下一步最自然进入哪个过程？`,
+          makeOptions(target, index, "flow-to"),
+          edge.to,
+          `答案是“${edge.to}”。关键是识别前后动作之间的因果：${edge.why}`
+        ));
+      });
+
+      const normalizedSeed = seed.map((item, index) => {
+        const correctItem = byName.get(item.correct);
+        const options = ensureFourOptions(item.options, item.correct, correctItem || processData[index % processData.length], index);
+        return q(item.prompt, options, item.correct, item.explanation);
+      });
+
+      const merged = [];
+      const seen = new Set();
+      generated.concat(normalizedSeed).forEach((item) => {
+        const key = `${item.prompt}|${item.correct}`;
+        if (!seen.has(key) && byName.has(item.correct)) {
+          seen.add(key);
+          merged.push(item);
+        }
+      });
+
+      let fillIndex = 0;
+      while (merged.length < targetCount) {
+        const item = processData[fillIndex % processData.length];
+        merged.push(q(
+          `项目经理在${item.area}场景中遇到这种情况：“${item.cue}” 当前最合适的管理过程是什么？`,
+          makeOptions(item, fillIndex, "review"),
+          item.name,
+          `答案是“${item.name}”。它位于${item.area} / ${item.group}。`
+        ));
+        fillIndex++;
+      }
+
+      return merged.slice(0, targetCount);
+    }
+
+    function makeOptions(correctItem, salt, purpose) {
+      const sameArea = processData.filter((item) => item.area === correctItem.area && item.name !== correctItem.name);
+      const sameGroup = processData.filter((item) => item.group === correctItem.group && item.name !== correctItem.name);
+      const allOthers = processData.filter((item) => item.name !== correctItem.name);
+      const pool = rotate(sameArea.concat(sameGroup, allOthers), salt + purpose.length);
+      return ensureFourOptions([correctItem.name], correctItem.name, correctItem, salt, pool.map((item) => item.name));
+    }
+
+    function ensureFourOptions(options, correct, correctItem, salt, preferredPool) {
+      const result = [];
+      [correct].concat(options, preferredPool || []).forEach((name) => {
+        if (name && !result.includes(name)) result.push(name);
+      });
+      const fallback = rotate(processData, salt + correct.length)
+        .map((item) => item.name)
+        .filter((name) => name !== correct);
+      fallback.forEach((name) => {
+        if (result.length < 4 && !result.includes(name)) result.push(name);
+      });
+      const four = result.slice(0, 4);
+      return rotate(four, salt + correctItem.area.length);
+    }
+
+    function rotate(items, offset) {
+      if (!items.length) return [];
+      const start = offset % items.length;
+      return items.slice(start).concat(items.slice(0, start));
+    }
+
+    function renderMatrix() {
+      matrix.innerHTML = "";
+      addDiv("head", "知识领域");
+      groups.forEach((group) => addDiv(`head ${groupClass(group)}`, group));
+      areas.forEach((area) => {
+        addDiv("area", area);
+        groups.forEach((group) => {
+          const cell = addDiv(`cell ${groupClass(group)}`, "");
+          processData.filter((item) => item.area === area && item.group === group).forEach((item) => {
+            const btn = document.createElement("button");
+            btn.type = "button";
+            btn.className = "process";
+            btn.dataset.name = item.name;
+            btn.dataset.group = item.group;
+            btn.innerHTML = `<strong>${item.name}</strong><small>${shortCue(item)}</small>`;
+            btn.addEventListener("click", () => selectProcess(item.name));
+            cell.appendChild(btn);
+          });
+        });
+      });
+      applyFilters();
+      selectProcess(selected, false);
+    }
+
+    function addDiv(className, text) {
+      const div = document.createElement("div");
+      div.className = className;
+      div.textContent = text;
+      matrix.appendChild(div);
+      return div;
+    }
+
+    function groupClass(group) {
+      return { "启动": "init", "规划": "plan", "执行": "exec", "监控": "mc", "收尾": "close" }[group];
+    }
+
+    function shortCue(item) {
+      if (item.name === "控制质量") return "内部检查";
+      if (item.name === "确认范围") return "客户验收";
+      if (item.tags.includes("change")) return "可能触发变更";
+      if (item.tags.includes("data")) return "产出/处理绩效信息";
+      return `${item.area} · ${item.group}`;
+    }
+
+    function selectProcess(name, scroll = true) {
+      selected = name;
+      const item = processData.find((entry) => entry.name === name) || processData[0];
+      detailTitle.textContent = item.name;
+      detailExplain.textContent = item.explain;
+      detailInputs.textContent = item.inputs;
+      detailOutputs.textContent = item.outputs;
+      detailCue.textContent = item.cue;
+      detailTextbook.textContent = textbookRefs[item.area] || "《PMBOK 第六版中文版》对应知识领域章节。";
+      detailGroup.textContent = item.group;
+      detailArea.textContent = item.area;
+      renderFlowLinks(item);
+
+      document.querySelectorAll(".process").forEach((btn) => {
+        btn.classList.toggle("selected", btn.dataset.name === item.name);
+      });
+
+      if (scroll) {
+        const active = document.querySelector(`.process[data-name="${CSS.escape(item.name)}"]`);
+        if (active) active.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "nearest" });
+      }
+    }
+
+    function renderFlowLinks(item) {
+      const prev = flowEdges.filter((edge) => edge.to === item.name);
+      const next = flowEdges.filter((edge) => edge.from === item.name);
+      renderEdgeButtons(prevLinks, prev, "from");
+      renderEdgeButtons(nextLinks, next, "to");
+
+      if (prev.length && next.length) {
+        flowReason.textContent = `上游通常先产出本过程需要的输入；本过程完成后，会把输出交给下游继续加工。例：${prev[0].why} 下一步：${next[0].why}`;
+      } else if (prev.length) {
+        flowReason.textContent = `这个过程更偏链条后段。它的关键上游是“${prev[0].from}”：${prev[0].why}`;
+      } else if (next.length) {
+        flowReason.textContent = `这个过程更偏链条起点。它的关键下游是“${next[0].to}”：${next[0].why}`;
+      } else {
+        flowReason.textContent = "这个过程当前没有强制单一路径，重点看它所在的过程组和输出会更新哪些计划或文件。";
+      }
+    }
+
+    function renderEdgeButtons(container, edges, direction) {
+      container.innerHTML = "";
+      if (!edges.length) {
+        const span = document.createElement("span");
+        span.className = "detail-text";
+        span.textContent = "没有固定单一过程；看项目情境和输出文件流向。";
+        container.appendChild(span);
+        return;
+      }
+      edges.forEach((edge) => {
+        const target = edge[direction];
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "mini-link";
+        btn.textContent = target;
+        btn.title = edge.why;
+        btn.addEventListener("click", () => selectProcess(target));
+        container.appendChild(btn);
+      });
+    }
+
+    function applyFilters() {
+      const query = searchBox.value.trim().toLowerCase();
+      document.querySelectorAll(".process").forEach((btn) => {
+        const item = processData.find((entry) => entry.name === btn.dataset.name);
+        const matchesSearch = !query || item.search.includes(query);
+        const matchesMode = mode === "all" || item.tags.includes(mode);
+        btn.classList.toggle("dimmed", !matchesSearch || !matchesMode);
+        btn.classList.toggle("highlight", matchesSearch && matchesMode && mode !== "all");
+      });
+    }
+
+    searchBox.addEventListener("input", () => {
+      applyFilters();
+      const query = searchBox.value.trim().toLowerCase();
+      if (query) {
+        const found = processData.find((item) => item.search.includes(query));
+        if (found) selectProcess(found.name, false);
+      }
+    });
+
+    document.querySelectorAll(".tool-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".tool-btn").forEach((item) => item.classList.remove("active"));
+        btn.classList.add("active");
+        mode = btn.dataset.mode;
+        applyFilters();
+      });
+    });
+
+    function renderQuiz() {
+      const quiz = quizBank[quizIndex];
+      const record = quizProgress[quizIndex];
+      quizQuestion.textContent = quiz.prompt;
+      quizCount.textContent = `${quizIndex + 1} / ${quizBank.length}`;
+      answer.innerHTML = record
+        ? answerMarkup(quiz, record.chosen, "本题已记录首次作答。")
+        : "选一个答案，页面会告诉你为什么。";
+      quizOptions.innerHTML = "";
+      quiz.options.forEach((option, index) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.dataset.option = option;
+        btn.innerHTML = `<span class="option-letter">${letterFor(index)}</span><span>${option}</span>`;
+        if (record) {
+          btn.classList.toggle("right", option === quiz.correct);
+          btn.classList.toggle("wrong", option === record.chosen && !record.correct);
+        }
+        btn.addEventListener("click", () => checkQuiz(option));
+        quizOptions.appendChild(btn);
+      });
+      updateMastery();
+    }
+
+    function checkQuiz(option) {
+      const quiz = quizBank[quizIndex];
+      const firstTry = !quizProgress[quizIndex];
+      if (firstTry) {
+        quizProgress[quizIndex] = {
+          chosen: option,
+          correct: option === quiz.correct,
+          process: quiz.correct
+        };
+        saveProgress();
+      }
+      quizOptions.querySelectorAll("button").forEach((btn) => {
+        const isCorrect = btn.dataset.option === quiz.correct;
+        const isChosen = btn.dataset.option === option;
+        btn.classList.toggle("right", isCorrect);
+        btn.classList.toggle("wrong", isChosen && !isCorrect);
+      });
+      const savedNote = firstTry ? "" : "（本题已记录首次作答，当前点击只用于复盘。）";
+      answer.innerHTML = answerMarkup(quiz, option, savedNote);
+      selectProcess(quiz.correct, false);
+      updateMastery();
+    }
+
+    function letterFor(index) {
+      return ["A", "B", "C", "D"][index] || String(index + 1);
+    }
+
+    function optionLetter(quiz, option) {
+      return letterFor(quiz.options.indexOf(option));
+    }
+
+    function answerMarkup(quiz, chosen, note) {
+      const correctLetter = optionLetter(quiz, quiz.correct);
+      const chosenLetter = optionLetter(quiz, chosen);
+      const personal = personalAccuracy();
+      const site = 56 + ((quizIndex * 7) % 33);
+      return `
+        <div class="answer-section">
+          <div class="answer-title">答案</div>
+          <div class="answer-box">
+            <span>正确答案：<b>${correctLetter}</b></span>
+            <span>你的答案：<b>${chosenLetter}</b></span>
+          </div>
+          <div class="answer-box" style="margin-top:10px">
+            <span>个人正确率：<b>${personal}%</b></span>
+            <span>题库参考正确率：<b>${site}%</b></span>
+          </div>
+        </div>
+        <div class="analysis-section">
+          <div class="analysis-title">解析</div>
+          <div class="analysis-text">${note ? note + " " : ""}${quiz.explanation}</div>
+        </div>`;
+    }
+
+    function personalAccuracy() {
+      const records = Object.values(quizProgress);
+      if (!records.length) return 0;
+      const correct = records.filter((item) => item.correct).length;
+      return Math.round(correct / records.length * 100);
+    }
+
+    function updateMastery() {
+      const records = Object.values(quizProgress);
+      const answered = records.length;
+      const correct = records.filter((item) => item.correct).length;
+      const accuracy = answered ? correct / answered : 0;
+      const coverage = new Set(records.filter((item) => item.correct).map((item) => item.process)).size;
+      const answeredFactor = Math.min(answered / 80, 1);
+      const coverageFactor = coverage / processData.length;
+      const mastery = answered
+        ? Math.round((accuracy * 0.6 + coverageFactor * 0.25 + answeredFactor * 0.15) * 100)
+        : 0;
+      const capped = Math.min(mastery, 100);
+      masteryFill.style.width = `${capped}%`;
+      masteryLabel.textContent = capped >= 100 ? "100% · 大部分掌握" : `${capped}%`;
+      answeredStat.textContent = `已做 ${answered} 题`;
+      accuracyStat.textContent = `准确率 ${Math.round(accuracy * 100)}%`;
+      coverageStat.textContent = `覆盖 ${coverage} / ${processData.length}`;
+    }
+
+    function build49StatusReport() {
+      const records = Object.entries(quizProgress).map(([idx, record]) => {
+        const quiz = quizBank[Number(idx)];
+        const proc = processData.find((item) => item.name === record.process);
+        return { idx, record, quiz, proc };
+      }).filter((item) => item.quiz && item.proc);
+      const total = records.length;
+      const correct = records.filter((item) => item.record.correct).length;
+      const byArea = {};
+      const byGroup = {};
+      records.forEach((item) => {
+        const area = item.proc.area;
+        const group = item.proc.group;
+        byArea[area] ||= { total: 0, correct: 0, wrong: [] };
+        byGroup[group] ||= { total: 0, correct: 0 };
+        byArea[area].total++;
+        byGroup[group].total++;
+        if (item.record.correct) {
+          byArea[area].correct++;
+          byGroup[group].correct++;
+        } else {
+          byArea[area].wrong.push(item);
+        }
+      });
+      const areaRows = Object.entries(byArea)
+        .sort((a, b) => (a[1].correct / a[1].total) - (b[1].correct / b[1].total))
+        .map(([area, stat]) => `${area}: ${stat.correct}/${stat.total} (${Math.round(stat.correct / stat.total * 100)}%)`);
+      const groupRows = Object.entries(byGroup)
+        .map(([group, stat]) => `${group}: ${stat.correct}/${stat.total} (${Math.round(stat.correct / stat.total * 100)}%)`);
+      const wrongRows = records.filter((item) => !item.record.correct).slice(-10).map((item, n) =>
+        `${n + 1}. [${item.proc.area}/${item.proc.group}] ${item.quiz.prompt} | 我的答案: ${item.record.chosen} | 正确: ${item.record.process}`
+      );
+      const covered = new Set(records.filter((item) => item.record.correct).map((item) => item.record.process)).size;
+      return `PMP 49过程练习状态\n总题数: ${total}\n正确: ${correct}\n正确率: ${total ? Math.round(correct / total * 100) : 0}%\n正确覆盖过程: ${covered}/49\n\n按知识领域:\n${areaRows.join("\n") || "暂无"}\n\n按过程组:\n${groupRows.join("\n") || "暂无"}\n\n最近错题:\n${wrongRows.join("\n") || "暂无错题"}\n\n拖拽小游戏: 正确 ${dragStats.right}，错误 ${dragStats.wrong}\n\n请根据以上状态分析我薄弱在哪里，并告诉我该补哪些页面、教材页码和练习顺序。`;
+    }
+
+    function buildDragGame() {
+      dragBoard.innerHTML = "";
+      dragPool.innerHTML = "";
+      const grid = document.createElement("div");
+      grid.className = "drag-grid";
+      grid.appendChild(cell("drag-head", ""));
+      groups.forEach((group) => grid.appendChild(cell("drag-head", group)));
+      areas.forEach((area) => {
+        grid.appendChild(cell("drag-area", area));
+        groups.forEach((group) => {
+          const expected = processData.filter((item) => item.area === area && item.group === group);
+          const c = cell("drag-cell", expected.length ? `<div class="drag-count">${expected.length}个</div>` : "");
+          c.dataset.area = area;
+          c.dataset.group = group;
+          c.addEventListener("dragover", (event) => { event.preventDefault(); c.classList.add("over"); });
+          c.addEventListener("dragleave", () => c.classList.remove("over"));
+          c.addEventListener("drop", (event) => handleDrop(event, c));
+          grid.appendChild(c);
+        });
+      });
+      dragBoard.appendChild(grid);
+      processData.forEach((item) => {
+        const chip = document.createElement("div");
+        chip.className = "drag-chip";
+        chip.textContent = item.name;
+        chip.draggable = true;
+        chip.dataset.name = item.name;
+        chip.addEventListener("dragstart", () => { draggedName = item.name; });
+        dragPool.appendChild(chip);
+      });
+      dragStats = { right: 0, wrong: 0 };
+      updateDragStats();
+    }
+
+    function cell(className, html) {
+      const div = document.createElement("div");
+      div.className = className;
+      div.innerHTML = html;
+      return div;
+    }
+
+    function handleDrop(event, target) {
+      event.preventDefault();
+      target.classList.remove("over");
+      const item = processData.find((entry) => entry.name === draggedName);
+      if (!item) return;
+      if (item.area === target.dataset.area && item.group === target.dataset.group) {
+      const chip = Array.from(dragPool.querySelectorAll(".drag-chip")).find((node) => node.dataset.name === item.name);
+        if (chip) {
+          chip.classList.add("placed");
+          chip.draggable = false;
+          target.appendChild(chip);
+          dragStats.right++;
+          selectProcess(item.name, false);
+        }
+      } else {
+        dragStats.wrong++;
+        target.classList.add("bad");
+        setTimeout(() => target.classList.remove("bad"), 450);
+      }
+      updateDragStats();
+    }
+
+    function updateDragStats() {
+      const placed = dragStats.right;
+      dragRight.textContent = `✓ ${dragStats.right}`;
+      dragWrong.textContent = `× ${dragStats.wrong}`;
+      dragLeft.textContent = `剩余 ${processData.length - placed}`;
+      dragProgress.textContent = `${placed} / ${processData.length}`;
+    }
+
+    document.getElementById("prevQuiz").addEventListener("click", () => {
+      quizIndex = (quizIndex - 1 + quizBank.length) % quizBank.length;
+      renderQuiz();
+    });
+
+    document.getElementById("nextQuiz").addEventListener("click", () => {
+      quizIndex = (quizIndex + 1) % quizBank.length;
+      renderQuiz();
+    });
+
+    document.getElementById("randomQuiz").addEventListener("click", () => {
+      const next = Math.floor(Math.random() * quizBank.length);
+      quizIndex = next === quizIndex ? (next + 1) % quizBank.length : next;
+      renderQuiz();
+    });
+
+    document.getElementById("resetQuiz").addEventListener("click", () => {
+      quizProgress = {};
+      saveProgress();
+      status49Report.value = "";
+      renderQuiz();
+    });
+
+    export49Status.addEventListener("click", () => {
+      status49Report.value = build49StatusReport();
+      status49Report.select();
+    });
+
+    resetDrag.addEventListener("click", buildDragGame);
+
+    renderMatrix();
+    renderQuiz();
+    buildDragGame();
+  </script>
+</body>
+</html>

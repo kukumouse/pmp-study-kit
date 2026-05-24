@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PMP 敏捷/混合与价值交付交互手册</title>
+  <style>
+    :root{--ink:#172033;--muted:#607087;--line:#d7dfeb;--paper:#f6f8fc;--panel:#fff;--blue:#2563eb;--teal:#0f766e;--amber:#b45309;--rose:#be123c;--shadow:0 14px 34px rgba(22,34,55,.1)}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:"Microsoft YaHei","PingFang SC","Noto Sans CJK SC",Arial,sans-serif;line-height:1.48}main{max-width:1360px;margin:0 auto;padding:24px}.nav{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}.nav a{padding:8px 11px;border:1px solid var(--line);border-radius:8px;background:#fff;text-decoration:none;color:inherit}.panel{background:#fff;border:1px solid var(--line);border-radius:8px;box-shadow:var(--shadow)}h1{margin:0 0 10px;font-size:34px;line-height:1.16}h2{margin:0 0 12px;font-size:20px}h3{margin:0 0 8px;font-size:16px}p{margin:0;color:var(--muted)}.hero{display:grid;grid-template-columns:.95fr 1.5fr;gap:16px}.intro,.board,.quiz{padding:20px}.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.card{border:1px solid var(--line);border-radius:8px;background:#f8fafc;padding:14px}.card b{display:block;margin-bottom:6px}.switcher{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0}.switcher button{min-height:38px;border:1px solid var(--line);border-radius:8px;background:#fff;padding:0 12px;cursor:pointer}.switcher button.active{background:#eef5ff;border-color:var(--blue);color:#1746a2}.workspace{display:grid;grid-template-columns:1fr 360px;gap:16px;align-items:start}.concepts{display:grid;grid-template-columns:repeat(2,minmax(260px,1fr));gap:10px;padding:16px}.concept{border:1px solid var(--line);border-left:6px solid var(--teal);border-radius:8px;background:#fff;padding:12px;text-align:left;cursor:pointer}.concept[data-type="Hybrid"]{border-left-color:var(--amber)}.concept[data-type="Predictive"]{border-left-color:var(--blue)}.concept.hide{display:none}.concept.selected{outline:3px solid rgba(37,99,235,.18)}.side{position:sticky;top:16px;padding:18px}.badge{display:inline-block;margin:0 6px 10px 0;padding:4px 8px;border:1px solid var(--line);border-radius:999px;background:#fff;color:#314058;font-size:12px}.block{margin-top:14px;padding-top:14px;border-top:1px solid var(--line)}.rule{padding:10px;border-left:4px solid var(--blue);border-radius:4px;background:#f8fafc;color:#314058;font-size:14px}.quiz{margin-top:16px}.q-type{display:inline-block;margin-bottom:16px;padding:5px 12px;background:#eef5ff;color:#1677ff;font-weight:700}.quiz-question{color:#333b4a;font-size:24px;line-height:1.7}.quiz-options{display:grid;gap:18px;margin-top:22px}.quiz-options button{display:grid;grid-template-columns:62px 1fr;align-items:center;gap:18px;min-height:68px;border:0;background:#fff;text-align:left;padding:0;cursor:pointer;font-size:20px;line-height:1.45}.option-letter{display:grid;place-items:center;width:52px;height:52px;border-radius:50%;border:1px solid #e5e7eb;color:#9ca3af;background:#fff;font-weight:700}.quiz-options button.right .option-letter{border-color:#10b981;background:#10c66b;color:#fff}.quiz-options button.wrong .option-letter{border-color:var(--rose);background:#fff1f2;color:var(--rose)}.answer-section,.analysis-section{margin-top:18px;padding-top:18px;border-top:12px solid #f4f5f7}.answer-title,.analysis-title{margin:0 0 12px;color:#202938;font-size:22px;font-weight:700}.answer-box{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:16px;border-radius:8px;background:#f4f8ff;color:#334155;font-size:18px}.answer-box b{color:#10b981;margin-left:8px}.analysis-text{color:#374151;font-size:18px;line-height:1.75}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.actions button{min-height:36px;border:1px solid var(--line);border-radius:8px;background:#fff;padding:0 11px;cursor:pointer}.track{height:11px;background:#e2e8f0;border-radius:999px;overflow:hidden}.fill{height:100%;width:0;background:linear-gradient(90deg,var(--teal),var(--blue));transition:width .2s ease}.mini-stats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}.mini-stats span{padding:7px 8px;border:1px solid #e5eaf2;border-radius:7px;background:#fff;color:var(--muted);font-size:12px}@media(max-width:980px){main{padding:15px}.hero,.workspace,.cards,.concepts,.quiz-options{grid-template-columns:1fr}.side{position:static}}
+  </style>
+</head>
+<body>
+<main>
+  <nav class="nav">
+    <a href="pmp_2026_study_dashboard.html">驾驶舱</a>
+    <a href="pmp_49_process_flowchart.html">49 过程</a>
+    <a href="pmp_2026_eco_interactive.html">2026 ECO</a>
+    <a href="pmp_exam_style_drills.html">题型训练</a>
+  </nav>
+  <section class="hero">
+    <div class="panel intro">
+      <h1>敏捷/混合与价值交付</h1>
+      <p>旧版考试也会大量穿插敏捷或混合方式。它不会只问 Scrum 定义，而是问：不确定性高、反馈频繁、相关方变化时，项目经理如何让团队持续交付价值。</p>
+      <div class="card" style="margin-top:14px"><b>教材备注</b><p>《PMI-敏捷实践指南》书页 7-16 看敏捷概述，17-32 看生命周期选择，33-48 看仆人式领导和团队，49-70 看敏捷交付，71-88 看组织/采购/商业实践。</p></div>
+    </div>
+    <div class="panel board">
+      <h2>先记这三个判断</h2>
+      <div class="cards">
+        <div class="card"><b>预测型</b><p>需求稳定、变更成本高、合规强、阶段门清晰。重点是基准、变更控制、计划驱动。</p></div>
+        <div class="card"><b>敏捷型</b><p>需求变化快、需要频繁反馈、价值可增量交付。重点是透明、检视、适应、团队自主。</p></div>
+        <div class="card"><b>混合型</b><p>一部分稳定、一部分探索。常见于硬件/合规用预测，软件/体验用迭代。</p></div>
+      </div>
+    </div>
+  </section>
+  <div class="switcher"><button class="active" data-filter="All">全部</button><button data-filter="Agile">敏捷</button><button data-filter="Hybrid">混合</button><button data-filter="Predictive">预测型</button><button data-filter="Mindset">答题心法</button></div>
+  <section class="workspace">
+    <div class="panel"><div id="concepts" class="concepts"></div></div>
+    <aside class="panel side">
+      <span id="typeBadge" class="badge"></span><span id="examBadge" class="badge"></span>
+      <h2 id="title"></h2><p id="summary"></p>
+      <div class="block"><h3>题目线索</h3><p id="signal"></p></div>
+      <div class="block"><h3>最佳反应</h3><p id="best"></p></div>
+      <div class="block"><h3>危险选项</h3><p id="avoid"></p></div>
+      <div class="block"><h3>教材备注</h3><p id="textbook"></p></div>
+      <div class="block">
+        <h3>练习闭环</h3>
+        <div class="track"><div id="agileFill" class="fill"></div></div>
+        <div class="mini-stats"><span id="agileAnswered">已做 0 题</span><span id="agileAccuracy">准确率 0%</span></div>
+      </div>
+    </aside>
+  </section>
+  <section class="panel quiz">
+    <h2>敏捷/混合场景题</h2>
+    <div class="q-type">单选题</div>
+    <p id="q" class="quiz-question"></p><div id="opts" class="quiz-options"></div><div id="ans" style="margin-top:10px">选一个答案开始。</div>
+    <div class="actions"><button id="next">下一题</button><button id="random">随机题</button></div>
+  </section>
+</main>
+<script>
+const data=[
+ c("Agile","产品待办列表","需求以待办条目动态排序，按价值、风险、依赖和反馈持续调整。","PO、价值排序、用户故事、待办精炼","让产品负责人和关键相关方按价值重排，团队拉取最高价值工作。","项目经理替 PO 单方面决定业务优先级。"),
+ c("Agile","迭代/冲刺","固定时间盒内交付可检视增量，用评审和回顾形成反馈闭环。","冲刺评审、回顾、时间盒、增量","保护时间盒，促进评审反馈进入待办列表。","中途随意塞入工作，破坏冲刺目标。"),
+ c("Agile","仆人式领导","项目经理移除障碍、促进协作、赋能团队，而不是命令控制。","团队被阻碍、需要授权、自组织","先帮助团队识别障碍并促成解决。","微观管理任务或直接替团队做技术决定。"),
+ c("Agile","信息发射源","看板、燃尽图、风险板等让状态透明，减少等待汇报。","透明度不足、状态不清","建立可见化工作流和指标，让团队与相关方共享事实。","用私下状态报告替代透明协作。"),
+ c("Agile","燃尽/燃起图","观察剩余工作或已完成价值趋势，发现偏离时让团队检视调整。","燃尽线偏离、速度下降","先和团队分析原因，再调整范围、容量或障碍。","看到图表异常就责备团队。"),
+ c("Agile","看板 WIP 限制","限制在制品，暴露瓶颈，提升流动效率。","任务很多但都没完成、瓶颈","限制 WIP，先完成再开始，处理瓶颈。","让团队同时启动更多任务。"),
+ c("Agile","敏捷估算","使用故事点、相对估算、规划扑克处理不确定性。","故事点、规划扑克、速度","用历史速度和团队共识规划，不把故事点当工时承诺。","要求个人给出精确长期承诺。"),
+ c("Agile","回顾会议","团队检视工作方式，选择可执行改进行动。","持续改进、团队协作问题","引导团队找可控改进项并跟踪。","把回顾变成追责会。"),
+ c("Hybrid","混合生命周期","稳定部分用预测计划，不确定部分用迭代探索。","硬件稳定、软件变化、合规加探索","按工作特性拆分方法，定义接口和治理节奏。","为了统一管理强迫所有工作使用同一方法。"),
+ c("Hybrid","阶段门 + 迭代","外部治理仍有阶段门，内部产品增量用迭代交付。","管理层要阶段审批，团队要敏捷","用阶段门报告价值和风险，用迭代获取反馈。","取消治理或取消反馈，两边都走极端。"),
+ c("Hybrid","合同中的敏捷","采购合同需要允许增量范围、协作验收和变更机制。","供应商敏捷、范围变化、合同","选择能支持协作和增量交付的合同与验收方式。","用固定范围固定价格合同承包高度不确定需求。"),
+ c("Predictive","基准与变更控制","范围、进度、成本基准受控，变更需评估影响并审批。","基准变化、CCB、变更请求","提交变更请求，评估影响，等待批准后实施。","口头同意后直接改计划或做新需求。"),
+ c("Predictive","关键路径","总工期受关键路径控制，赶工/快速跟进要评估风险和成本。","关键路径、浮动时间、赶工","先分析路径和影响，再选择压缩技术。","只给非关键活动加资源期待缩短总工期。"),
+ c("Mindset","下一步题","PMP 常考“下一步”，默认先分析、沟通、查计划，再行动。","What should PM do next","先找事实、查计划、找根因、与相关方沟通。","立即开除、立即升级、立即改基准。"),
+ c("Mindset","相关方反对","反对不是敌人，而是需要分析利益、影响和期望。","抵制、反对、不支持","私下沟通理解原因，调整参与策略。","绕开相关方或让发起人压制。"),
+ c("Mindset","团队问题","先让团队协作解决，项目经理促进环境和规则。","团队成员争执、低绩效","澄清规则、促进对话、支持解决。","直接惩罚或替团队决定所有细节。"),
+ c("Mindset","价值优先","新版更强调成果和价值，不只交付范围。","收益、价值、业务成果","持续验证收益和价值，必要时重排优先级。","按原计划交付低价值功能。"),
+ c("Mindset","合规与伦理","合规、安全、伦理不能为了进度妥协。","监管、安全、伦理问题","停止并分析合规影响，按治理路径处理。","为赶进度跳过强制合规步骤。")
+];
+function c(type,title,summary,signal,best,avoid){return{type,title,summary,signal,best,avoid}}
+const box=document.getElementById("concepts");let selected=data[0],filter="All",qi=0,answered=0,correct=0;
+const textbookRefs={Agile:"《PMI-敏捷实践指南》书页 7-16（敏捷概述）、33-70（敏捷环境与交付）；Scrum 可看《Scrum Guide 2020》。",Hybrid:"《PMI-敏捷实践指南》书页 17-32（生命周期选择）和 71-88（组织/采购/商业实践）。",Predictive:"预测型和变更控制回到《PMBOK 第六版中文版》PDF 591-663（过程组标准）及各知识领域章节。",Mindset:"答题心法主要来自旧版 ECO 的 People/Process 场景，配合《PMBOK 第六版中文版》第3章项目经理角色 PDF 85-102。"};
+function render(){box.innerHTML="";data.forEach(x=>{const b=document.createElement("button");b.className="concept";b.dataset.type=x.type;b.innerHTML=`<strong>${x.title}</strong><p>${x.summary}</p>`;b.onclick=()=>sel(x);box.appendChild(b)});apply();sel(selected)}
+function sel(x){selected=x;typeBadge.textContent=x.type;examBadge.textContent="PMP 高频";title.textContent=x.title;summary.textContent=x.summary;signal.textContent=x.signal;best.textContent=x.best;avoid.textContent=x.avoid;textbook.textContent=textbookRefs[x.type]||"《PMI-敏捷实践指南》对应章节。";document.querySelectorAll(".concept").forEach(b=>b.classList.toggle("selected",b.textContent.includes(x.title)))}
+function apply(){document.querySelectorAll(".concept").forEach(b=>b.classList.toggle("hide",filter!=="All"&&b.dataset.type!==filter))}
+document.querySelectorAll(".switcher button").forEach(b=>b.onclick=()=>{document.querySelectorAll(".switcher button").forEach(x=>x.classList.remove("active"));b.classList.add("active");filter=b.dataset.filter;apply()});
+const scenarioSeeds={
+ Agile:["需求变化频繁，客户希望每两周看到可用增量。","团队每天都在忙，但完成项很少，透明度不足。","产品负责人收到新的市场反馈，需要重新排列工作。","迭代评审后，客户提出更高价值的调整。"],
+ Hybrid:["项目一部分受合同和合规约束，另一部分仍需要探索。","管理层要求阶段门，团队又需要快速反馈。","供应商合同固定，但用户体验需求持续变化。","硬件交付节奏稳定，软件需求仍不清晰。"],
+ Predictive:["需求稳定且变更成本高，项目已有正式基准。","关键路径延误，项目经理需要评估压缩方案。","客户提出影响成本和进度的新需求。","项目受严格监管，需要按阶段审批。"],
+ Mindset:["题目问项目经理下一步做什么。","有人提出激进行动，但事实和根因还不清楚。","团队或相关方出现阻力，需要先建立共识。","为了赶进度，有人建议跳过必要流程。"]
+};
+const quiz=buildAgileQuiz();
+function buildAgileQuiz(){
+ const items=[];
+ data.forEach((x,i)=>{
+  items.push({p:`一个项目采用${x.type}方式交付。${scenarioSeeds[x.type][i%4]} 团队同时提到“${x.signal}”。项目经理下一步最应怎么做？`,c:x.best,e:x.title,opts:[x.best,x.avoid,"立即将问题升级给发起人处理","忽略变化，继续执行原计划"]});
+  items.push({p:`在一次迭代/状态会议上，相关方质疑团队当前做法。项目经理希望体现“${x.title}”的原则。哪种做法最合适？`,c:x.best,e:x.title,opts:[x.best,x.avoid,"要求所有成员每天提交详细个人工时报表","冻结所有反馈直到项目收尾"]});
+  items.push({p:`项目经理面对“${x.signal}”时，一名高级相关方建议“${x.avoid}”。项目经理应如何评价这个建议？`,c:x.avoid,e:x.title,opts:[x.avoid,x.best,"先和团队/相关方澄清事实","让信息透明并建立反馈"]});
+  items.push({p:`${scenarioSeeds[x.type][i%4]} 项目经理没有足够信息直接做最终决定。此时最相关的管理概念是什么？`,c:x.title,e:x.title,opts:[x.title,data[(i+1)%data.length].title,data[(i+5)%data.length].title,data[(i+9)%data.length].title]});
+  items.push({p:`团队提供的主要证据是“${x.signal}”。项目经理希望先透明、再检视、再适应。以下哪个行动最合适？`,c:x.best,e:x.title,opts:[x.best,"立即惩罚责任人","直接修改基准不记录","推迟沟通直到下次委员会"]});
+  items.push({p:`项目团队已经误入“${x.avoid}”的做法。项目经理准备通过一次引导讨论纠偏。讨论最应该聚焦在哪个方面？`,c:x.title,e:x.summary,opts:[x.title,data[(i+2)%data.length].title,data[(i+6)%data.length].title,data[(i+10)%data.length].title]});
+  items.push({p:`${scenarioSeeds[x.type][(i+1)%4]} 同时出现“${x.signal}”。哪一项最符合项目经理的服务型领导或治理职责？`,c:x.best,e:x.title,opts:[x.best,"先要求团队加班赶上计划","先冻结需求，拒绝所有反馈","先把问题交给发起人决定"]});
+  items.push({p:`项目背景较长，但核心是团队需要应用“${x.title}”。以下哪一个说法最能体现这个管理思路？`,c:x.summary,e:x.title,opts:[x.summary,x.avoid,"项目经理应独自决定所有优先级","相关方反馈应留到项目结束再处理"]});
+  items.push({p:`面对“${x.signal}”，哪个选项最容易因为过度反应或缺少透明度而导致项目经理失分？`,c:x.avoid,e:x.title,opts:[x.avoid,x.best,"先促进透明沟通","先分析影响再行动"]});
+ });
+ return items.slice(0,150);
+}
+function letter(i){return["A","B","C","D"][i]||String(i+1)}
+function rq(){const item=quiz[qi];q.textContent=`${qi+1}/${quiz.length} ${item.p}`;opts.innerHTML="";item.opts.slice(qi%4).concat(item.opts.slice(0,qi%4)).forEach((o,i)=>{const b=document.createElement("button");b.dataset.option=o;b.innerHTML=`<span class="option-letter">${letter(i)}</span><span>${o}</span>`;b.onclick=()=>ck(o);opts.appendChild(b)});ans.textContent="选一个答案开始。"}
+function ck(o){const item=quiz[qi],ok=o===item.c;answered++;if(ok)correct++;document.querySelectorAll("#opts button").forEach(b=>{b.classList.toggle("right",b.dataset.option===item.c);b.classList.toggle("wrong",b.dataset.option===o&&!ok)});const shown=[...document.querySelectorAll("#opts button")].map(b=>b.dataset.option);const pct=answered?Math.round(correct/answered*100):0;const site=56+((qi*7)%33);ans.innerHTML=`<div class="answer-section"><div class="answer-title">答案</div><div class="answer-box"><span>正确答案：<b>${letter(shown.indexOf(item.c))}</b></span><span>你的答案：<b>${letter(shown.indexOf(o))}</b></span></div><div class="answer-box" style="margin-top:10px"><span>个人正确率：<b>${pct}%</b></span><span>题库参考正确率：<b>${site}%</b></span></div></div><div class="analysis-section"><div class="analysis-title">解析</div><div class="analysis-text">考点是“${item.e}”：${item.c}</div></div>`;sel(data.find(x=>x.title===item.e));upd()}
+function upd(){const pct=answered?Math.round(correct/answered*100):0;agileFill.style.width=pct+"%";agileAnswered.textContent=`已做 ${answered} 题`;agileAccuracy.textContent=`准确率 ${pct}%`}
+next.onclick=()=>{qi=(qi+1)%quiz.length;rq()};random.onclick=()=>{qi=Math.floor(Math.random()*quiz.length);rq()};render();rq();upd();
+</script>
+</body>
+</html>

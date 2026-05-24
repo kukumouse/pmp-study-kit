@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PMBOK 第七版 8 个绩效域交互学习</title>
+  <style>
+    :root { --ink:#172033; --muted:#607087; --line:#d7dfeb; --paper:#f6f8fc; --blue:#2563eb; --teal:#0f766e; --amber:#b45309; --rose:#be123c; --shadow:0 14px 34px rgba(22,34,55,.1); }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--paper); color:var(--ink); font-family:"Microsoft YaHei","PingFang SC","Noto Sans CJK SC",Arial,sans-serif; line-height:1.5; }
+    main { max-width:1320px; margin:0 auto; padding:24px; }
+    a { color:inherit; text-decoration:none; }
+    .nav { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:16px; }
+    .nav a { padding:8px 11px; border:1px solid var(--line); border-radius:8px; background:#fff; }
+    .panel { background:#fff; border:1px solid var(--line); border-radius:8px; box-shadow:var(--shadow); }
+    .hero { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+    .intro, .weight, .side, .section { padding:20px; }
+    h1 { margin:0 0 10px; font-size:34px; line-height:1.16; letter-spacing:0; }
+    h2 { margin:0 0 12px; font-size:20px; letter-spacing:0; }
+    h3 { margin:0 0 8px; font-size:16px; letter-spacing:0; }
+    p { margin:0; color:var(--muted); }
+    .chips { display:flex; flex-wrap:wrap; gap:8px; margin-top:14px; }
+    .chip { padding:5px 10px; border-radius:999px; border:1px solid var(--line); background:#fff; color:#314058; font-size:13px; }
+    .weights { display:grid; grid-template-columns:33fr 41fr 26fr; min-height:54px; overflow:hidden; border-radius:8px; color:#fff; font-weight:700; text-align:center; }
+    .weights span { display:grid; place-items:center; padding:8px; }
+    .people { background:var(--teal); } .process { background:var(--blue); } .business { background:var(--amber); }
+    .workspace { display:grid; grid-template-columns:minmax(700px,1fr) 360px; gap:16px; margin-top:16px; align-items:start; }
+    .domains { display:grid; grid-template-columns:repeat(4,minmax(160px,1fr)); gap:12px; padding:16px; }
+    .domain { min-height:160px; padding:14px; border:2px solid #dbeafe; border-radius:8px; background:#f8fbff; text-align:left; cursor:pointer; }
+    .domain:hover, .domain.selected { outline:3px solid rgba(37,99,235,.18); background:#fff; }
+    .domain small { display:block; margin-bottom:8px; color:var(--muted); }
+    .domain b { display:block; margin-bottom:8px; font-size:17px; }
+    .domain span { color:var(--muted); font-size:13px; }
+    .side { position:sticky; top:16px; }
+    .badge { display:inline-block; margin:0 6px 8px 0; padding:4px 8px; border-radius:999px; border:1px solid var(--line); background:#fff; color:#314058; font-size:12px; }
+    .block { margin-top:14px; padding-top:14px; border-top:1px solid var(--line); }
+    .io { display:grid; gap:8px; }
+    .io div { padding:10px; border-radius:8px; border:1px solid #e5eaf2; background:#f8fafc; color:#314058; font-size:14px; }
+    .map-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-top:12px; }
+    .map-card { padding:14px; border-radius:8px; border:1px solid var(--line); border-left:5px solid var(--blue); background:#fff; }
+    .map-card.teal { border-left-color:var(--teal); } .map-card.amber { border-left-color:var(--amber); } .map-card.rose { border-left-color:var(--rose); }
+    .map-card ul { margin:8px 0 0; padding-left:18px; color:var(--muted); font-size:14px; }
+    .quiz { margin-top:16px; }
+    .quiz-head { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:10px; }
+    .qbox { padding:14px; border-radius:8px; background:#f8fafc; border:1px solid var(--line); color:#334155; font-size:18px; line-height:1.7; }
+    .options { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:14px; }
+    .options button { display:grid; grid-template-columns:48px 1fr; align-items:center; gap:12px; min-height:58px; border:1px solid var(--line); border-radius:8px; background:#fff; text-align:left; cursor:pointer; font-size:16px; }
+    .letter { display:grid; place-items:center; width:38px; height:38px; border-radius:50%; border:1px solid #e5e7eb; color:#94a3b8; font-weight:700; }
+    .options button.right .letter { background:#10b981; color:#fff; border-color:#10b981; }
+    .options button.wrong .letter { background:#fff1f2; color:var(--rose); border-color:var(--rose); }
+    .answer { margin-top:12px; padding:14px; border-radius:8px; background:#f4f8ff; color:#334155; line-height:1.7; }
+    .actions { display:flex; gap:8px; flex-wrap:wrap; margin-top:12px; }
+    .actions button { min-height:38px; border:1px solid var(--line); border-radius:8px; background:#fff; padding:0 12px; cursor:pointer; }
+    @media (max-width:980px) { main{padding:16px;} .hero,.workspace,.domains,.map-grid,.options{grid-template-columns:1fr;} .side{position:static;} h1{font-size:30px;} }
+  </style>
+</head>
+<body>
+<main>
+  <nav class="nav">
+    <a href="pmp_2026_study_dashboard.html">驾驶舱</a>
+    <a href="pmp_49_process_flowchart.html">49 过程</a>
+    <a href="pmp_knowledge_areas_dashboard.html">十大知识领域</a>
+    <a href="pmp_exam_style_drills.html">题型训练</a>
+    <a href="pmp_exam_essentials_gap_fill.html">补齐页</a>
+  </nav>
+
+  <section class="hero">
+    <div class="panel intro">
+      <h1>PMBOK 第七版 8 个绩效域</h1>
+      <p>第七版不是把项目管理切成 49 个过程，而是让你用“绩效域”看项目是否真的能交付成果和价值。考试里它不会单独写“考绩效域”，但很多场景题的正确答案都来自这里。</p>
+      <div class="chips">
+        <span class="chip">成果导向</span>
+        <span class="chip">价值交付</span>
+        <span class="chip">裁剪方法</span>
+        <span class="chip">系统思维</span>
+      </div>
+    </div>
+    <div class="panel weight">
+      <h2>占比怎么理解</h2>
+      <p>PMP 官方考试大纲按 ECO 三大领域给权重，不按 8 个绩效域给权重。2026 年 7 月 9 日起的新考纲权重是：</p>
+      <div style="margin-top:14px" class="weights">
+        <span class="people">People 33%</span>
+        <span class="process">Process 41%</span>
+        <span class="business">Business 26%</span>
+      </div>
+      <p style="margin-top:12px">绩效域更像“解题视角”：团队和相关方常落在 People；规划、工作、交付、测量、不确定性常落在 Process；价值、收益、外部变化会落在 Business。</p>
+    </div>
+  </section>
+
+  <section class="workspace">
+    <div class="panel">
+      <div id="domainGrid" class="domains"></div>
+    </div>
+    <aside class="panel side">
+      <h2 id="sideTitle"></h2>
+      <p id="sideSummary"></p>
+      <div class="block">
+        <h3>考试触发词</h3>
+        <div id="sideTriggers"></div>
+      </div>
+      <div class="block">
+        <h3>你该怎么判断</h3>
+        <div id="sideRules" class="io"></div>
+      </div>
+      <div class="block">
+        <h3>常见陷阱</h3>
+        <div id="sideTrap" class="io"></div>
+      </div>
+      <div class="block">
+        <h3>教材备注</h3>
+        <div id="sideTextbook" class="io"></div>
+      </div>
+    </aside>
+  </section>
+
+  <section class="panel section">
+    <h2>8 个绩效域和原来知识体系怎么接上</h2>
+    <div class="map-grid">
+      <div class="map-card teal"><h3>人和协作</h3><p>相关方、团队</p><ul><li>相关方参与</li><li>团队章程/心理安全</li><li>冲突和领导力</li></ul></div>
+      <div class="map-card"><h3>怎么做项目</h3><p>开发方法、规划、项目工作</p><ul><li>预测/敏捷/混合</li><li>计划不是一次性文件</li><li>管理项目工作和知识</li></ul></div>
+      <div class="map-card amber"><h3>交付什么价值</h3><p>交付、测量</p><ul><li>不仅交范围，还要能用</li><li>指标、趋势、收益</li><li>质量和验收</li></ul></div>
+      <div class="map-card rose"><h3>不确定怎么办</h3><p>不确定性</p><ul><li>风险和机会</li><li>假设、依赖、问题</li><li>韧性和储备</li></ul></div>
+    </div>
+  </section>
+
+  <section class="panel section quiz">
+    <h2>绩效域场景判断</h2>
+    <div class="quiz-head"><span id="qDomain" class="badge"></span><span id="qCount" class="badge"></span></div>
+    <div id="qText" class="qbox"></div>
+    <div id="qOptions" class="options"></div>
+    <div id="qAnswer" class="answer">选一个答案，重点看解析里怎么把场景挂回绩效域。</div>
+    <div class="actions"><button id="nextQ">下一题</button><button id="randomQ">随机题</button></div>
+  </section>
+</main>
+
+<script>
+const domains=[
+  {name:"相关方绩效域", en:"Stakeholders", summary:"让受项目影响、能影响项目的人持续参与，并让期望、担忧、阻力和支持被主动管理。", triggers:["反对/抵触","期望不一致","参与度低","关键审批人缺席"], rules:["先识别和理解相关方的利益、影响和担忧。","用合适的沟通和参与策略，而不是只发状态报告。","当态度变化时，重新评估参与度。"], trap:["把反对者直接升级或排除。","只管高权力，忽略低权力但高知识的人。"], ref:"《PMBOK 第七版中文版》书页 8-15；旧版相关方管理看《PMBOK 第六版中文版》PDF 535-568。"},
+  {name:"团队绩效域", en:"Team", summary:"建设一个能协作、互信、自我改进并持续交付的团队。", triggers:["冲突","士气下降","不敢说真话","技能缺口","虚拟团队"], rules:["先建立心理安全和共同规则。","用辅导、培训、授权和冲突管理提升团队能力。","关注团队系统问题，不只责备个人。"], trap:["一出问题就惩罚、替换、升级。","项目经理微观管理每个任务。"], ref:"《PMBOK 第七版中文版》书页 16-31；旧版资源/团队看《PMBOK 第六版中文版》PDF 340-391。"},
+  {name:"开发方法和生命周期绩效域", en:"Development Approach and Life Cycle", summary:"根据项目不确定性、交付节奏和价值需要，选择预测、敏捷或混合方法。", triggers:["需求变化快","硬件稳定软件变化","MVP","迭代反馈","阶段门"], rules:["稳定明确的部分适合预测，不确定高的部分适合迭代。","混合项目要设计接口和节奏。","方法为价值服务，不是为了套模板。"], trap:["所有项目都用一种方法。","敏捷场景忽略合同、合规或基准约束。"], ref:"《PMBOK 第七版中文版》书页 32-50；《敏捷实践指南》书页 17-32。"},
+  {name:"规划绩效域", en:"Planning", summary:"规划是持续对齐目标、范围、进度、成本、质量、资源、沟通、风险等，而不是一次性写计划。", triggers:["计划不再适用","估算依据变化","依赖不清","成功标准不一致"], rules:["计划要与交付方法和项目环境匹配。","新信息出现时，分析影响并更新计划。","规划要覆盖如何执行、监控和变更。"], trap:["把计划当成不可变文件。","没有分析影响就直接改基准。"], ref:"《PMBOK 第七版中文版》书页 51-68；旧版各知识领域规划过程可看《PMBOK 第六版中文版》PDF 595-624。"},
+  {name:"项目工作绩效域", en:"Project Work", summary:"组织和管理项目实际工作流，包括流程、资源、采购、知识、沟通和问题处理。", triggers:["工作流混乱","问题重复","知识断层","供应商协作","流程瓶颈"], rules:["建立清晰的工作方式、责任和问题跟踪。","把经验教训用于当前项目。","让团队、供应商和组织流程协同。"], trap:["只盯任务完成，不管工作系统是否健康。","经验教训只在收尾时补表。"], ref:"《PMBOK 第七版中文版》书页 69-79；旧版执行过程组速查《PMBOK 第六版中文版》PDF 625-640。"},
+  {name:"交付绩效域", en:"Delivery", summary:"确保项目交付的成果能满足范围、质量和业务目标，真正被用户接受和使用。", triggers:["可交付成果","验收","MVP","用户不用","质量通过但不适用"], rules:["交付不是只做完范围，还要让成果可用、有价值。","确认验收标准、完成定义和质量要求。","根据反馈调整交付优先级。"], trap:["以为客户没投诉就代表成功。","只看输出数量，不看业务结果。"], ref:"《PMBOK 第七版中文版》书页 80-92；旧版范围/质量看《PMBOK 第六版中文版》PDF 163-205、304-339。"},
+  {name:"测量绩效域", en:"Measurement", summary:"用数据、指标、趋势和预测来判断项目是否健康，并支持决策。", triggers:["CPI/SPI","趋势","仪表盘","报告不支持决策","收益无法衡量"], rules:["原始数据要转成信息和报告。","指标要服务项目目标和价值。","看趋势和预测，不只看某个点。"], trap:["报告一堆数据但没有解释。","只用产出指标，不看结果指标。"], ref:"《PMBOK 第七版中文版》书页 93-115；旧版监控过程组速查《PMBOK 第六版中文版》PDF 642-660。"},
+  {name:"不确定性绩效域", en:"Uncertainty", summary:"面对风险、机会、模糊性、复杂性和外部变化，让项目保持韧性。", triggers:["假设不成立","法规变化","机会","未知问题","风险触发"], rules:["识别威胁和机会，明确触发条件和责任人。","风险发生后转为问题处理。","记录残余风险和次生风险。"], trap:["只管威胁不管机会。","风险触发后还继续观察不行动。"], ref:"《PMBOK 第七版中文版》书页 116-129；旧版风险管理看《PMBOK 第六版中文版》PDF 427-490。"}
+];
+
+const quiz=[
+  q("相关方绩效域","上线前，一个运营经理突然反对上线。项目经理发现他的团队将承担支持工作，但之前没有参加过移交评审。项目经理首先应该做什么？",["要求发起人命令其支持上线","了解运营经理担忧并评估移交准备度","按原计划上线，因为反对太晚","把运营经理加入状态报告抄送"],1,"这不是单纯反对，而是参与不足和移交风险。绩效域视角是：相关方参与要服务项目成果，先理解担忧和准备度，再决定上线策略。"),
+  q("团队绩效域","团队成员不愿在回顾会上提出问题，因为过去提出问题的人会被责备。项目经理应该优先改善什么？",["会议频率","心理安全和非责备式改进氛围","项目进度基准","供应商合同条款"],1,"团队绩效域强调协作、信任和安全表达。没有心理安全，回顾会就变成形式。"),
+  q("开发方法和生命周期绩效域","一个项目的硬件采购合同稳定，但用户界面需求每周变化。最合适的管理思路是？",["全部预测型","全部敏捷，不再管合同","硬件预测，界面迭代，并定义接口治理","暂停项目直到需求稳定"],2,"这是典型混合。绩效域要求按不确定性和交付节奏裁剪方法。"),
+  q("规划绩效域","项目执行中出现新法规，影响已批准的交付方案。项目经理已经确认法规适用。下一步最合适的是？",["直接让团队返工","分析影响并按变更流程更新相关计划","忽略法规直到客户要求","只更新风险登记册"],1,"规划是动态的。新约束影响方案时，要分析对范围、进度、成本、质量等影响，并按治理更新计划。"),
+  q("项目工作绩效域","项目经理发现不同小组分别维护问题清单，导致重复处理和遗漏。应该怎么做？",["让每组继续自治","建立统一问题管理、责任人和优先级机制","把所有问题都升级给发起人","删除低优先级问题"],1,"项目工作绩效域看的是工作系统是否顺畅。统一问题机制能减少浪费和遗漏。"),
+  q("交付绩效域","团队完成了全部合同范围，但上线后用户很少使用。最能反映第七版思维的问题是？",["范围是否做完","成果是否被采用并产生预期价值","团队是否加班","文档是否足够厚"],1,"交付绩效域关注成果和价值，不只是输出。"),
+  q("测量绩效域","状态报告有很多原始数据，但高层仍不知道项目是否需要干预。项目经理应该怎么做？",["继续增加数据表","把数据转化为趋势、偏差、预测和建议","停止报告","只报告绿色状态"],1,"测量绩效域强调指标要支持决策。WPD 要加工为 WPI/WPR。"),
+  q("不确定性绩效域","一个风险触发条件已经出现，但损失还没真正发生。团队建议继续观察。项目经理应该怎么做？",["按应对计划启动行动或重新评估","等损失发生再处理","删除触发条件","把风险交给客户"],0,"触发条件就是提前行动的信号。不确定性绩效域强调韧性和主动应对。"),
+  q("测量绩效域","项目 CPI 良好、SPI 也良好，但业务收益指标连续下降。项目经理最应该关注什么？",["项目很健康，不用行动","复核项目价值假设和收益实现路径","立即削减预算","只把收益下降写入经验教训"],1,"第七版把项目成功从铁三角扩展到价值和结果。进度成本好，不代表业务价值好。"),
+  q("开发方法和生命周期绩效域","客户要求每个小功能都走完整合同验收，敏捷团队反馈周期被严重拖慢。项目经理应该怎么做？",["取消所有验收","与客户设计适合迭代反馈和正式验收的混合机制","让团队私下发布","把项目改回完全瀑布"],1,"混合不是互相打架，而是设计节奏接口：迭代反馈可以频繁，正式验收可在合适节点。"),
+  q("项目工作绩效域","一名关键专家离开项目后，团队发现很多设计决策没有记录。项目经理应吸取什么教训？",["专家越多越好","项目工作需要知识管理和可持续交接","所有决策都应由项目经理独自做","不要使用专家"],1,"项目工作绩效域包含知识管理。项目不能让关键知识只存在个人脑子里。"),
+  q("交付绩效域","客户说产品通过测试，但现场网络差导致无法稳定使用。需求中没有写网络差的场景。项目经理首先应该做什么？",["要求客户接受测试结果","澄清实际使用场景并评估需求/质量差距","立即重做所有功能","关闭项目"],1,"交付绩效域提醒你：可交付成果必须适合真实使用环境。先澄清差距和影响。")
+];
+quiz.push(...[
+  q("相关方绩效域","一个低权力现场员工指出新流程会导致每天多录入 30 分钟，但部门经理认为这不重要。项目经理应该怎么做？",["忽略该员工，因为权力低","验证现场反馈并评估对采用和价值的影响","只听部门经理意见","要求员工上线后再反馈"],1,"第七版相关方视角不只看权力，也看知识和受影响程度。现场反馈可能直接影响采用。"),
+  q("团队绩效域","团队成员在会议上都表示同意，但会后各自按不同理解执行。项目经理应该优先做什么？",["增加会议频率","在会议结束前确认共同理解、决策和行动项","要求每个人写日报","只让职能经理分配任务"],1,"团队绩效域关注协作质量。表面同意不等于真正对齐，必须确认行动项和共同理解。"),
+  q("开发方法和生命周期绩效域","客户需要尽快验证市场假设，但完整产品需要 9 个月才能完成。最合适的思路是？",["等待完整产品再发布","考虑增量或 MVP 方式验证价值","取消项目","只做详细计划"],1,"生命周期选择要服务价值和学习速度。不确定市场假设适合用增量验证。"),
+  q("规划绩效域","项目管理计划已批准。执行中发现关键假设不成立，会影响成本和进度。项目经理首先应该做什么？",["立即修改基准","分析影响并准备必要的变更","忽略假设变化","要求团队按原计划完成"],1,"规划绩效域不是死守计划，而是用新信息调整。先分析影响，再走相应治理。"),
+  q("项目工作绩效域","团队反复解决同类缺陷，但没有人分析为什么它们不断出现。项目经理应该关注什么？",["缺陷修复速度","工作过程和根因改进","增加更多测试人员","减少缺陷记录"],1,"项目工作绩效域看工作系统。反复问题说明流程或知识管理需要改进。"),
+  q("交付绩效域","项目按时发布，但客服工单数量大幅增加。团队认为发布成功，因为范围全部完成。项目经理应该怎么判断？",["发布成功，范围完成即可","交付结果可能没有达到可用和价值目标","只要客户没拒收就成功","客服工单不属于项目"],1,"交付绩效域关注成果是否可用、是否带来预期价值。工单增加是重要反馈。"),
+  q("测量绩效域","项目仪表盘显示很多活动完成率，但没有展示风险趋势和业务收益。项目经理应该怎么做？",["继续使用现有仪表盘","补充能支持决策的趋势、预测和价值指标","删除所有活动指标","只报告预算"],1,"测量绩效域强调指标要支持决策，而不是堆数据。"),
+  q("不确定性绩效域","团队发现一个机会可以提前交付部分成果，但会影响一个低优先级功能。项目经理应该怎么做？",["直接执行机会","评估机会收益、影响和相关方期望后决策","放弃机会","让团队自行删除功能"],1,"不确定性包含机会。机会也要分析收益、代价和影响。"),
+  q("相关方绩效域","一位关键审批人很少参加会议，但其批准是上线前必需的。项目经理应该怎么做？",["等上线前再找他","主动确认其期望、审批标准和参与方式","假设不反对就是同意","让客户代替审批"],1,"关键相关方低参与会形成后期风险，应主动管理参与。"),
+  q("团队绩效域","项目经理发现团队成员不敢报告坏消息，因为担心被责备。最合适的行动是？",["减少状态报告","建立透明、非惩罚的风险和问题报告氛围","要求只私下报告坏消息","惩罚曾经隐瞒的人"],1,"团队绩效域强调心理安全。坏消息早暴露才能早处理。"),
+  q("开发方法和生命周期绩效域","项目采用敏捷，但监管要求每个正式版本必须保留审计记录。团队认为敏捷不需要文档。项目经理应该怎么做？",["取消审计记录","裁剪敏捷实践，同时满足必要合规工件","改成完全瀑布","让监管部门不要介入"],1,"裁剪不是不要治理。开发方法要适应监管环境。"),
+  q("规划绩效域","一个项目计划非常详细，但团队说计划无法反映快速变化的客户优先级。项目经理应该怎么做？",["要求团队严格按计划执行","调整规划方式，使计划与变化节奏匹配","取消所有计划","让客户不要改优先级"],1,"规划要匹配项目环境。高变化场景需要滚动式、适应性规划。"),
+  q("项目工作绩效域","供应商、内部团队和客户各自使用不同问题编号，导致跟踪混乱。项目经理应该做什么？",["让各方保持自己的编号","建立统一跟踪机制或映射规则","只跟踪内部问题","把问题全部发给供应商"],1,"项目工作绩效域关注工作流和协作系统，统一问题跟踪能减少遗漏。"),
+  q("交付绩效域","团队交付了一个功能，客户代表签收了，但最终用户反馈流程不符合日常工作。项目经理下一步应该做什么？",["认为签收后不再处理","分析用户反馈与验收标准/价值目标的差距","要求用户适应系统","关闭项目"],1,"交付绩效域要求关注真实用户和价值。签收不是唯一成功指标。"),
+  q("测量绩效域","CPI 和 SPI 都正常，但缺陷趋势连续上升。项目经理应该怎么做？",["认为项目健康","把质量趋势纳入绩效分析并采取措施","只关注成本进度","等客户投诉后再处理"],1,"测量绩效域要多维度看健康状态。成本进度好不能掩盖质量恶化。"),
+  q("不确定性绩效域","一个风险应对措施降低了进度风险，但增加了安全风险。项目经理应该怎么做？",["只关注原风险","记录并分析次生风险","取消所有应对措施","让安全团队自己负责"],1,"不确定性绩效域强调残余风险和次生风险。"),
+  q("相关方绩效域","项目需要改变一线人员工作方式。培训后仍有人绕回旧流程。项目经理应该怎么做？",["认为培训完成，项目责任结束","分析采用障碍并制定强化参与和支持措施","处罚所有未使用者","删除旧流程文档"],1,"相关方绩效域和变革原则都强调采用，不是培训完成就结束。"),
+  q("团队绩效域","一个专家经常指出方案风险，但表达方式让团队成员不愿发言。项目经理应该怎么做？",["让专家停止发言","建立建设性评审规则，保留风险识别同时保护参与","让专家独自决策","忽略团队感受"],1,"团队绩效域不是压制专业意见，而是改善协作方式。"),
+  q("开发方法和生命周期绩效域","项目初期需求模糊，但后期必须通过阶段门审批。项目经理应该考虑什么？",["前期探索迭代，后期阶段门治理的混合方式","全程不做计划","全程严格瀑布","只听客户临时决定"],0,"生命周期可以混合设计，前期学习，后期治理。"),
+  q("规划绩效域","项目经理发现相关方对“成功”的定义不同。销售看收入，运营看稳定性，客户看体验。项目经理应该做什么？",["让各方保留自己的定义","促成共同成功标准和衡量指标","只采用发起人的定义","等收尾时再统一"],1,"规划绩效域要对齐目标和衡量方式，否则后续交付和验收会冲突。"),
+  q("项目工作绩效域","团队把经验教训只留到项目结束填写。执行中同类沟通问题反复出现。项目经理应该怎么做？",["保持收尾时再总结","在执行中持续记录并应用经验教训","取消经验教训","让 PMO 负责所有沟通"],1,"管理项目知识是持续过程，经验教训要用于当前项目。"),
+  q("交付绩效域","MVP 发布后用户反馈最核心假设不成立。项目经理应该怎么做？",["继续完整路线图","与产品负责人和相关方重新评估价值和路线图","隐藏反馈","要求团队提高速度"],1,"MVP 的意义是学习。假设不成立时应调整价值方向。"),
+  q("测量绩效域","团队报告所有任务 90% 完成已持续三周。项目经理应该怎么做？",["接受报告","核实完成标准和剩余工作，改进测量方式","把任务改成 100%","取消进度跟踪"],1,"测量绩效域要求指标真实可用。长期 90% 是假进度信号。"),
+  q("不确定性绩效域","项目依赖一个外部接口，多个风险都指向这个接口。项目经理应该如何看待？",["分别登记即可","识别共同依赖和集中风险，规划整体应对","删除低概率风险","等接口团队通知"],1,"复杂不确定性往往来自依赖和关联风险，不能只孤立看单个风险。"),
+  q("相关方绩效域","一个相关方反对项目，是因为担心项目会减少其部门预算。项目经理应该怎么做？",["把他归为消极相关方并忽略","识别利益影响并与发起人制定参与和变革策略","发更多状态报告","要求其服从组织战略"],1,"真实利益受损不能只靠解释，要设计参与和变革支持。"),
+  q("团队绩效域","虚拟团队跨时区协作，某地区成员总在深夜参会，参与度下降。项目经理应该怎么做？",["要求他们适应","协商更公平的同步/异步沟通方式","取消所有会议","只让该地区负责人参会"],1,"团队绩效域强调包容、公平参与和有效协作。"),
+  q("开发方法和生命周期绩效域","项目需求稳定、技术成熟、合同固定，客户要求详细里程碑。哪种方式更合适？",["预测型或以预测型为主","完全敏捷","不做计划","只做 MVP"],0,"低不确定性、合同固定、里程碑明确时，预测型可能更适合。"),
+  q("规划绩效域","项目经理发现风险管理计划没有定义风险阈值。团队对哪些风险要升级争论不休。应该怎么做？",["由项目经理凭感觉决定","补充风险阈值和升级标准","升级所有风险","忽略低概率风险"],1,"规划绩效域要求计划指导后续执行和监控。阈值不清会导致判断不一致。"),
+  q("项目工作绩效域","采购团队和开发团队没有同步供应商交付状态，导致开发等待材料。项目经理应该关注什么？",["单个团队效率","跨职能工作流和依赖管理","只惩罚采购团队","要求开发团队自己采购"],1,"项目工作绩效域看整体工作流和依赖，不只是某个团队。"),
+  q("交付绩效域","项目交付物质量合格，但组织没有准备好接收和运营。项目经理应该怎么做？",["按期移交即可","评估组织准备度并协调移交支持","让运营部门自己解决","关闭项目"],1,"交付绩效域包括让成果可被接收、运营和产生价值。"),
+  q("测量绩效域","项目经理只用燃尽图判断敏捷项目健康，但用户满意度持续下降。应该补充什么？",["更多燃尽图","价值、质量和用户反馈指标","个人利用率","会议次数"],1,"单一指标会误导。测量要覆盖价值、质量、流动和反馈。"),
+  q("不确定性绩效域","项目环境高度复杂，各方对因果关系判断不同。项目经理应该避免什么？",["小步试验和反馈","直接采用单一确定性方案并强推","让相关方参与学习","持续调整"],1,"复杂环境下不能假装确定，应通过试验、反馈和适应降低不确定性。"),
+  q("相关方绩效域","客户代表频繁改变意见，但最终用户没有参与。项目经理应该怎么做？",["只听客户代表","扩大用户代表性并验证需求优先级","拒绝所有变化","让团队自己决定"],1,"相关方参与要保证代表性，否则会造成返工和价值偏差。"),
+  q("团队绩效域","团队加班很多，短期进度恢复，但缺陷率上升。项目经理应该怎么判断？",["加班有效，继续","疲劳和质量风险正在损害团队绩效","删除缺陷指标","要求测试团队负责"],1,"团队绩效域重视可持续节奏和质量，不能只看短期产出。"),
+  q("开发方法和生命周期绩效域","项目经理在所有项目中强制使用同一套模板。新项目是高度创新研发，团队觉得模板过重。应该怎么做？",["继续强制，保持一致","根据项目复杂性和不确定性裁剪工件和方法","取消所有治理","只由团队口头沟通"],1,"第七版强调裁剪。治理要足够但不过度。"),
+  q("规划绩效域","团队认为计划只属于项目经理，因此很少参与估算。结果承诺总是不现实。项目经理应该怎么做？",["自己继续估算","让团队参与规划和估算，提升承诺质量","取消估算","让客户估算"],1,"规划绩效域强调协作式规划。执行团队参与能提高可行性。"),
+  q("项目工作绩效域","一个重要问题已经超出项目经理权限，会影响组织级资源。项目经理应该怎么做？",["继续自己处理","按治理路径升级，并附影响分析和建议","隐藏问题","让团队投票"],1,"升级是项目工作的一部分，不是甩锅。要带着分析和建议。"),
+  q("交付绩效域","客户要求提前发布一个最小版本，部分非核心功能未完成。项目经理应该怎么做？",["评估最小可发布范围、风险和价值","拒绝提前发布","发布所有未完成功能","取消质量检查"],0,"交付绩效域支持基于价值的增量交付，但要评估风险和质量。"),
+  q("测量绩效域","项目经理发现报告总是绿色，但实际问题很多。团队说绿色能避免高层干预。应该怎么做？",["保持绿色","建立真实透明的状态和升级机制","取消状态颜色","只在项目结束报告"],1,"测量绩效域要求真实可用的信息，粉饰状态会破坏决策。"),
+  q("不确定性绩效域","一个未知问题消耗了大量管理储备。项目经理下一步应该做什么？",["只记录实际成本","评估剩余储备和项目风险敞口","隐藏储备使用","取消风险审查"],1,"不确定性绩效域要求持续看储备、风险敞口和韧性。"),
+  q("相关方绩效域","用户参加培训后仍不愿使用新系统，因为旧绩效指标鼓励旧流程。项目经理应该怎么做？",["重复培训","与业务负责人评估绩效指标和采用障碍","处罚用户","关闭项目"],1,"相关方和变革问题常在激励机制。培训不是万能药。"),
+  q("团队绩效域","项目经理发现团队成员总是等他批准每个小决定。应该怎么做？",["继续亲自批准","明确授权边界并鼓励团队在边界内决策","要求职能经理批准","停止回答问题"],1,"团队绩效域强调授权和能力建设，而不是微观管理。"),
+  q("项目工作绩效域","团队使用 AI 生成需求摘要，但没有人验证准确性。项目经理应该怎么做？",["直接使用 AI 输出","建立验证、隐私和责任机制","禁止所有 AI","让客户自己验证"],1,"项目工作绩效域和 2026 新考点结合：AI 可用，但要治理和验证。"),
+  q("测量绩效域","项目经理想衡量组织变革是否成功。最有用的指标是？",["培训场次数量","新流程采用率和业务结果变化","会议次数","项目文档页数"],1,"测量绩效域强调结果指标。培训场次只是活动，不代表采用。")
+]);
+
+function q(domain,text,options,correct,explain){return{domain,text,options,correct,explain}}
+const grid=document.getElementById("domainGrid");
+const sideTitle=document.getElementById("sideTitle");
+const sideSummary=document.getElementById("sideSummary");
+const sideTriggers=document.getElementById("sideTriggers");
+const sideRules=document.getElementById("sideRules");
+const sideTrap=document.getElementById("sideTrap");
+const sideTextbook=document.getElementById("sideTextbook");
+let selected=0, qi=0;
+function renderDomains(){
+  grid.innerHTML="";
+  domains.forEach((d,index)=>{
+    const btn=document.createElement("button");
+    btn.className="domain"+(index===selected?" selected":"");
+    btn.innerHTML=`<small>${index+1}. ${d.en}</small><b>${d.name}</b><span>${d.summary}</span>`;
+    btn.onclick=()=>{selected=index;renderDomains();renderSide()};
+    grid.appendChild(btn);
+  });
+}
+function renderSide(){
+  const d=domains[selected];
+  sideTitle.textContent=d.name;
+  sideSummary.textContent=d.summary;
+  sideTriggers.innerHTML=d.triggers.map(t=>`<span class="badge">${t}</span>`).join("");
+  sideRules.innerHTML=d.rules.map(r=>`<div>${r}</div>`).join("");
+  sideTrap.innerHTML=d.trap.map(r=>`<div>${r}</div>`).join("");
+  sideTextbook.innerHTML=`<div>${d.ref}</div>`;
+}
+const qDomain=document.getElementById("qDomain");
+const qCount=document.getElementById("qCount");
+const qText=document.getElementById("qText");
+const qOptions=document.getElementById("qOptions");
+const qAnswer=document.getElementById("qAnswer");
+function letter(n){return["A","B","C","D"][n]}
+function renderQuiz(){
+  const item=quiz[qi];
+  qDomain.textContent=item.domain;
+  qCount.textContent=`${qi+1}/${quiz.length}`;
+  qText.textContent=item.text;
+  qOptions.innerHTML="";
+  qAnswer.textContent="选一个答案，重点看解析里怎么把场景挂回绩效域。";
+  item.options.forEach((option,index)=>{
+    const btn=document.createElement("button");
+    btn.innerHTML=`<span class="letter">${letter(index)}</span><span>${option}</span>`;
+    btn.onclick=()=>check(index);
+    qOptions.appendChild(btn);
+  });
+}
+function check(index){
+  const item=quiz[qi];
+  qOptions.querySelectorAll("button").forEach((btn,i)=>{
+    btn.classList.toggle("right",i===item.correct);
+    btn.classList.toggle("wrong",i===index && i!==item.correct);
+  });
+  qAnswer.innerHTML=`<b>正确答案：${letter(item.correct)}</b><br>${item.explain}`;
+}
+document.getElementById("nextQ").onclick=()=>{qi=(qi+1)%quiz.length;renderQuiz()};
+document.getElementById("randomQ").onclick=()=>{qi=Math.floor(Math.random()*quiz.length);renderQuiz()};
+renderDomains();renderSide();renderQuiz();
+</script>
+</body>
+</html>

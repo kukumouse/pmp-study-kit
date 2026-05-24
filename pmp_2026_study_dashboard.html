@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PMP 2026 交互备考驾驶舱</title>
+  <style>
+    :root {
+      --ink: #172033;
+      --muted: #607087;
+      --line: #d7dfeb;
+      --paper: #f6f8fc;
+      --panel: #fff;
+      --blue: #2563eb;
+      --teal: #0f766e;
+      --amber: #b45309;
+      --rose: #be123c;
+      --green: #15803d;
+      --shadow: 0 14px 34px rgba(22, 34, 55, 0.1);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        linear-gradient(90deg, rgba(37, 99, 235, .05) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(15, 118, 110, .04) 1px, transparent 1px),
+        var(--paper);
+      background-size: 30px 30px;
+      font-family: "Microsoft YaHei", "PingFang SC", "Noto Sans CJK SC", Arial, sans-serif;
+      line-height: 1.5;
+    }
+    main { max-width: 1240px; margin: 0 auto; padding: 28px; }
+    a { color: inherit; text-decoration: none; }
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(300px, 1.1fr) minmax(420px, 1.6fr);
+      gap: 18px;
+      align-items: stretch;
+    }
+    .panel {
+      background: rgba(255,255,255,.94);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+    }
+    .intro { padding: 24px; }
+    h1 { margin: 0 0 10px; font-size: 36px; line-height: 1.16; letter-spacing: 0; }
+    h2 { margin: 0 0 12px; font-size: 20px; letter-spacing: 0; }
+    h3 { margin: 0 0 8px; font-size: 16px; letter-spacing: 0; }
+    p { margin: 0; color: var(--muted); }
+    .pill-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 32px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: #fff;
+      color: #314058;
+      font-size: 13px;
+    }
+    .timeline { padding: 20px; }
+    .bar {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 14px;
+    }
+    .date-card {
+      min-height: 116px;
+      padding: 14px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: #f8fafc;
+    }
+    .date-card strong { display: block; margin-bottom: 6px; font-size: 18px; }
+    .date-card.new { border-color: rgba(37,99,235,.35); background: #eef5ff; }
+    .date-card.current { border-color: rgba(21,128,61,.38); background: #effdf4; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(220px, 1fr));
+      gap: 16px;
+      margin-top: 18px;
+    }
+    .card {
+      display: flex;
+      flex-direction: column;
+      min-height: 260px;
+      padding: 18px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: #fff;
+      box-shadow: 0 8px 20px rgba(22, 34, 55, .07);
+    }
+    .card:hover { border-color: rgba(37,99,235,.5); transform: translateY(-1px); }
+    .tag {
+      width: fit-content;
+      margin-bottom: 12px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: #eef5ff;
+      color: #1746a2;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .card p { font-size: 14px; }
+    .card ul {
+      margin: 12px 0 0;
+      padding-left: 18px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .open {
+      margin-top: auto;
+      min-height: 40px;
+      display: grid;
+      place-items: center;
+      border-radius: 8px;
+      background: var(--ink);
+      color: #fff;
+      font-weight: 700;
+      pointer-events: none;
+    }
+    .strategy {
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 18px;
+      margin-top: 18px;
+    }
+    .strategy .panel { padding: 20px; }
+    .weights {
+      display: grid;
+      grid-template-columns: 42fr 50fr 8fr;
+      min-height: 54px;
+      border-radius: 8px;
+      overflow: hidden;
+      color: #fff;
+      font-weight: 700;
+      text-align: center;
+    }
+    .weights span { display: grid; place-items: center; padding: 8px; }
+    .people { background: var(--teal); }
+    .process { background: var(--blue); }
+    .business { background: var(--amber); }
+    .rules {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-top: 12px;
+    }
+    .rule {
+      padding: 12px;
+      border-left: 4px solid var(--blue);
+      background: #f8fafc;
+      border-radius: 4px;
+      font-size: 14px;
+      color: #314058;
+    }
+    footer {
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    footer a { color: var(--blue); text-decoration: underline; }
+    @media (max-width: 980px) {
+      main { padding: 16px; }
+      .hero, .grid, .strategy, .bar, .rules { grid-template-columns: 1fr; }
+      h1 { font-size: 30px; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="hero">
+      <div class="panel intro">
+        <h1>PMP 考前交互备考驾驶舱</h1>
+        <p>你是在 2026 年 7 月 9 日新版启用前考试，所以这套页面现在按旧版 PMP 优先级使用：49 过程、十大知识领域、People/Process 场景题、敏捷/混合判断是主线。</p>
+        <div class="pill-row">
+          <span class="pill">旧版 ECO：People 42%</span>
+          <span class="pill">Process 50%</span>
+          <span class="pill">Business 8%</span>
+          <span class="pill">敏捷/混合仍高频穿插</span>
+        </div>
+      </div>
+      <div class="panel timeline">
+        <h2>先确认你考哪一版</h2>
+        <p>PMI 官方说明：新版 PMP 考试在 2026 年 7 月 9 日启用。你如果正好 7 月考试，这个日期非常关键。</p>
+        <div class="bar">
+          <div class="date-card current">
+            <strong>2026-07-08 及以前</strong>
+            <p>你的情况：按旧版准备。People 42%、Process 50%、Business 8%。不要把 AI/可持续这些新版增量当主菜。</p>
+          </div>
+          <div class="date-card new">
+            <strong>2026-07-09 起</strong>
+            <p>新版才明显提高 Business Environment，占比到 26%，并更强调 AI、可持续、业务环境变化。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid" aria-label="学习模块">
+      <a class="card" href="pmp_pre_july_old_exam_plan.html">
+        <span class="tag">旧版优先</span>
+        <h3>7月前考试复习路径</h3>
+        <p>按 2026 年 7 月 9 日前旧版 PMP 权重安排：Process 50%、People 42%、Business 8%。</p>
+        <ul>
+          <li>每天先刷题型训练</li>
+          <li>49 过程和十大领域优先</li>
+          <li>新版增量只做补充</li>
+        </ul>
+        <span class="open">打开</span>
+      </a>
+      <a class="card" href="pmp_49_process_flowchart.html">
+        <span class="tag">已完成</span>
+        <h3>49 个管理过程地图</h3>
+        <p>保留现有页面：过程矩阵、前后因果、200 题、掌握度闭环。</p>
+        <ul>
+          <li>预测型/过程组骨架</li>
+          <li>输入输出与上下游</li>
+          <li>质量、变更、相关方链</li>
+        </ul>
+        <span class="open">打开</span>
+      </a>
+      <a class="card" href="pmp_2026_eco_interactive.html">
+        <span class="tag">低优先级</span>
+        <h3>2026 ECO 三大领域</h3>
+        <p>新版页面保留作补充。你考旧版时，不要按这里的 33/41/26 权重安排主复习。</p>
+        <ul>
+          <li>26 个任务</li>
+          <li>任务线索与误区</li>
+          <li>领域权重训练</li>
+        </ul>
+        <span class="open">打开</span>
+      </a>
+      <a class="card" href="pmp_agile_hybrid_playbook.html">
+        <span class="tag">新增</span>
+        <h3>敏捷/混合与价值交付</h3>
+        <p>把新版考试高频的敏捷、混合、价值、团队自组织、阻碍移除做成交互判断。</p>
+        <ul>
+          <li>敏捷 vs 预测 vs 混合</li>
+          <li>仆人式领导与团队</li>
+          <li>燃尽图、看板、迭代</li>
+        </ul>
+        <span class="open">打开</span>
+      </a>
+      <a class="card" href="pmp_exam_style_drills.html">
+        <span class="tag">新增</span>
+        <h3>考试题型训练</h3>
+        <p>模拟新版题感：场景题、案例题、图表题、匹配题、下一步题。</p>
+        <ul>
+          <li>先分析再选择</li>
+          <li>排除危险选项</li>
+          <li>形成 PMP 答题直觉</li>
+        </ul>
+        <span class="open">打开</span>
+      </a>
+      <a class="card" href="pmp_pmbok7_performance_domains.html">
+        <span class="tag">补充</span>
+        <h3>PMBOK 8 个绩效域</h3>
+        <p>补齐第七版的底层思维：相关方、团队、开发方法、规划、项目工作、交付、测量、不确定性。</p>
+        <ul>
+          <li>绩效域和 ECO 权重关系</li>
+          <li>场景题触发词</li>
+          <li>8 个绩效域判断练习</li>
+        </ul>
+        <span class="open">打开</span>
+      </a>
+      <a class="card" href="pmp_exam_essentials_gap_fill.html">
+        <span class="tag">补充</span>
+        <h3>原则/公式/伦理/新考点</h3>
+        <p>旧版考试也要掌握公式、伦理和原则。AI/可持续只当低频补充，不抢主线时间。</p>
+        <ul>
+          <li>十二原则速记</li>
+          <li>公式与指标判断</li>
+          <li>2026 新关注点</li>
+        </ul>
+        <span class="open">打开</span>
+      </a>
+      <a class="card" href="pmp_resource_management_flow.html">
+        <span class="tag">专项</span>
+        <h3>资源管理关系图</h3>
+        <p>根据通关宝典资源管理章节整理，专门攻克资源管理计划、团队章程、建设团队、管理团队、控制资源这些绕弯题。</p>
+        <ul>
+          <li>6 个过程主线</li>
+          <li>高频混淆边界</li>
+          <li>考试化判断口诀</li>
+        </ul>
+        <span class="open">打开</span>
+      </a>
+      <a class="card" href="pmp_knowledge_areas_dashboard.html">
+        <span class="tag">专项合集</span>
+        <h3>十大知识领域导航</h3>
+        <p>把整合、范围、进度、成本、质量、资源、沟通、风险、采购、相关方都整理成关系流程图。</p>
+        <ul>
+          <li>每个领域一张主线图</li>
+          <li>前后步骤与考试触发词</li>
+          <li>高频易混边界</li>
+        </ul>
+        <span class="open">打开</span>
+      </a>
+    </section>
+
+    <section class="strategy">
+      <div class="panel">
+        <h2>旧版考前权重怎么安排</h2>
+        <div class="weights">
+          <span class="people">People 42%</span>
+          <span class="process">Process 50%</span>
+          <span class="business">Business 8%</span>
+        </div>
+        <div class="rules">
+          <div class="rule">Process 仍是最大头：49 过程、变更、风险、质量、范围、进度、采购要稳。</div>
+          <div class="rule">People 很重：团队、冲突、相关方、沟通、仆人式领导、授权和心理安全要多刷。</div>
+          <div class="rule">Business 只有 8%，但商业论证、收益、合规、价值仍会穿插在场景题里。</div>
+          <div class="rule">第七版绩效域、AI/可持续页面作为补充理解，不要挤掉 49 过程和题型训练时间。</div>
+        </div>
+      </div>
+      <div class="panel">
+        <h2>答题总原则</h2>
+        <div class="rules">
+          <div class="rule">先沟通、先分析、先找根因，再行动。</div>
+          <div class="rule">基准变化走变更控制；团队问题先协作解决。</div>
+          <div class="rule">敏捷场景优先透明、反馈、价值、团队自主。</div>
+          <div class="rule">不要越级、不要甩锅、不要立刻惩罚、不要私自改计划。</div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      依据 PMI 官方页面和 2026 PMP Examination Content Outline 制作。参考：
+      <a href="https://www.pmi.org/certifications/project-management-pmp/new-exam">PMI New PMP Exam</a>，
+      <a href="https://www.pmi.org/-/media/pmi/documents/public/pdf/certifications/new-pmp-examination-content-outline-2026.pdf">PMI 2026 ECO PDF</a>。
+    </footer>
+  </main>
+</body>
+</html>

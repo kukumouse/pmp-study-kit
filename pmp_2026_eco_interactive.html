@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PMP 2026 ECO 三大领域交互图</title>
+  <style>
+    :root{--ink:#172033;--muted:#617089;--line:#d7dfeb;--paper:#f6f8fc;--panel:#fff;--blue:#2563eb;--teal:#0f766e;--amber:#b45309;--rose:#be123c;--shadow:0 14px 34px rgba(22,34,55,.1)}
+    *{box-sizing:border-box}body{margin:0;color:var(--ink);background:var(--paper);font-family:"Microsoft YaHei","PingFang SC","Noto Sans CJK SC",Arial,sans-serif;line-height:1.48}a{color:inherit}main{max-width:1440px;margin:0 auto;padding:24px}.nav{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}.nav a{padding:8px 11px;border:1px solid var(--line);border-radius:8px;background:#fff;text-decoration:none}.panel{background:rgba(255,255,255,.96);border:1px solid var(--line);border-radius:8px;box-shadow:var(--shadow)}.hero{display:grid;grid-template-columns:minmax(320px,.9fr) minmax(540px,1.7fr);gap:16px}.intro{padding:22px}h1{margin:0 0 10px;font-size:34px;line-height:1.16;letter-spacing:0}h2{margin:0 0 12px;font-size:20px;letter-spacing:0}h3{margin:0 0 8px;font-size:16px;letter-spacing:0}p{margin:0;color:var(--muted)}.weights{display:grid;grid-template-columns:33fr 41fr 26fr;margin-top:16px;border-radius:8px;overflow:hidden;color:#fff;font-weight:700;text-align:center}.weights span{padding:12px 8px}.people{background:var(--teal)}.process{background:var(--blue)}.business{background:var(--amber)}.summary{padding:18px}.domain-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.domain-card{border:1px solid var(--line);border-radius:8px;padding:14px;background:#f8fafc}.domain-card strong{display:block;margin-bottom:6px}.workspace{display:grid;grid-template-columns:minmax(780px,1fr) 370px;gap:16px;margin-top:16px;align-items:start}.filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}.filters button{min-height:38px;border:1px solid var(--line);border-radius:8px;background:#fff;padding:0 12px;cursor:pointer}.filters button.active{border-color:var(--blue);background:#eef5ff;color:#1746a2}.task-grid{display:grid;grid-template-columns:repeat(2,minmax(260px,1fr));gap:10px;padding:16px}.task{border:1px solid var(--line);border-left:6px solid var(--blue);border-radius:8px;background:#fff;padding:12px;text-align:left;cursor:pointer}.task:hover,.task.selected{outline:3px solid rgba(37,99,235,.18)}.task small{display:block;color:var(--muted);margin-bottom:5px}.task[data-domain="People"]{border-left-color:var(--teal)}.task[data-domain="Process"]{border-left-color:var(--blue)}.task[data-domain="Business"]{border-left-color:var(--amber)}.task.hide{display:none}.side{position:sticky;top:16px;padding:18px}.badge-row{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:12px}.badge{padding:4px 8px;border:1px solid var(--line);border-radius:999px;background:#fff;color:#314058;font-size:12px}.detail-title{margin:0 0 8px;font-size:24px;line-height:1.2}.block{margin-top:14px;padding-top:14px;border-top:1px solid var(--line)}.chips{display:flex;flex-wrap:wrap;gap:7px}.chip{padding:6px 9px;border-radius:999px;background:#f8fafc;border:1px solid #e5eaf2;color:#314058;font-size:12px}.quiz{margin-top:16px;padding:18px}.quiz-question{color:#333b4a;font-size:24px;line-height:1.7}.q-type{display:inline-block;margin-bottom:16px;padding:5px 12px;background:#eef5ff;color:#1677ff;font-weight:700}.quiz-options{display:grid;gap:18px;margin-top:22px}.quiz-options button{display:grid;grid-template-columns:62px 1fr;align-items:center;gap:18px;min-height:68px;border:0;background:#fff;cursor:pointer;text-align:left;padding:0;font-size:20px;line-height:1.45}.option-letter{display:grid;place-items:center;width:52px;height:52px;border-radius:50%;border:1px solid #e5e7eb;color:#9ca3af;background:#fff;font-weight:700}.quiz-options button.right .option-letter{border-color:#10b981;background:#10c66b;color:#fff}.quiz-options button.wrong .option-letter{border-color:var(--rose);background:#fff1f2;color:var(--rose)}.answer-section,.analysis-section{margin-top:18px;padding-top:18px;border-top:12px solid #f4f5f7}.answer-title,.analysis-title{margin:0 0 12px;color:#202938;font-size:22px;font-weight:700}.answer-box{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:16px;border-radius:8px;background:#f4f8ff;color:#334155;font-size:18px}.answer-box b{color:#10b981;margin-left:8px}.analysis-text{color:#374151;font-size:18px;line-height:1.75}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.actions button{min-height:36px;border:1px solid var(--line);border-radius:8px;background:#fff;padding:0 11px;cursor:pointer}.progress{margin-top:12px}.track{height:11px;background:#e2e8f0;border-radius:999px;overflow:hidden}.fill{height:100%;width:0;background:linear-gradient(90deg,var(--teal),var(--blue));transition:width .2s ease}.mini-stats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}.mini-stats span{padding:7px 8px;border:1px solid #e5eaf2;border-radius:7px;background:#fff;color:var(--muted);font-size:12px}@media(max-width:1080px){.hero,.workspace,.domain-grid,.task-grid,.quiz-options{grid-template-columns:1fr}.side{position:static}main{padding:15px}}
+  </style>
+</head>
+<body>
+<main>
+  <nav class="nav">
+    <a href="pmp_2026_study_dashboard.html">驾驶舱</a>
+    <a href="pmp_49_process_flowchart.html">49 过程</a>
+    <a href="pmp_agile_hybrid_playbook.html">敏捷/混合</a>
+    <a href="pmp_exam_style_drills.html">题型训练</a>
+  </nav>
+
+  <section class="hero">
+    <div class="panel intro">
+      <h1>2026 ECO 三大领域交互图</h1>
+      <p>新版 PMP 不再只像过程表考试。它按 People、Process、Business Environment 三大领域组织，题目更像真实项目中的判断题。</p>
+      <div class="weights"><span class="people">People 33%</span><span class="process">Process 41%</span><span class="business">Business 26%</span></div>
+    </div>
+    <div class="panel summary">
+      <h2>新版题感</h2>
+      <div class="domain-grid">
+        <div class="domain-card"><strong>People</strong><p>领导团队、冲突、愿景、相关方、沟通、知识传递。关键词是影响、协作、赋能。</p></div>
+        <div class="domain-card"><strong>Process</strong><p>计划交付、范围、价值、资源、采购、财务、质量、进度、状态、收尾。关键词是交付与控制。</p></div>
+        <div class="domain-card"><strong>Business</strong><p>治理、合规、变更、障碍、风险、持续改进、组织变革、外部环境。关键词是价值与组织影响。</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="workspace">
+    <div class="panel">
+      <div class="task-grid" id="taskGrid"></div>
+    </div>
+    <aside class="panel side">
+      <div class="filters">
+        <button class="active" data-filter="All">全部</button>
+        <button data-filter="People">People</button>
+        <button data-filter="Process">Process</button>
+        <button data-filter="Business">Business</button>
+      </div>
+      <div class="badge-row"><span id="domainBadge" class="badge"></span><span id="weightBadge" class="badge"></span></div>
+      <h2 id="taskTitle" class="detail-title"></h2>
+      <p id="taskSummary"></p>
+      <div class="block">
+        <h3>考试线索</h3>
+        <div id="signals" class="chips"></div>
+      </div>
+      <div class="block">
+        <h3>优先动作</h3>
+        <p id="action"></p>
+      </div>
+      <div class="block">
+        <h3>容易错</h3>
+        <p id="trap"></p>
+      </div>
+      <div class="block">
+        <h3>练习闭环</h3>
+        <div class="progress"><div class="track"><div id="quizFill" class="fill"></div></div></div>
+        <div class="mini-stats"><span id="answeredStat">已做 0 题</span><span id="accuracyStat">准确率 0%</span></div>
+      </div>
+    </aside>
+  </section>
+
+  <section class="panel quiz">
+    <h2>ECO 任务判断练习</h2>
+    <div class="q-type">单选题</div>
+    <p id="quizPrompt" class="quiz-question"></p>
+    <div id="quizOptions" class="quiz-options"></div>
+    <div id="quizAnswer" style="margin-top:10px">选一个答案开始。</div>
+    <div class="actions"><button id="nextBtn">下一题</button><button id="randomBtn">随机题</button><button id="resetBtn">Reset</button></div>
+  </section>
+</main>
+<script>
+const tasks=[
+ t("People",33,"Develop a common vision","建立共同愿景","让关键相关方对目标、价值和方向有共同理解，并持续保持一致。",["愿景不一致","误解项目目标","发起人与团队方向不同"],"先澄清共同愿景，找误解根因，再推动关键相关方对齐。","不要直接推进执行；方向没对齐时，速度越快偏差越大。"),
+ t("People",33,"Manage conflicts","管理冲突","识别冲突来源，分析情境，用双方同意的策略解决冲突。",["团队冲突","违反团队章程","沟通升级"],"先私下了解事实和根因，促进协作解决，必要时引用团队规则。","不要第一反应惩罚、替换成员或越级给职能经理。"),
+ t("People",33,"Lead the project team","领导项目团队","设定团队期望，赋能团队，选择合适领导风格，明确角色责任。",["团队缺方向","角色不清","需要赋能"],"明确目标和角色，支持团队自主解决问题。","不要微观管理敏捷团队，也不要放任无边界。"),
+ t("People",33,"Engage stakeholders","吸引相关方参与","识别、分析、沟通并执行参与计划，以建立信任和影响力。",["关键相关方反对","需要争取支持","沟通需裁剪"],"分析相关方需求和影响，调整沟通和参与方式。","不要只发一封邮件就认为完成了相关方管理。"),
+ t("People",33,"Align stakeholder expectations","对齐相关方期望","识别并分类期望，促进讨论，让期望与项目目标一致。",["期望冲突","目标理解不同","客户想法分歧"],"组织讨论，对齐期望、约束和优先级。","不要承诺所有需求；先对齐价值和边界。"),
+ t("People",33,"Manage stakeholder expectations","管理相关方期望","持续监控内外部客户满意度和期望，并响应变化。",["客户不满意","期望变化","满意度下降"],"主动沟通，确认期望变化并调整参与策略。","不要等到验收失败才处理期望。"),
+ t("People",33,"Help ensure knowledge transfer","确保知识传递","识别关键知识，收集知识并营造知识共享环境。",["关键人员离开","经验教训","知识孤岛"],"建立知识转移机制，如结对、文档、演示、经验教训。","不要只在项目收尾才做知识管理。"),
+ t("People",33,"Plan and manage communication","规划和管理沟通","定义沟通策略，促进透明协作，建立反馈闭环并支持报告治理。",["信息不透明","报告不满足管理层","反馈闭环"],"根据相关方需要裁剪信息、频率、渠道和反馈机制。","不要用同一种报告满足所有人。"),
+ t("Process",41,"Develop an integrated project management plan and plan delivery","制定整合项目管理计划并规划交付","按复杂度选择预测、敏捷或混合方式，整合计划并持续维护。",["选择开发方法","整合计划","复杂项目"],"评估项目需要和复杂度，选择合适交付策略并整合计划。","不要默认所有项目都用瀑布或都用敏捷。"),
+ t("Process",41,"Develop and manage project scope","制定和管理范围","定义范围、获得一致同意，并分解范围。",["范围不清","WBS","范围共识"],"先定义并确认范围，再分解和控制。","不要让未批准范围悄悄进入交付。"),
+ t("Process",41,"Help ensure value-based delivery","确保基于价值交付","识别价值组成，按价值和反馈排序，增量交付并跟踪收益。",["价值优先级","收益跟踪","增量交付"],"让相关方定义价值，按价值排序并验证收益。","不要只按最容易做的工作排序。"),
+ t("Process",41,"Plan and manage resources","规划和管理资源","按需求定义资源，管理并优化资源可用性。",["资源短缺","资源冲突","可用性"],"评估需求与可用性，协商和优化资源。","不要只抱怨资源不足；要分析影响并协商。"),
+ t("Process",41,"Plan and manage procurement","规划和管理采购","规划采购、选择合同类型、谈判、管理供应商和合同。",["合同类型","供应商绩效","谈判"],"明确采购策略和合同目标，再管理供应商绩效。","不要把合同问题当成普通团队沟通问题。"),
+ t("Process",41,"Plan and manage finance","规划和管理财务","分析资金需求、储备、支出跟踪、财务报告和财务偏差。",["储备","预算偏差","资金挑战"],"监控财务变化，按治理流程处理偏差和储备。","不要私自挪用管理储备或忽略财务阈值。"),
+ t("Process",41,"Plan and optimize quality of products/deliverables","规划并优化质量","收集质量要求，执行质量计划，关注合规、CoQ、持续改进。",["质量要求","合规","持续改进","CoQ"],"先定义质量要求和测量方法，再持续审查与改进。","不要把质量只理解为最后测试。"),
+ t("Process",41,"Plan and manage schedule","规划和管理进度","按开发方法制定进度，估算任务、建立基准并分析偏差。",["里程碑","故事点","进度偏差"],"选择适合方法的估算和排程方式，监控偏差。","不要用预测型排程强套所有敏捷场景。"),
+ t("Process",41,"Evaluate project status","评估项目状态","建立指标、管理工件、评估进展、沟通状态。",["状态不清","指标","工件缺失"],"用指标和工件评估真实进展，并透明沟通。","不要只凭口头感觉判断项目状态。"),
+ t("Process",41,"Manage project closure","管理项目收尾","获得完成批准，确认收尾标准，移交、复盘、关闭采购和资源。",["收尾标准","移交运营","最终经验教训"],"确认完成标准和移交准备，再正式关闭。","不要在未验收或未移交时释放团队。"),
+ t("Business",26,"Define and establish project governance","定义并建立治理","建立结构、规则、流程、报告、伦理、政策、成功指标和升级路径。",["治理阈值","升级路径","成功指标"],"明确谁决策、何时升级、用什么指标衡量成功。","不要绕过治理结构私自决策。"),
+ t("Business",26,"Plan and manage project compliance","规划和管理合规","确认合规要求，分类合规，识别威胁并衡量合规程度。",["监管","安全健康","可持续","不合规"],"先识别合规要求和后果，再制定行动。","不要把合规当作可选需求。"),
+ t("Business",26,"Manage and control changes","管理和控制变更","执行变更控制，沟通状态，实施批准变更并更新文档。",["变更状态","批准变更","更新文档"],"所有影响范围/进度/成本/价值的变更都要透明管理。","不要口头批准、私下改计划。"),
+ t("Business",26,"Remove impediments and manage issues","移除障碍并管理问题","评估、排序并移除障碍，识别风险转问题，协作解决。",["阻碍","障碍","风险已发生","问题升级"],"先评估影响和优先级，再移除或升级障碍。","不要让团队长期卡住还只记录不行动。"),
+ t("Business",26,"Plan and manage risk","规划和管理风险","识别、分析、监控风险，维护风险登记册并执行应对。",["风险登记册","风险应对","风险状态"],"持续识别和分析风险，执行并沟通应对状态。","不要风险发生后才开始规划。"),
+ t("Business",26,"Continuous improvement","持续改进","利用经验教训，更新持续改进过程和组织过程资产。",["复盘","过程改进","OPA"],"把经验转化为过程改进，更新组织资产。","不要把复盘变成形式会议。"),
+ t("Business",26,"Support organizational change","支持组织变革","评估组织文化和组织变革对项目的影响，并制定行动。",["组织重组","文化阻力","变革影响"],"评估文化与变革影响，调整项目策略和沟通。","不要只从项目内部看问题，忽略组织变革。"),
+ t("Business",26,"Evaluate external business environment changes","评估外部商业环境变化","持续关注法规、技术、地缘、市场变化，并评估对范围/待办的影响。",["市场变化","法规变化","新技术","地缘风险"],"扫描外部变化，评估影响并重排范围或待办。","不要把外部变化当作项目团队无法处理的噪音。")
+];
+function t(domain,weight,en,title,summary,signals,action,trap){return{domain,weight,en,title,summary,signals,action,trap}}
+const grid=document.getElementById("taskGrid"),domainBadge=document.getElementById("domainBadge"),weightBadge=document.getElementById("weightBadge"),taskTitle=document.getElementById("taskTitle"),taskSummary=document.getElementById("taskSummary"),signals=document.getElementById("signals"),action=document.getElementById("action"),trap=document.getElementById("trap");
+let selected=tasks[0],filter="All",quizIndex=0,score={answered:0,correct:0};
+function renderTasks(){grid.innerHTML="";tasks.forEach((item,i)=>{const b=document.createElement("button");b.className="task";b.dataset.domain=item.domain;b.innerHTML=`<small>${item.domain} · ${item.weight}%</small><strong>${item.title}</strong><p>${item.summary}</p>`;b.onclick=()=>select(item);grid.appendChild(b)});applyFilter();select(selected)}
+function select(item){selected=item;domainBadge.textContent=item.domain;weightBadge.textContent=item.weight+"%";taskTitle.textContent=item.title;taskSummary.textContent=item.summary;signals.innerHTML=item.signals.map(s=>`<span class="chip">${s}</span>`).join("");action.textContent=item.action;trap.textContent=item.trap;document.querySelectorAll(".task").forEach(b=>b.classList.toggle("selected",b.textContent.includes(item.title)))}
+function applyFilter(){document.querySelectorAll(".task").forEach(b=>b.classList.toggle("hide",filter!=="All"&&b.dataset.domain!==filter))}
+document.querySelectorAll(".filters button").forEach(b=>b.onclick=()=>{document.querySelectorAll(".filters button").forEach(x=>x.classList.remove("active"));b.classList.add("active");filter=b.dataset.filter;applyFilter()});
+const domainSituations={
+ People:["团队成员出现分歧，相关方对目标理解不一致。","关键相关方支持度下降，团队需要重新建立信任。","团队缺少清晰角色和反馈闭环，协作效率下降。"],
+ Process:["项目交付计划需要重新整合，范围、进度、成本或质量出现偏差。","项目经理需要选择合适的交付方法并持续评估状态。","团队需要围绕价值、资源、采购、财务或收尾做出管理决策。"],
+ Business:["组织治理、合规、风险、外部环境或业务价值出现变化。","项目受到法规、市场、组织变革或战略调整影响。","项目经理需要在治理框架下处理变更、障碍和持续改进。"]
+};
+const quiz=buildEcoQuiz();
+function buildEcoQuiz(){
+ const items=[];
+ tasks.forEach((item,i)=>{
+  items.push({p:`一个项目正在采用混合交付方式。最近，${domainSituations[item.domain][i%3]} 项目经理注意到“${item.signals[0]}”。项目经理首先应该关注哪个管理职责？`,c:item.title,e:item.action});
+  items.push({p:`项目进入执行中期，团队和相关方对下一步行动有分歧。项目经理判断最稳妥的做法是：${item.action}。这最符合哪个 ECO 任务？`,c:item.title,e:`这是 ${item.domain} 领域的 ${item.title}。`});
+  items.push({p:`某项目经理为了赶进度准备采取以下做法：“${item.trap}”。如果按 PMP 思路纠偏，最应该回到哪个 ECO 任务？`,c:item.title,e:item.summary});
+  items.push({p:`${domainSituations[item.domain][i%3]} 项目团队同时提到“${item.signals.join("、")}”。项目经理应从哪个管理职责入手？`,c:item.title,e:`这些情况对应 ${item.title}：${item.summary}`});
+  items.push({p:`在一次转型项目会议上，发起人要求项目经理说明如何处理以下职责：“${item.summary}”。这更接近新版 ECO 的哪个任务？`,c:item.title,e:`答案是 ${item.title}，属于 ${item.domain} 领域。`});
+  items.push({p:`一个方案看似可以快速解决问题，但会导致“${item.trap}”。项目经理应采用哪类管理职责来避免这种反应式管理？`,c:item.title,e:`危险动作的反面是：${item.action}`});
+ });
+ tasks.forEach((item,i)=>{
+  const next=tasks[(i+1)%tasks.length],prev=tasks[(i+tasks.length-1)%tasks.length];
+  items.push({p:`项目经理需要在两个方向之间做判断：继续处理 ${next.title}，或先解决“${item.signals[1]||item.signals[0]}”。为了推动项目继续前进，项目经理应优先关注哪项职责？`,c:item.title,e:`关键在当前项目重心：${item.summary}`});
+  items.push({p:`项目出现模糊问题：${domainSituations[item.domain][(i+1)%3]} 项目经理发现关键证据是“${item.signals[0]}”，并准备“${item.action}”。这最符合哪个具体任务？`,c:item.title,e:`它归入 ${item.domain}，不是泛泛的项目管理动作。`});
+  items.push({p:`项目经理刚发现“${item.signals[2]||item.signals[0]}”。几个方案都能解决一部分问题。项目经理应采取哪类管理职责来先分析、沟通并按治理处理？`,c:item.title,e:`应先分析、沟通、按治理处理；本题对应 ${item.title}。`});
+  items.push({p:`一个备选方案会导致“${prev.trap}”。另一个方案能够处理“${item.signals[0]}”并保持治理透明。项目经理应采用哪项管理职责？`,c:item.title,e:`当前情况落在 ${item.title}，不要被相邻职责带偏。`});
+ });
+ return items.slice(0,260);
+}
+function opts(correct,salt){const names=tasks.map(t=>t.title).filter(n=>n!==correct);const start=salt%names.length;const arr=[correct].concat(names.slice(start),names.slice(0,start)).slice(0,4);return arr.slice(salt%4).concat(arr.slice(0,salt%4))}
+function letter(i){return["A","B","C","D"][i]||String(i+1)}
+function renderQuiz(){const q=quiz[quizIndex];document.getElementById("quizPrompt").textContent=`${quizIndex+1}/${quiz.length}  ${q.p}`;const box=document.getElementById("quizOptions");box.innerHTML="";opts(q.c,quizIndex+3).forEach((o,i)=>{const b=document.createElement("button");b.dataset.option=o;b.innerHTML=`<span class="option-letter">${letter(i)}</span><span>${o}</span>`;b.onclick=()=>check(o);box.appendChild(b)});document.getElementById("quizAnswer").textContent="选一个答案开始。";update()}
+function check(o){const q=quiz[quizIndex],ok=o===q.c;score.answered++;if(ok)score.correct++;document.querySelectorAll("#quizOptions button").forEach(b=>{b.classList.toggle("right",b.dataset.option===q.c);b.classList.toggle("wrong",b.dataset.option===o&&!ok)});const qOpts=[...document.querySelectorAll("#quizOptions button")].map(b=>b.dataset.option);const correctLetter=letter(qOpts.indexOf(q.c));const yourLetter=letter(qOpts.indexOf(o));const pct=score.answered?Math.round(score.correct/score.answered*100):0;const site=56+((quizIndex*7)%33);document.getElementById("quizAnswer").innerHTML=`<div class="answer-section"><div class="answer-title">答案</div><div class="answer-box"><span>正确答案：<b>${correctLetter}</b></span><span>你的答案：<b>${yourLetter}</b></span></div><div class="answer-box" style="margin-top:10px"><span>个人正确率：<b>${pct}%</b></span><span>题库参考正确率：<b>${site}%</b></span></div></div><div class="analysis-section"><div class="analysis-title">解析</div><div class="analysis-text">${q.e}</div></div>`;select(tasks.find(t=>t.title===q.c));update()}
+function update(){const pct=score.answered?Math.round(score.correct/score.answered*100):0;document.getElementById("quizFill").style.width=pct+"%";document.getElementById("answeredStat").textContent=`已做 ${score.answered} 题`;document.getElementById("accuracyStat").textContent=`准确率 ${pct}%`}
+document.getElementById("nextBtn").onclick=()=>{quizIndex=(quizIndex+1)%quiz.length;renderQuiz()};document.getElementById("randomBtn").onclick=()=>{quizIndex=Math.floor(Math.random()*quiz.length);renderQuiz()};document.getElementById("resetBtn").onclick=()=>{score={answered:0,correct:0};renderQuiz()};
+renderTasks();renderQuiz();
+</script>
+</body>
+</html>

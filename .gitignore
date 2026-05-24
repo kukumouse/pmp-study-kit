@@ -1,0 +1,4 @@
+ocr_pages/
+ocr_resource_pages/
+*.tmp
+*.log
