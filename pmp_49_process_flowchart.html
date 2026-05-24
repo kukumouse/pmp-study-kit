@@ -1745,7 +1745,7 @@
         });
       });
       dragBoard.appendChild(grid);
-      processData.forEach((item) => {
+      shuffleItems(processData).forEach((item) => {
         const chip = document.createElement("div");
         chip.className = "drag-chip";
         chip.textContent = item.name;
@@ -1756,6 +1756,15 @@
       });
       dragStats = { right: 0, wrong: 0 };
       updateDragStats();
+    }
+
+    function shuffleItems(items) {
+      const shuffled = items.slice();
+      for (let index = shuffled.length - 1; index > 0; index--) {
+        const swapIndex = Math.floor(Math.random() * (index + 1));
+        [shuffled[index], shuffled[swapIndex]] = [shuffled[swapIndex], shuffled[index]];
+      }
+      return shuffled;
     }
 
     function cell(className, html) {
