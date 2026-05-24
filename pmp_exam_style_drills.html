@@ -26,6 +26,12 @@
     .mode-switch{display:grid;grid-template-columns:1fr;gap:8px;margin-top:14px}
     .mode-switch button{min-height:40px;border:1px solid var(--line);border-radius:8px;background:#fff;color:#172033;font-weight:700;cursor:pointer}
     .mode-switch button.active{background:#172033;color:#fff;border-color:#172033}
+    .user-profile{margin-top:12px;padding:12px;border:1px solid var(--line);border-radius:8px;background:#f8fafc}
+    .user-title{font-weight:700;margin-bottom:8px}
+    .user-row{display:grid;grid-template-columns:1fr;gap:8px}
+    .user-row select,.user-row input,.user-row button{min-height:36px;border:1px solid var(--line);border-radius:8px;background:#fff;padding:0 10px}
+    .user-row button{cursor:pointer;font-weight:700;color:#1746a2}
+    .user-hint{margin-top:8px;color:var(--muted);font-size:12px}
   </style>
 </head>
 <body>
@@ -69,6 +75,7 @@
     <aside class="panel side">
       <h2>练习闭环</h2>
       <p>题型训练的准确率会在这里显示，保持题干区域干净。</p>
+      <div id="userProfiles" class="user-profile"></div>
       <div class="mode-switch">
         <button id="normalMode" class="active">普通题</button>
         <button id="hardMode">难题模式</button>
@@ -89,6 +96,7 @@
     </div>
   </section>
 </main>
+<script src="pmp_user_profiles.js"></script>
 <script>
 const kind=document.getElementById("kind");
 const domain=document.getElementById("domain");
@@ -340,6 +348,9 @@ const hardQs=[
 function q(kind,domain,scenario,question,options,correct,explain,source){return{kind,domain,scenario,question,options,correct,explain,source}}
 let i=0,answered=0,correct=0,displayOptions=[],attemptLog=[];
 let bank=normalQs,modeName="普通题";
+const drillScope="examStyleDrillsV1";
+function loadDrillState(){const data=PmpUsers.read(drillScope,{answered:0,correct:0,attemptLog:[]});answered=Number(data.answered)||0;correct=Number(data.correct)||0;attemptLog=Array.isArray(data.attemptLog)?data.attemptLog:[];statusReport.value=""}
+function saveDrillState(){PmpUsers.write(drillScope,{answered,correct,attemptLog,updatedAt:new Date().toISOString()})}
 function letter(n){return["A","B","C","D"][n]||String(n+1)}
 function sourceFor(x){
   const map={
@@ -362,17 +373,19 @@ function sourceFor(x){
 }
 function shuffledOptions(x){const arr=x.options.map((text,source)=>({text,source}));for(let n=arr.length-1;n>0;n--){const j=(i*7+n*3)%arr.length;[arr[n],arr[j]]=[arr[j],arr[n]]}return arr}
 function render(){const x=bank[i];kind.textContent=x.kind;domain.textContent=x.domain;count.textContent=`${modeName} ${i+1}/${bank.length}`;caseBox.textContent=x.scenario;question.textContent=x.question;options.innerHTML="";displayOptions=shuffledOptions(x);displayOptions.forEach((o,idx)=>{const b=document.createElement("button");b.dataset.index=idx;b.innerHTML=`<span class="option-letter">${letter(idx)}</span><span>${o.text}</span>`;b.onclick=()=>check(idx);options.appendChild(b)});answer.textContent="选一个答案开始。";update()}
-function check(idx){const x=bank[i],chosen=displayOptions[idx],rightIndex=displayOptions.findIndex((o)=>o.source===x.correct),ok=chosen.source===x.correct;answered++;if(ok)correct++;attemptLog.push({mode:modeName,kind:x.kind,domain:x.domain,ok,question:x.question,scenario:x.scenario,chosen:chosen.text,correct:x.options[x.correct]});document.querySelectorAll("#options button").forEach((b,n)=>{b.classList.toggle("right",n===rightIndex);b.classList.toggle("wrong",n===idx&&!ok)});const pct=answered?Math.round(correct/answered*100):0;const site=56+((i*7)%33);answer.innerHTML=`<div class="answer-section"><div class="answer-title">答案</div><div class="answer-box"><span>正确答案：<b>${letter(rightIndex)}</b></span><span>你的答案：<b>${letter(idx)}</b></span></div><div class="answer-box" style="margin-top:10px"><span>个人正确率：<b>${pct}%</b></span><span>题库参考正确率：<b>${site}%</b></span></div></div><div class="analysis-section"><div class="analysis-title">解析</div><div class="analysis-text"><b>为什么这样选：</b>${x.explain}<div class="source"><b>教材关联：</b>${sourceFor(x).replace(/^教材关联：/,"")}</div></div></div>`;update()}
+function check(idx){const x=bank[i],chosen=displayOptions[idx],rightIndex=displayOptions.findIndex((o)=>o.source===x.correct),ok=chosen.source===x.correct;answered++;if(ok)correct++;attemptLog.push({mode:modeName,kind:x.kind,domain:x.domain,ok,question:x.question,scenario:x.scenario,chosen:chosen.text,correct:x.options[x.correct]});saveDrillState();document.querySelectorAll("#options button").forEach((b,n)=>{b.classList.toggle("right",n===rightIndex);b.classList.toggle("wrong",n===idx&&!ok)});const pct=answered?Math.round(correct/answered*100):0;const site=56+((i*7)%33);answer.innerHTML=`<div class="answer-section"><div class="answer-title">答案</div><div class="answer-box"><span>正确答案：<b>${letter(rightIndex)}</b></span><span>你的答案：<b>${letter(idx)}</b></span></div><div class="answer-box" style="margin-top:10px"><span>个人正确率：<b>${pct}%</b></span><span>题库参考正确率：<b>${site}%</b></span></div></div><div class="analysis-section"><div class="analysis-title">解析</div><div class="analysis-text"><b>为什么这样选：</b>${x.explain}<div class="source"><b>教材关联：</b>${sourceFor(x).replace(/^教材关联：/,"")}</div></div></div>`;update()}
 function update(){const pct=answered?Math.round(correct/answered*100):0;fill.style.width=pct+"%";answeredStat.textContent=`已做 ${answered} 题`;accuracyStat.textContent=`准确率 ${pct}%`}
-function setMode(name,newBank,btn){modeName=name;bank=newBank;i=0;answered=0;correct=0;attemptLog=[];document.querySelectorAll(".mode-switch button").forEach((b)=>b.classList.remove("active"));btn.classList.add("active");render()}
+function setMode(name,newBank,btn){modeName=name;bank=newBank;i=0;answered=0;correct=0;attemptLog=[];saveDrillState();document.querySelectorAll(".mode-switch button").forEach((b)=>b.classList.remove("active"));btn.classList.add("active");render()}
 next.onclick=()=>{i=(i+1)%bank.length;render()};
 random.onclick=()=>{i=Math.floor(Math.random()*bank.length);render()};
-reset.onclick=()=>{answered=0;correct=0;attemptLog=[];statusReport.value="";render()};
-function buildStatusReport(){const by={};attemptLog.forEach(a=>{const k=a.domain||"未分类";by[k] ||= {total:0,correct:0,wrong:[]};by[k].total++;if(a.ok)by[k].correct++;else by[k].wrong.push(a)});const rows=Object.entries(by).sort((a,b)=>(a[1].correct/a[1].total)-(b[1].correct/b[1].total)).map(([k,v])=>`${k}: ${v.correct}/${v.total} (${Math.round(v.correct/v.total*100)}%)`);const wrong=attemptLog.filter(a=>!a.ok).slice(-8).map((a,n)=>`${n+1}. [${a.domain}/${a.kind}] ${a.scenario} ${a.question} | 我的答案: ${a.chosen} | 正确: ${a.correct}`).join("\n");return `PMP题型训练状态\n模式: ${modeName}\n总题数: ${answered}\n正确: ${correct}\n正确率: ${answered?Math.round(correct/answered*100):0}%\n\n按领域:\n${rows.join("\n")||"暂无"}\n\n最近错题:\n${wrong||"暂无错题"}\n\n请根据以上状态分析我的薄弱点，并告诉我下一步应该补哪些页面、教材页码和练习。`;}
+reset.onclick=()=>{answered=0;correct=0;attemptLog=[];statusReport.value="";PmpUsers.reset(drillScope);render()};
+function buildStatusReport(){const by={};attemptLog.forEach(a=>{const k=a.domain||"未分类";by[k] ||= {total:0,correct:0,wrong:[]};by[k].total++;if(a.ok)by[k].correct++;else by[k].wrong.push(a)});const rows=Object.entries(by).sort((a,b)=>(a[1].correct/a[1].total)-(b[1].correct/b[1].total)).map(([k,v])=>`${k}: ${v.correct}/${v.total} (${Math.round(v.correct/v.total*100)}%)`);const wrong=attemptLog.filter(a=>!a.ok).slice(-8).map((a,n)=>`${n+1}. [${a.domain}/${a.kind}] ${a.scenario} ${a.question} | 我的答案: ${a.chosen} | 正确: ${a.correct}`).join("\n");return `PMP题型训练状态\n用户: ${PmpUsers.activeUser()}\n模式: ${modeName}\n总题数: ${answered}\n正确: ${correct}\n正确率: ${answered?Math.round(correct/answered*100):0}%\n\n按领域:\n${rows.join("\n")||"暂无"}\n\n最近错题:\n${wrong||"暂无错题"}\n\n请根据以上状态分析我的薄弱点，并告诉我下一步应该补哪些页面、教材页码和练习。`;}
 exportStatus.onclick=()=>{statusReport.value=buildStatusReport();statusReport.select();};
 normalMode.onclick=()=>setMode("普通题",normalQs,normalMode);
 hardMode.onclick=()=>setMode("难题模式",hardQs,hardMode);
 allMode.onclick=()=>setMode("全部混刷",normalQs.concat(hardQs),allMode);
+PmpUsers.mount(document.getElementById("userProfiles"),()=>{loadDrillState();render()});
+loadDrillState();
 render();
 </script>
 </body>

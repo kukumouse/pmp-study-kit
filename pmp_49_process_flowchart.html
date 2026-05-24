@@ -738,6 +738,47 @@
       color: #263246;
     }
 
+    .user-profile {
+      margin-bottom: 14px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #f8fafc;
+    }
+
+    .user-title {
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .user-row {
+      display: grid;
+      grid-template-columns: minmax(120px, 1fr) minmax(120px, 1fr) auto;
+      gap: 8px;
+    }
+
+    .user-row select,
+    .user-row input,
+    .user-row button {
+      min-height: 36px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      padding: 0 10px;
+    }
+
+    .user-row button {
+      cursor: pointer;
+      color: #1746a2;
+      font-weight: 700;
+    }
+
+    .user-hint {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
     .drag-panel {
       margin-top: 18px;
       padding: 18px;
@@ -1031,6 +1072,7 @@
       </div>
 
       <div class="panel quiz">
+        <div id="userProfiles" class="user-profile"></div>
         <div class="quiz-head">
           <h2>200 题判断练习</h2>
           <span id="quizCount" class="quiz-count"></span>
@@ -1063,6 +1105,7 @@
     </section>
   </main>
 
+  <script src="pmp_user_profiles.js"></script>
   <script>
     const groups = ["启动", "规划", "执行", "监控", "收尾"];
     const areas = ["整合管理", "范围管理", "进度管理", "成本管理", "质量管理", "资源管理", "沟通管理", "风险管理", "采购管理", "相关方管理"];
@@ -1277,7 +1320,6 @@
     let selected = processData[0].name;
     let mode = "all";
     let quizIndex = 0;
-    const progressKey = "pmp49QuizProgressV1";
     let quizProgress = loadProgress();
     let draggedName = "";
     let dragStats = { right: 0, wrong: 0 };
@@ -1296,14 +1338,14 @@
 
     function loadProgress() {
       try {
-        return JSON.parse(localStorage.getItem(progressKey)) || {};
+        return PmpUsers.read("pmp49QuizProgressV1", {});
       } catch (error) {
         return {};
       }
     }
 
     function saveProgress() {
-      localStorage.setItem(progressKey, JSON.stringify(quizProgress));
+      PmpUsers.write("pmp49QuizProgressV1", quizProgress);
     }
 
     function buildQuizBank(seed, targetCount) {
@@ -1679,7 +1721,7 @@
         `${n + 1}. [${item.proc.area}/${item.proc.group}] ${item.quiz.prompt} | 我的答案: ${item.record.chosen} | 正确: ${item.record.process}`
       );
       const covered = new Set(records.filter((item) => item.record.correct).map((item) => item.record.process)).size;
-      return `PMP 49过程练习状态\n总题数: ${total}\n正确: ${correct}\n正确率: ${total ? Math.round(correct / total * 100) : 0}%\n正确覆盖过程: ${covered}/49\n\n按知识领域:\n${areaRows.join("\n") || "暂无"}\n\n按过程组:\n${groupRows.join("\n") || "暂无"}\n\n最近错题:\n${wrongRows.join("\n") || "暂无错题"}\n\n拖拽小游戏: 正确 ${dragStats.right}，错误 ${dragStats.wrong}\n\n请根据以上状态分析我薄弱在哪里，并告诉我该补哪些页面、教材页码和练习顺序。`;
+      return `PMP 49过程练习状态\n用户: ${PmpUsers.activeUser()}\n总题数: ${total}\n正确: ${correct}\n正确率: ${total ? Math.round(correct / total * 100) : 0}%\n正确覆盖过程: ${covered}/49\n\n按知识领域:\n${areaRows.join("\n") || "暂无"}\n\n按过程组:\n${groupRows.join("\n") || "暂无"}\n\n最近错题:\n${wrongRows.join("\n") || "暂无错题"}\n\n拖拽小游戏: 正确 ${dragStats.right}，错误 ${dragStats.wrong}\n\n请根据以上状态分析我薄弱在哪里，并告诉我该补哪些页面、教材页码和练习顺序。`;
     }
 
     function buildDragGame() {
@@ -1729,7 +1771,7 @@
       const item = processData.find((entry) => entry.name === draggedName);
       if (!item) return;
       if (item.area === target.dataset.area && item.group === target.dataset.group) {
-      const chip = Array.from(dragPool.querySelectorAll(".drag-chip")).find((node) => node.dataset.name === item.name);
+        const chip = Array.from(dragPool.querySelectorAll(".drag-chip")).find((node) => node.dataset.name === item.name);
         if (chip) {
           chip.classList.add("placed");
           chip.draggable = false;
@@ -1771,7 +1813,7 @@
 
     document.getElementById("resetQuiz").addEventListener("click", () => {
       quizProgress = {};
-      saveProgress();
+      PmpUsers.reset("pmp49QuizProgressV1");
       status49Report.value = "";
       renderQuiz();
     });
@@ -1782,6 +1824,13 @@
     });
 
     resetDrag.addEventListener("click", buildDragGame);
+
+    PmpUsers.mount(document.getElementById("userProfiles"), () => {
+      quizProgress = loadProgress();
+      status49Report.value = "";
+      renderQuiz();
+      buildDragGame();
+    });
 
     renderMatrix();
     renderQuiz();
