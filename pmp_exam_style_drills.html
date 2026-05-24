@@ -83,6 +83,7 @@
         <button id="normalMode" class="active">普通题</button>
         <button id="hardMode">难题模式</button>
         <button id="simulationMode">仿真题（像考试）</button>
+        <button id="trapMode">概念陷阱题</button>
         <button id="allMode">全部混刷</button>
       </div>
       <div style="margin-top:12px" class="track"><div id="fill" class="fill"></div></div>
@@ -118,6 +119,7 @@ const reset=document.getElementById("reset");
 const normalMode=document.getElementById("normalMode");
 const hardMode=document.getElementById("hardMode");
 const simulationMode=document.getElementById("simulationMode");
+const trapMode=document.getElementById("trapMode");
 const heroSimulation=document.getElementById("heroSimulation");
 const allMode=document.getElementById("allMode");
 const exportStatus=document.getElementById("exportStatus");
@@ -474,6 +476,61 @@ const simThemes=[
  ["Cost","项目经理发现成本报告没有包含供应商已发生但未开票的费用。","项目经理应该怎么做？",["等发票来了再报","更新成本预测，纳入已发生未开票费用","删除供应商费用","让采购负责"],1,"成本预测要反映真实已发生义务。"]
 ];
 simThemes.forEach((item)=>simulationQs.push(q("仿真题",item[0],item[1],item[2],item[3],item[4],item[5])));
+const trapQs=[
+ q("概念陷阱题","Schedule","不要看关键词，判断两个术语最本质的差异。","里程碑和进度活动的区别在于？",["里程碑不在进度表中","进度活动不在进度表中","里程碑持续时间为零","两者没有区别"],2,"里程碑是重要时间点或事件，持续时间为零；活动是需要资源、持续时间和工作量的工作包组成部分。"),
+ q("概念陷阱题","Scope","两个词都和客户验收有关，但位置不同。","核实的可交付成果与验收的可交付成果的区别是？",["前者来自控制质量，后者来自确认范围","前者来自确认范围，后者来自控制质量","两者都来自控制质量","两者都来自确认范围"],0,"控制质量产生核实的可交付成果，确认范围产生验收的可交付成果。先内部检查，再客户/发起人验收。"),
+ q("概念陷阱题","Quality","这题常被“检查”二字误导。","管理质量和控制质量的主要区别是？",["管理质量关注过程改进，控制质量关注结果检查","管理质量关注客户验收，控制质量关注团队建设","管理质量只在收尾做，控制质量只在启动做","两者没有区别"],0,"管理质量偏执行过程中的质量保证和过程改进；控制质量偏监控过程中的结果检查、测量和缺陷识别。"),
+ q("概念陷阱题","Integration","两个都可能改变项目，但授权层级不同。","变更请求和批准的变更请求的区别是？",["前者已授权实施，后者只是建议","前者是建议或待审事项，后者已通过整体变更控制","两者都可直接执行","两者都只能由团队批准"],1,"变更请求只是提出改变；批准的变更请求经过实施整体变更控制后才可按计划执行。"),
+ q("概念陷阱题","Risk","一个是事件，一个是提前信号。","风险触发条件和风险事件的区别是？",["触发条件是风险真正发生后的损失","触发条件是提示风险可能发生的迹象，风险事件是风险发生","风险事件用于机会，触发条件用于威胁","两者没有区别"],1,"触发条件是预警信号；风险事件是风险已经发生。看到触发条件通常就应按计划行动或复核。"),
+ q("概念陷阱题","Cost","两个储备都像“钱”，但控制方式不同。","应急储备和管理储备的主要区别是？",["应急储备用于已知风险，管理储备用于未知未知","应急储备用于未知未知，管理储备用于已知风险","两者都在成本基准外","两者都无需批准"],0,"应急储备应对已识别风险，通常包含在成本基准内；管理储备用于未知未知，通常不在成本基准内，使用需要更高授权。"),
+ q("概念陷阱题","Scope","两个都是范围文件，但层级不同。","项目范围说明书和 WBS 的区别是？",["范围说明书描述边界和可交付成果，WBS 分解可交付成果和工作","范围说明书分解工作，WBS 描述商业论证","两者都只描述需求","WBS 不属于范围基准"],0,"范围说明书讲边界、成果、验收标准等；WBS 把可交付成果和工作逐层分解。范围基准包括范围说明书、WBS、WBS 词典。"),
+ q("概念陷阱题","Schedule","都和网络图有关，但含义不同。","提前量和滞后量的区别是？",["提前量让后续活动提前开始，滞后量让后续活动延后开始","提前量让活动变长，滞后量让活动变短","提前量只用于成本，滞后量只用于范围","两者没有区别"],0,"Lead 提前，Lag 滞后。它们调整活动逻辑关系中的时间间隔。"),
+ q("概念陷阱题","Schedule","两个都能赶进度，但代价不同。","赶工和快速跟进的区别是？",["赶工增加资源成本，快速跟进并行原本顺序活动并增加返工风险","赶工并行活动，快速跟进增加资源","两者都不增加风险","快速跟进只用于成本管理"],0,"赶工是加资源换时间，常增加成本；快速跟进是把顺序活动并行，常增加返工和质量风险。"),
+ q("概念陷阱题","Risk","两个都是风险应对，但方向不同。","减轻风险和转移风险的区别是？",["减轻降低概率或影响，转移把责任转给第三方","减轻把风险交给供应商，转移降低概率","两者都是接受风险","两者都只用于机会"],0,"Mitigate 是降低概率/影响；Transfer 是把部分责任或影响转给第三方，如保险、担保、合同。"),
+ q("概念陷阱题","Risk","机会应对不要套威胁术语。","开拓机会和提高机会的区别是？",["开拓确保机会发生，提高增加机会概率或影响","开拓降低机会概率，提高消除机会","两者都用于威胁","两者没有区别"],0,"Exploit 是确保机会实现；Enhance 是提高机会发生概率或正面影响。"),
+ q("概念陷阱题","Communications","发送信息不等于沟通完成。","沟通管理计划和相关方参与计划的区别是？",["前者规定信息如何沟通，后者规定如何促进相关方参与和支持","前者只管理团队，后者只管理卖方","两者都是风险计划","两者没有区别"],0,"沟通管理计划回答谁需要什么信息、何时、如何；相关方参与计划回答如何让相关方从当前参与水平到期望参与水平。"),
+ q("概念陷阱题","Stakeholder","两个过程名字很像，但过程组不同。","管理相关方参与和监督相关方参与的区别是？",["前者执行沟通和参与，后者监控参与效果并调整策略","前者监控，后者执行","两者都在规划","两者都只在收尾"],0,"管理相关方参与是执行过程；监督相关方参与是监控过程，看参与策略是否有效并调整。"),
+ q("概念陷阱题","Resource","一个是人，一个是物；但都叫资源。","团队资源和实物资源的区别是？",["团队资源是人员，实物资源是设备、材料、设施等","团队资源只指供应商，实物资源只指现金","两者都只能外部采购","两者没有区别"],0,"资源管理同时管人和实物资源。团队资源涉及能力、协作、领导；实物资源涉及获取、分配、控制。"),
+ q("概念陷阱题","Resource","两个都在执行，但焦点不同。","建设团队和管理团队的区别是？",["建设团队提升能力和协作，管理团队跟踪绩效、反馈、解决问题","建设团队处理采购，管理团队制定章程","两者都只做培训","两者没有区别"],0,"建设团队重在能力、氛围、协作；管理团队重在绩效、冲突、反馈和人员问题处理。"),
+ q("概念陷阱题","Procurement","采购题最爱混合同类型。","固定总价合同和成本补偿合同的主要区别是？",["固定总价价格相对固定，成本补偿按允许成本加费用支付","固定总价没有风险，成本补偿没有合同","固定总价用于敏捷，成本补偿用于收尾","两者付款方式相同"],0,"固定总价把成本风险更多给卖方；成本补偿按实际允许成本加费用，买方成本风险更高。"),
+ q("概念陷阱题","Procurement","两个词都像采购文件，但用途不同。","投标人会议和建议书评价的区别是？",["投标人会议澄清采购需求，建议书评价用于选择卖方","投标人会议用于验收，建议书评价用于团队建设","两者都在合同收尾后","两者没有区别"],0,"投标人会议在采购前澄清需求，确保卖方理解一致；建议书评价用于根据标准评估卖方响应。"),
+ q("概念陷阱题","Agile","这题别把 Scrum 事件混在一起。","冲刺评审和冲刺回顾的区别是？",["评审检查产品增量和反馈，回顾改进团队过程","评审改进团队过程，回顾验收产品","两者都只给管理层看","两者没有区别"],0,"Sprint Review 看产品增量和反馈；Retrospective 看团队工作方式和改进。"),
+ q("概念陷阱题","Agile","两个列表很像，但责任不同。","产品待办事项和冲刺待办事项的区别是？",["产品待办由产品负责人排序，冲刺待办是团队本冲刺计划工作","产品待办只在收尾使用，冲刺待办由发起人排序","两者都由项目经理分派","两者没有区别"],0,"产品待办体现产品范围和优先级；冲刺待办体现本冲刺目标和团队计划。"),
+ q("概念陷阱题","Agile","两个都像验收标准，但层级不同。","完成定义和验收标准的区别是？",["完成定义适用于增量质量门槛，验收标准用于具体待办项是否被接受","完成定义只给客户看，验收标准只给团队看","两者都由项目经理单独制定","两者没有区别"],0,"Definition of Done 是通用完成质量标准；Acceptance Criteria 是某个用户故事/需求的具体接受条件。"),
+ q("概念陷阱题","Integration","三种绩效词最容易混。","工作绩效数据、工作绩效信息、工作绩效报告的顺序是？",["数据 → 信息 → 报告","报告 → 数据 → 信息","信息 → 数据 → 报告","数据 → 报告 → 信息"],0,"WPD 是原始观察数据，WPI 是分析后的信息，WPR 是汇总形成的报告。"),
+ q("概念陷阱题","Scope","两个过程都像验收，但对象不同。","控制质量和确认范围的区别是？",["控制质量检查正确性，确认范围获取正式验收","控制质量获取客户验收，确认范围检查缺陷","两者都只由客户执行","两者没有区别"],0,"控制质量通常是内部检查成果是否正确；确认范围是客户或发起人正式接受成果。"),
+ q("概念陷阱题","Integration","这题考项目经理权限来源。","项目章程和项目管理计划的区别是？",["章程正式授权项目和项目经理，管理计划说明如何执行、监控和收尾","章程用于收尾，管理计划用于授权项目经理","两者都由团队任意更新","两者没有区别"],0,"章程启动项目并授权项目经理；项目管理计划整合各子计划和基准，指导后续工作。"),
+ q("概念陷阱题","Integration","两个文件都和商业价值有关。","商业论证和收益管理计划的区别是？",["商业论证说明为什么值得做，收益管理计划说明收益如何实现和衡量","商业论证只列风险，收益计划只列范围","两者都只由团队创建","两者没有区别"],0,"Business Case 支持是否投资；Benefits Management Plan 说明收益交付、衡量和责任。"),
+ q("概念陷阱题","Risk","两个风险文件别混。","风险登记册和风险报告的区别是？",["风险登记册记录单个风险细节，风险报告提供整体风险暴露信息","风险登记册只给客户看，风险报告只给团队看","两者都只在收尾使用","两者没有区别"],0,"风险登记册偏单项风险；风险报告偏整体风险状态、暴露、趋势和决策信息。"),
+ q("概念陷阱题","Schedule","估算题最爱混。","类比估算和参数估算的区别是？",["类比用相似项目经验，参数用统计关系和单位参数","类比必须最准确，参数只能用于风险","两者都不需要历史数据","两者没有区别"],0,"类比估算靠相似历史经验；参数估算用单位成本/生产率等参数模型。"),
+ q("概念陷阱题","Cost","两个成本概念常被混为一谈。","成本基准和项目预算的区别是？",["项目预算通常包含成本基准加管理储备","成本基准包含所有管理储备","两者完全相同","项目预算不含任何储备"],0,"成本基准通常含应急储备，不含管理储备；项目预算通常为成本基准加管理储备。"),
+ q("概念陷阱题","Quality","质量和等级不是一回事。","质量低和等级低的区别是？",["质量低通常不可接受，等级低可能可接受","等级低一定不可接受，质量低一定可接受","两者完全相同","质量只看价格，等级只看缺陷"],0,"质量是满足要求的程度；等级是功能/特性档次。低等级可被接受，低质量通常不可接受。"),
+ q("概念陷阱题","Resource","两个图都画人，但目的不同。","责任分配矩阵和组织分解结构的区别是？",["RAM 显示工作与角色责任关系，OBS 按组织结构分解资源","RAM 只显示成本，OBS 只显示风险","两者都是进度网络图","两者没有区别"],0,"RAM/RACI 连接工作包和角色责任；OBS 按组织部门/团队层级展示资源。"),
+ q("概念陷阱题","Communications","沟通方式三兄弟。","交互式沟通和推式沟通的区别是？",["交互式是多方实时交流，推式是发送给特定接收者但不保证理解","交互式只发邮件，推式只能开会","两者都保证理解","两者没有区别"],0,"会议、电话常是交互式；邮件、备忘录常是推式。推送不等于被理解。"),
+ q("概念陷阱题","Stakeholder","两个模型都分相关方，但维度不同。","权力利益方格和凸显模型的区别是？",["前者看权力和利益，后者看权力、紧迫性、合法性","前者只看紧迫性，后者只看成本","两者都只用于风险","两者没有区别"],0,"权力利益方格二维；凸显模型三维：权力、紧迫性、合法性。"),
+ q("概念陷阱题","Integration","两个动作都像结束。","结束项目或阶段和确认范围的区别是？",["确认范围是验收成果，结束项目或阶段是正式关闭并归档移交","确认范围归档经验教训，结束项目或阶段检查缺陷","两者都由团队内部完成","两者没有区别"],0,"确认范围取得正式验收；结束项目或阶段完成行政收尾、移交、归档、经验教训。"),
+ q("概念陷阱题","Agile","敏捷里速度不是承诺。","速度和团队能力的关系是？",["速度是经验性规划参考，不是对个人绩效的承诺","速度越高质量一定越高","速度应用于比较不同团队绩效","速度由项目经理分配"],0,"Velocity 用于团队自身预测和规划，不适合跨团队排名或个人绩效考核。"),
+ q("概念陷阱题","Risk","风险接受也分主动被动。","主动接受和被动接受的区别是？",["主动接受通常建立应急储备或计划，被动接受等风险发生再处理","主动接受转移风险，被动接受消除风险","两者都要求关闭风险","两者没有区别"],0,"主动接受会预留资源或计划；被动接受不提前行动，风险发生时再处理。"),
+ q("概念陷阱题","Schedule","浮动时间别和持续时间混。","总浮动时间的含义是？",["不延误项目完工日期的前提下，活动可延迟的时间","活动必须持续的时间","项目总工期","活动已经延误的时间"],0,"Total Float 是不影响项目完工日期时活动可延迟的时间。"),
+ q("概念陷阱题","Schedule","自由浮动更窄。","自由浮动时间的含义是？",["不延误任何紧后活动最早开始的前提下，活动可延迟的时间","不延误项目完工日期的所有时间","活动总持续时间","关键路径长度"],0,"Free Float 是不影响紧后活动最早开始的可延迟时间。"),
+ q("概念陷阱题","Integration","两个日志都记录事项，但对象不同。","问题日志和风险登记册的区别是？",["问题日志记录已发生需要处理的事项，风险登记册记录不确定事件","问题日志只记录机会，风险登记册只记录缺陷","两者都只记录已发生事项","两者没有区别"],0,"Issue 通常已发生；Risk 是不确定事件，可能发生。"),
+ q("概念陷阱题","Scope","需求文件和需求跟踪矩阵别混。","需求文件和需求跟踪矩阵的区别是？",["需求文件描述需求，跟踪矩阵连接需求与来源、交付物、测试和状态","需求文件只列成本，矩阵只列人员","两者都只在收尾使用","两者没有区别"],0,"RTM 用来追踪需求从来源到交付和验证的链条。"),
+ q("概念陷阱题","Agile","两个角色都服务团队，但职责不同。","产品负责人和 Scrum Master 的区别是？",["产品负责人负责价值和待办排序，Scrum Master 促进 Scrum 和移除障碍","产品负责人管理团队成员绩效，Scrum Master 排序待办","两者都批准预算","两者没有区别"],0,"PO 管价值和产品待办；SM 服务团队、促进流程、移除障碍。"),
+ q("概念陷阱题","Quality","审计不是验收。","质量审计和检查的区别是？",["质量审计看过程是否有效合规，检查看工作结果是否符合要求","质量审计只由客户做，检查只由发起人做","两者都只在采购中用","两者没有区别"],0,"Audit 偏过程和合规；Inspection 偏成果检查。"),
+ q("概念陷阱题","Procurement","控制采购不是实施采购。","实施采购和控制采购的区别是？",["实施采购选择卖方并授予合同，控制采购管理合同关系和卖方绩效","实施采购验收最终产品，控制采购创建章程","两者都只做招标会议","两者没有区别"],0,"Conduct Procurements 选卖方；Control Procurements 管合同执行、绩效、变更和索赔。"),
+ q("概念陷阱题","Integration","基准和计划不是完全同义词。","项目管理计划与三大基准的关系是？",["项目管理计划包含范围、进度、成本基准以及各子计划","三大基准不属于项目管理计划","项目管理计划只包含章程","三大基准只能口头更新"],0,"项目管理计划是综合性文件，包含各子计划和范围/进度/成本基准。"),
+ q("概念陷阱题","Risk","威胁升级别和上报混淆。","上报风险的含义是？",["风险超出项目经理权限或项目范围，需要交给更高层处理","把所有风险发给客户","把风险删除","风险已经发生"],0,"Escalate 用于超出项目层级可处理范围的风险，但仍需适当跟踪。"),
+ q("概念陷阱题","Resource","奖励权力与惩罚权力不是职位本身。","正式权力与专家权力的区别是？",["正式权力来自职位授权，专家权力来自知识和专业能力","正式权力来自魅力，专家权力来自处罚","两者都必须由客户授予","两者没有区别"],0,"Formal power 来自组织职位；Expert power 来自专业能力。"),
+ q("概念陷阱题","Resource","容易和截图那类权力题混。","项目经理“挣得”的权力通常指什么？",["专家权力或参照权力","正式权力","惩罚权力","组织结构权力"],0,"挣得的权力不是职位天然带来的，通常来自专业能力、信誉、关系和影响力。"),
+ q("概念陷阱题","Communications","状态报告不是工作绩效数据。","工作绩效报告的典型用途是？",["向相关方传达整理后的绩效信息以支持决策","记录每个原始工时","替代项目章程","直接批准变更"],0,"WPR 是把绩效信息汇总成报告，用于沟通和决策。"),
+ q("概念陷阱题","Business","价值和范围常冲突。","项目交付范围完成但收益假设失效时，项目经理应关注什么？",["继续完成范围即可","复核商业论证和收益实现可能性","只看成本偏差","立即关闭项目不沟通"],1,"PMP 越来越强调价值。范围完成不等于商业成功。"),
+ q("概念陷阱题","Stakeholder","参与程度分类题。","相关方“不知道项目存在”属于哪种参与程度？",["不了解型","抵制型","支持型","领导型"],0,"Unaware/不了解型表示不知道项目及其影响。"),
+ q("概念陷阱题","Stakeholder","参与程度分类题。","相关方知道项目且积极帮助成功，通常属于哪种参与程度？",["支持型","不了解型","抵制型","中立型"],0,"Supportive/支持型是了解项目和影响并支持项目成果。"),
+ q("概念陷阱题","Risk","残余风险不是次生风险。","残余风险和次生风险的区别是？",["残余风险是应对后仍剩余的风险，次生风险是应对措施引发的新风险","残余风险是机会，次生风险是问题","两者都必须关闭","两者没有区别"],0,"Residual risk 是剩余风险；Secondary risk 是应对措施产生的新风险。"),
+ q("概念陷阱题","Schedule","紧前紧后别看反。","紧前活动的含义是？",["逻辑上位于某活动之前的活动","某活动之后立即发生的活动","持续时间为零的活动","没有依赖的活动"],0,"Predecessor 是前置活动，Successor 是后续活动。"),
+ q("概念陷阱题","Scope","范围蔓延的本质。","范围蔓延指什么？",["未受控制地扩大项目或产品范围","客户批准的正式变更","范围基准创建","WBS 分解"],0,"Scope creep 是未经控制的范围扩大；正式批准的变更不是范围蔓延。"),
+ q("概念陷阱题","Quality","镀金不是质量。","镀金通常指什么？",["交付超出需求的额外功能或特性","满足验收标准","消除缺陷","执行质量审计"],0,"Gold plating 是未经要求添加额外内容，可能导致风险、成本和范围问题。")
+];
 function q(kind,domain,scenario,question,options,correct,explain,source){return{kind,domain,scenario,question,options,correct,explain,source}}
 let i=0,answered=0,correct=0,displayOptions=[],attemptLog=[];
 let bank=normalQs,modeName="普通题";
@@ -501,7 +558,7 @@ function sourceFor(x){
   return x.source || map[x.domain] || "教材关联：回到 PMBOK 第七版的绩效域和通关宝典对应知识领域，抓住先分析、再协作、再按流程行动。";
 }
 function shuffledOptions(x){const arr=x.options.map((text,source)=>({text,source}));for(let n=arr.length-1;n>0;n--){const j=(i*7+n*3)%arr.length;[arr[n],arr[j]]=[arr[j],arr[n]]}return arr}
-function render(){const x=bank[i];kind.textContent=x.kind;domain.textContent=x.kind==="仿真题"?"综合场景":x.domain;count.textContent=`${modeName} ${i+1}/${bank.length}`;caseBox.textContent=x.scenario;question.textContent=x.question;options.innerHTML="";displayOptions=shuffledOptions(x);displayOptions.forEach((o,idx)=>{const b=document.createElement("button");b.dataset.index=idx;b.innerHTML=`<span class="option-letter">${letter(idx)}</span><span>${o.text}</span>`;b.onclick=()=>check(idx);options.appendChild(b)});answer.textContent="选一个答案开始。";update()}
+function render(){const x=bank[i];kind.textContent=x.kind;domain.textContent=x.kind==="仿真题"||x.kind==="概念陷阱题"?"综合场景":x.domain;count.textContent=`${modeName} ${i+1}/${bank.length}`;caseBox.textContent=x.scenario;question.textContent=x.question;options.innerHTML="";displayOptions=shuffledOptions(x);displayOptions.forEach((o,idx)=>{const b=document.createElement("button");b.dataset.index=idx;b.innerHTML=`<span class="option-letter">${letter(idx)}</span><span>${o.text}</span>`;b.onclick=()=>check(idx);options.appendChild(b)});answer.textContent="选一个答案开始。";update()}
 function check(idx){const x=bank[i],chosen=displayOptions[idx],rightIndex=displayOptions.findIndex((o)=>o.source===x.correct),ok=chosen.source===x.correct;answered++;if(ok)correct++;attemptLog.push({mode:modeName,kind:x.kind,domain:x.domain,ok,question:x.question,scenario:x.scenario,chosen:chosen.text,correct:x.options[x.correct]});saveDrillState();document.querySelectorAll("#options button").forEach((b,n)=>{b.classList.toggle("right",n===rightIndex);b.classList.toggle("wrong",n===idx&&!ok)});const pct=answered?Math.round(correct/answered*100):0;const site=56+((i*7)%33);answer.innerHTML=`<div class="answer-section"><div class="answer-title">答案</div><div class="answer-box"><span>正确答案：<b>${letter(rightIndex)}</b></span><span>你的答案：<b>${letter(idx)}</b></span></div><div class="answer-box" style="margin-top:10px"><span>个人正确率：<b>${pct}%</b></span><span>题库参考正确率：<b>${site}%</b></span></div></div><div class="analysis-section"><div class="analysis-title">解析</div><div class="analysis-text"><b>为什么这样选：</b>${x.explain}<div class="source"><b>教材关联：</b>${sourceFor(x).replace(/^教材关联：/,"")}</div></div></div>`;update()}
 function update(){const pct=answered?Math.round(correct/answered*100):0;fill.style.width=pct+"%";answeredStat.textContent=`已做 ${answered} 题`;accuracyStat.textContent=`准确率 ${pct}%`}
 function setMode(name,newBank,btn){modeName=name;bank=newBank;i=0;answered=0;correct=0;attemptLog=[];saveDrillState();document.querySelectorAll(".mode-switch button").forEach((b)=>b.classList.remove("active"));btn.classList.add("active");render()}
@@ -514,10 +571,12 @@ normalMode.onclick=()=>setMode("普通题",normalQs,normalMode);
 hardMode.onclick=()=>setMode("难题模式",hardQs,hardMode);
 simulationMode.onclick=()=>setMode("仿真题",simulationQs,simulationMode);
 heroSimulation.onclick=()=>setMode("仿真题",simulationQs,simulationMode);
-allMode.onclick=()=>setMode("全部混刷",normalQs.concat(hardQs,simulationQs),allMode);
+trapMode.onclick=()=>setMode("概念陷阱题",trapQs,trapMode);
+allMode.onclick=()=>setMode("全部混刷",normalQs.concat(hardQs,simulationQs,trapQs),allMode);
 PmpUsers.mount(document.getElementById("userProfiles"),()=>{loadDrillState();render()});
 loadDrillState();
 if(location.hash==="#simulation"){setMode("仿真题",simulationQs,simulationMode)}
+if(location.hash==="#trap"){setMode("概念陷阱题",trapQs,trapMode)}
 render();
 </script>
 </body>
