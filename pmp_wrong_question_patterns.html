@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PMP 错题本：高频套路归类</title>
+  <style>
+    :root{--ink:#172033;--muted:#607087;--line:#d7dfeb;--paper:#f6f8fc;--panel:#fff;--blue:#2563eb;--teal:#0f766e;--amber:#b45309;--rose:#be123c;--green:#15803d;--shadow:0 14px 34px rgba(22,34,55,.1)}
+    *{box-sizing:border-box}
+    body{margin:0;background:linear-gradient(90deg,rgba(37,99,235,.05) 1px,transparent 1px),linear-gradient(180deg,rgba(15,118,110,.04) 1px,transparent 1px),var(--paper);background-size:30px 30px;color:var(--ink);font-family:"Microsoft YaHei","PingFang SC","Noto Sans CJK SC",Arial,sans-serif;line-height:1.55}
+    main{max-width:1280px;margin:0 auto;padding:28px}
+    a{color:inherit;text-decoration:none}
+    .nav{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+    .nav a,.filter button{min-height:36px;padding:7px 11px;border:1px solid var(--line);border-radius:8px;background:#fff;color:#263247}
+    .hero{display:grid;grid-template-columns:1fr 1.15fr;gap:18px;align-items:stretch}
+    .panel{background:rgba(255,255,255,.95);border:1px solid var(--line);border-radius:8px;box-shadow:var(--shadow)}
+    .intro,.priority{padding:22px}
+    h1{margin:0 0 10px;font-size:34px;line-height:1.18;letter-spacing:0}
+    h2{margin:0 0 12px;font-size:20px}
+    h3{margin:0 0 8px;font-size:17px}
+    p{margin:0;color:var(--muted)}
+    .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+    .chip{display:inline-flex;align-items:center;min-height:30px;padding:4px 9px;border:1px solid var(--line);border-radius:999px;background:#fff;color:#314058;font-size:13px}
+    .priority-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+    .priority-card{padding:12px;border-radius:8px;border:1px solid var(--line);background:#f8fafc}
+    .priority-card strong{display:block;margin-bottom:4px}
+    .filter{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0}
+    .filter button{cursor:pointer}
+    .filter button.active{border-color:rgba(37,99,235,.55);background:#eef5ff;color:#1746a2;font-weight:700}
+    .grid{display:grid;grid-template-columns:repeat(2,minmax(280px,1fr));gap:14px}
+    .card{padding:18px;border-radius:8px;border:1px solid var(--line);background:#fff;box-shadow:0 8px 20px rgba(22,34,55,.07)}
+    .card[data-area="敏捷"]{border-left:6px solid var(--teal)}
+    .card[data-area="变更/风险"]{border-left:6px solid var(--rose)}
+    .card[data-area="相关方"]{border-left:6px solid var(--blue)}
+    .card[data-area="基础工具"]{border-left:6px solid var(--amber)}
+    .card.hide{display:none}
+    .topline{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:8px}
+    .tag{display:inline-flex;align-items:center;min-height:24px;padding:3px 8px;border-radius:999px;background:#eef5ff;color:#1746a2;font-size:12px;font-weight:700}
+    .hot{background:#fff7ed;color:#9a3412}
+    .block{margin-top:12px;padding-top:12px;border-top:1px solid #edf1f7}
+    .block b{display:block;margin-bottom:5px;color:#263247}
+    ul{margin:0;padding-left:18px;color:var(--muted)}
+    li{margin:3px 0}
+    .memory{margin-top:12px;padding:11px 12px;border-radius:8px;background:#f0fdf4;border:1px solid #bbf7d0;color:#14532d;font-weight:700}
+    .drill{margin-top:18px;padding:18px}
+    .drill-box{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center}
+    .drill button{min-height:38px;border:0;border-radius:8px;background:var(--ink);color:#fff;padding:0 14px;font-weight:700;cursor:pointer}
+    #drillText{font-size:18px;color:#263247}
+    footer{margin-top:18px;color:var(--muted);font-size:13px}
+    @media(max-width:900px){main{padding:16px}.hero,.grid,.priority-grid,.drill-box{grid-template-columns:1fr}h1{font-size:29px}}
+  </style>
+</head>
+<body>
+<main>
+  <nav class="nav">
+    <a href="pmp_2026_study_dashboard.html">驾驶舱</a>
+    <a href="pmp_agile_hybrid_playbook.html">敏捷/混合</a>
+    <a href="pmp_exam_style_drills.html">题型训练</a>
+    <a href="pmp_49_process_flowchart.html">49 过程</a>
+  </nav>
+
+  <section class="hero">
+    <div class="panel intro">
+      <h1>PMP 错题本：高频套路归类</h1>
+      <p>这些不是单题解析，而是你最近反复掉分的“出题套路”。下次模考前先刷这里，把同类题的判断开关打开。</p>
+      <div class="chips">
+        <span class="chip">更新时间：2026-05-31</span>
+        <span class="chip">优先级：敏捷/混合最高</span>
+        <span class="chip">目标：把 109 提到 120+</span>
+      </div>
+    </div>
+    <div class="panel priority">
+      <h2>下一轮最快提分顺序</h2>
+      <div class="priority-grid">
+        <div class="priority-card"><strong>1. 敏捷角色与会议</strong><p>PO、团队、Review、Retro、站会、MVP。</p></div>
+        <div class="priority-card"><strong>2. 变更/风险/日志</strong><p>Backlog、CCB、风险登记册、问题日志、假设日志。</p></div>
+        <div class="priority-card"><strong>3. 相关方与沟通</strong><p>先分析参与度，再对齐价值，不要急着升级。</p></div>
+        <div class="priority-card"><strong>4. 挣值和基础工具</strong><p>PV/EV/AC、SPI/CPI、WBS、RACI、赶工。</p></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="filter" aria-label="错题分类筛选">
+    <button class="active" data-filter="全部">全部</button>
+    <button data-filter="敏捷">敏捷</button>
+    <button data-filter="变更/风险">变更/风险</button>
+    <button data-filter="相关方">相关方</button>
+    <button data-filter="基础工具">基础工具</button>
+  </div>
+
+  <section id="cards" class="grid"></section>
+
+  <section class="panel drill">
+    <h2>30 秒自测</h2>
+    <div class="drill-box">
+      <p id="drillText">点击随机抽问，把规则用自己的话说出来。</p>
+      <button id="nextDrill">随机抽问</button>
+    </div>
+  </section>
+
+  <footer>用法：错题复盘时先判断它属于哪一类，再背“记忆句”，最后回到原题解释为什么其他选项危险。</footer>
+</main>
+
+<script>
+const patterns=[
+  p("敏捷","敏捷角色边界","PO 管价值，团队管工作量",["产品待办列表排序","用户故事业务价值","新 PO 调整优先级","业务价值/产品价值"],["PO 负责产品待办列表、优先级、业务价值最大化。","团队负责估算工作量、技术实现、故事点、可行性建议。"],["把业务价值评估交给团队。","把工作量估算交给 PO。"],"价值问业务，工作量问团队。Backlog 排序听 PO，故事点估算问团队。"),
+  p("敏捷","Review vs Retrospective","看产品找 Review，改做法找 Retrospective",["客户反馈、验证功能、展示增量","相关方看产品","流程不顺、协作问题、下一轮怎么更好"],["产品反馈选 Sprint Review / Demo。","过程改进选 Retrospective。"],["把客户反馈题选成回顾。","把过程改进题选成重新排序待办列表。"],"看产品找 Review/Demo；改过程找 Retrospective。"),
+  p("敏捷","每日站会与障碍处理","站会暴露问题，不展开长会解决",["Daily standup","团队报告问题/障碍","问下一步"],["问题可以在站会上暴露。","复杂问题放进 parking lot，会后安排相关人员处理。","当前冲刺关键障碍要当前处理。"],["站会上展开长讨论。","拖到下个冲刺再处理当前关键障碍。"],"每日站会暴露问题，不展开解决；当前关键障碍，当前处理。"),
+  p("敏捷","敏捷变更与 Backlog","Backlog 增删改找 PO，不是所有变化都走 CCB",["Agile / iteration","backlog item 不再需要","重新排序产品待办列表","业务价值变化"],["与 PO 协作更新产品待办列表。","PO 负责增删改和排序。"],["敏捷项目中一看到 change request 就触发整体变更控制。","让团队直接删除 backlog item。"],"敏捷里 backlog 的变化找 PO；预测型里改基准才走 CCB。"),
+  p("敏捷","MVP 与时间压缩","时间被压缩，先切 MVP",["18 个月不可接受，要求 6 个月上线","市场窗口提前","客户需求不清","需要快速验证"],["审查产品待办列表。","找高优先级/最高价值项。","定义 MVP / 最小可行产品。"],["先说不可能。","先加班、赶工、快速跟进。","先增加预算和人手。"],"敏捷遇到时间压缩，先切 MVP，不是先硬压进度。"),
+  p("敏捷","敏捷转型与培训","转敏捷先试点，缺能力先评估",["组织首次采用敏捷","发起人支持敏捷","团队只懂预测型","能力错配/技能不足"],["选择合适复杂度的试点项目。","给受影响人员培训。","发现能力差距先评估培训需求。"],["把当前项目剩余部分硬改成敏捷。","未评估就给所有人同样培训。"],"敏捷转型先试点；发现能力差距先评估，再培训。"),
+  p("敏捷","仆人式领导与自组织","PM 不分配任务，团队自己决定怎么做",["PM assigns tasks","团队不自主选择工作","奖励最佳个人"],["团队应自组织。","PM/Scrum Master 促进、移除障碍、服务团队。","奖励机制应支持团队整体成功。"],["把问题只说成 PM 很独裁。","鼓励个人英雄主义破坏团队协作。"],"敏捷题别骂人，要说机制：团队未自组织。"),
+  p("敏捷","看板与流动指标","可视化流程 + WIP = Kanban",["可视化工作流","瓶颈可见","WIP 限制","管理流程"],["选 Kanban。","Lead Time 从需求进入系统到交付。","Cycle Time 从真正开始做到完成。"],["把看板误判成待办列表。","把等待时间算到 Cycle Time 里。"],"可视化流程和 WIP 是看板；Lead 从提出算，Cycle 从开干算。"),
+  p("变更/风险","变更控制与 CCB","CCB 决定后，记录并通知",["重大范围变更","影响成本/进度","需要 CCB 批准","CCB 已拒绝/批准"],["CCB 做出决定后，PM 记录到变更日志，并通知相关方和团队。","紧急情况可先处理，事后补记录和追认。"],["CCB 已经拒绝，还回答“由 CCB 决定”。","私下游说 CCB 改决定。"],"CCB 决定后，PM 记录并沟通；紧急情况可先处理后补流程。"),
+  p("变更/风险","风险、问题、假设日志","可能性进风险，硬条件进假设日志",["可能发生/可能影响","已经发生的问题","必须/不得/只能/硬日期"],["可能性进风险登记册。","已经发生进问题日志。","硬条件和制约因素进假设日志。","记录风险不等于评估风险。"],["把发布日期必须提前当风险。","把已发生的问题继续当风险。"],"可能性进风险登记册；硬条件进假设日志；已经发生进问题日志。"),
+  p("变更/风险","风险应对策略","看动作判断应对类型",["换地点/取消高风险范围","额外测试/监控/备份","保险/固定价合同","储备"],["改计划消除风险源是规避。","降低概率或影响是减轻。","把财务责任转给第三方是转移。","不主动处理是接受。"],["看到储备就以为是减轻。","看到保险还选接受。"],"改计划消风险是规避；加测试降影响是减轻；买保险是转移；准备储备是接受。"),
+  p("相关方","相关方与沟通","收集意见找相关方，拍板章程找发起人",["收集需求/了解期望","项目章程/成功标准取舍","相关方觉得敏捷会议太频繁"],["需求和期望找相关方。","章程、商业理由、关键方向找发起人。","相关方不理解时先解释价值。"],["马上减少参与。","一遇反对就升级。"],"收集意见找相关方；拍板章程找发起人；相关方不理解先沟通价值。"),
+  p("相关方","商业价值与认知偏差","交付价值靠优先级，避免误解靠沟通",["没有商业收益","产品待办列表优先级","业务方认为失败","不知道项目成功之处"],["与 PO、发起人、关键相关方确定价值排序。","通过沟通管理计划持续对齐成功标准和价值认知。"],["只按范围、进度、成本成功就认为价值成功。","收尾才第一次调查关键相关方。"],"交付价值靠优先级；避免误解靠沟通计划。"),
+  p("基础工具","需求收集工具","跨部门达成一致，用引导式研讨会",["人数多、分布广","人数少、深入了解","跨职能部门、达成一致","专家匿名多轮"],["很多人用问卷。","少数深入用访谈。","跨部门达成一致用引导式研讨会。","专家匿名共识用德尔菲。"],["把焦点小组和引导式研讨会混掉。","看到跨部门还选问卷。"],"收集很多人用问卷；跨部门达成一致用引导式研讨会。"),
+  p("基础工具","WBS、范围与 RACI","WBS 管范围，RACI 管职责",["工作包意见分歧","范围变更","需求追踪","负责人不清"],["WBS 分解项目范围，不显示工期。","RACI 解决职责不清。","RTM 跟踪需求来源到交付/测试。"],["把 WBS 当工期表。","用 RTM 解决职责冲突。"],"WBS 管做什么；RACI 管谁负责；RTM 管需求追踪。"),
+  p("基础工具","进度压缩与资源","不能改逻辑但能加人 = 赶工",["不能改网络图","有足够人员","并行原本顺序活动","资源负荷变化"],["赶工是加资源/加班/外包，不改变逻辑。","快速跟进是并行活动，改变逻辑，风险增加。","资源平衡是减少负荷波动。"],["把资源平衡理解为把人用满。","能加人时却选快速跟进。"],"赶工花钱，快速跟进冒险；资源平衡是拉平负荷，不是塞满人。"),
+  p("基础工具","成本与挣值","PV 看计划，EV 看完成，AC 看花钱",["计划价值/挣值/实际成本","SPI/CPI","EAC/ETC","投资回收期"],["PV 是按计划到今天应该完成的价值。","EV 是实际完成的价值。","AC 是实际花的钱。","SPI/CPI 都和 1 比，不互相比。"],["PV 用实际完成比例算。","SPI 大于 CPI 就判断进度好。"],"PV 看计划，EV 看完成，AC 看花钱；SPI/CPI 都和 1 比，不互相比。"),
+  p("基础工具","质量管理","想保证质量，先规划质量",["确保执行阶段满足质量要求","大型项目","质量标准、职责、活动"],["规划质量管理：确定质量标准、指标、责任、检查方式、质量活动。"],["选持续审查交付物质量；那是控制质量，偏事后检查。"],"想保证质量，先规划质量；检查交付物只是控制动作。"),
+  p("基础工具","收尾","收尾确认成果移交，不是交计划",["closing document","submit for approval","final product/service/result","transition/handover"],["确认可交付成果已验收，并顺利移交给运营/需求组织。"],["选择质量管理计划、风险登记册等计划类文件。"],"收尾不是交计划，是确认成果被验收并移交。"),
+  p("相关方","激励与组织规则","激励不能破坏制度",["赫兹伯格","成就/认可/责任/晋升","公司规则明确禁止"],["缺少激励因素：没动力但不一定不满。","表现好也不能违反公司制度。"],["为了激励而破坏公司规则。","把缺少激励因素理解成一定强烈不满。"],"缺激励是不满意度低，不等于不满；奖励再好也不能破坏制度。")
+];
+function p(area,title,subtitle,signals,rules,traps,memory){return{area,title,subtitle,signals,rules,traps,memory}}
+const cards=document.getElementById("cards");
+function render(filter="全部"){
+  cards.innerHTML="";
+  patterns.forEach((x,i)=>{
+    const article=document.createElement("article");
+    article.className="card"+(filter!=="全部"&&x.area!==filter?" hide":"");
+    article.dataset.area=x.area;
+    article.innerHTML=`<div class="topline"><span class="tag">${x.area}</span><span class="tag hot">#${i+1}</span></div><h3>${x.title}</h3><p>${x.subtitle}</p><div class="block"><b>题干暗号</b><ul>${x.signals.map(v=>`<li>${v}</li>`).join("")}</ul></div><div class="block"><b>正确规则</b><ul>${x.rules.map(v=>`<li>${v}</li>`).join("")}</ul></div><div class="block"><b>危险选项</b><ul>${x.traps.map(v=>`<li>${v}</li>`).join("")}</ul></div><div class="memory">${x.memory}</div>`;
+    cards.appendChild(article);
+  });
+}
+document.querySelectorAll(".filter button").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    document.querySelectorAll(".filter button").forEach(b=>b.classList.remove("active"));
+    btn.classList.add("active");
+    render(btn.dataset.filter);
+  });
+});
+const drills=[
+  "题干说客户/相关方要看产品功能反馈，你选 Review 还是 Retrospective？为什么？",
+  "题干说流程不顺、团队协作问题、项目管理方法要审查，你选哪个会议？",
+  "PO 调整 backlog 优先级时，PM 应该替团队决定，还是与 PO 协作？",
+  "可能发生、已经发生、硬性日期，分别进哪个日志？",
+  "PV、EV、AC 三个词分别看计划、完成、花钱中的哪一个？",
+  "不能改变网络图但有足够人员，选赶工还是快速跟进？",
+  "跨部门要达成一致收集需求，选问卷还是引导式研讨会？",
+  "CCB 已经拒绝变更，PM 下一步是重新说服 CCB，还是记录并通知？"
+];
+let drillIndex=0;
+document.getElementById("nextDrill").addEventListener("click",()=>{
+  drillIndex=(drillIndex+Math.floor(Math.random()*drills.length-1)+1)%drills.length;
+  document.getElementById("drillText").textContent=drills[drillIndex];
+});
+render();
+</script>
+</body>
+</html>
